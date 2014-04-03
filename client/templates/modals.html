@@ -1,5 +1,6 @@
 <template name="target_modal">
 	<p>Status: {{ target_task.task }}</p>
+	<p>Service: {{ target_task.service }}</p>
 	<br/>
 	<p>Invoice: {{ target_task.invoice }}</p>
 	<p>Date Ordered: {{ target_task.date }}</p>
@@ -9,6 +10,7 @@
 	<p>Quantity: {{ target_task.qty }}</p>
 	<p>Total Cost: {{ target_task.totals }}</p>
 	<br/>
+	Update Status:<br/>
 	{{#unless checkUser}}
 		{{#if check_task}}
 		<select id="target_select" class="form-control" style="width: 30%">

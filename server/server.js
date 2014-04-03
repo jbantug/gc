@@ -1,6 +1,6 @@
 Meteor.startup(function () {
 
-	var username = "sales348";
+	var username = "sales367";
 	Accounts.createUser({
 		username: username,
 		password: "asdf",
@@ -10,7 +10,7 @@ Meteor.startup(function () {
 		}
 	});
 
-	var username2 = "staff348";
+	var username2 = "staff367";
 	Accounts.createUser({
 		username: username2,
 		password: "asdf",

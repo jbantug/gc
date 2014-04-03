@@ -1,0 +1,59 @@
+<template name="target_modal">
+	<p>Status: {{ target_task.task }}</p>
+	<br/>
+	<p>Invoice: {{ target_task.invoice }}</p>
+	<p>Date Ordered: {{ target_task.date }}</p>
+	<p>Customer: {{ target_task.name }}</p>
+	<br/>
+	<p>Item: {{ target_task.itemNum }}</p>
+	<p>Quantity: {{ target_task.qty }}</p>
+	<p>Total Cost: {{ target_task.totals }}</p>
+	<br/>
+	{{#unless checkUser}}
+		{{#if check_task}}
+		<select id="target_select" class="form-control" style="width: 30%">
+		  	<option>Ordered</option>
+		  	<option>Embroidering</option>
+		  	<option>Printing</option>
+		</select>
+		{{else}}
+		<select id="target_select" class="form-control" style="width: 30%">
+			<option>Need to Order</option>
+			<option>Ordered</option>
+		</select>
+		{{/if}}
+	{{/unless}}
+</template>
+
+<template name="inventory_modal">
+	<table>
+		<tr>
+			<td>Item No:</td>
+			<td><input id="inv_itemNum" class="form-control" type="number"/></td>
+		</tr>
+		<tr>
+			<td>Type:</td>
+			<td><input id="inv_type" class="form-control" type="text"/></td>
+		</tr>
+		<tr>
+			<td>Item:</td>
+			<td><input id="inv_item" class="form-control" type="text"/></td>
+		</tr>
+		<tr>
+			<td>Color:</td>
+			<td><input id="inv_color" class="form-control" type="text"/></td>
+		</tr>
+		<tr>
+			<td>Quantity:</td>
+			<td><input id="inv_qty" class="form-control" type="number"/></td>
+		</tr>
+		<tr>
+			<td>Unit Price:</td>
+			<td><input id="inv_unitPrice" class="form-control" type="number"/></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td><button id="add_inventory" class="btn btn-primary pull-right" data-dismiss="modal">Add</button></td>
+		</tr>
+	</table>
+</template>

@@ -87,8 +87,6 @@ Template.content_sales.events({
 				alert("Please complete the table.");
 			}
 
-			$('#content-table tbody input').val("");
-
 			event.preventDefault();
 		}
 	},
@@ -178,6 +176,12 @@ Template.content_sales.events({
 			);
 
 			Orders.remove({_id: order._id});
+
+			Session.set("grand_total", 0);
+
+			$('#content-title input').val("");
+			$('#content-table tbody input').val("");
+			$('.content-footer-adds div input').val("");
 		});
 
 
@@ -215,9 +219,8 @@ Template.content_sales.dateToday = function () {
 	var month = d.getMonth()+1;
 	var day = d.getDate();
 
-	var output = d.getFullYear() + '/' +
-	    (month<10 ? '0' : '') + month + '/' +
-	    (day<10 ? '0' : '') + day;
+	var output = (month<10 ? '0' : '') + month + '/' +
+	    (day<10 ? '0' : '') + day + '/' + d.getFullYear() ;
 
 	return output;
 };

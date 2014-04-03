@@ -66,10 +66,10 @@
 		</div>
 		<div id="content-datebox" class="col-lg-12">
 			<div class="col-lg-12" id="content-datebox-upper">
+				<span class="col-lg-3">Salesperson: <input name="salesperson" style="width:50%;" class="form-control content-control" type="text"/></span>
 				<span id="dateToday" class="col-lg-3">Today's Date: <u>{{ dateToday }}</u></span>
-				<span class="col-lg-3">Final Art: <input name="final_art" style="width:65%;" class="form-control content-control" type="text"/></span>
 				<span class="col-lg-3">Est Prod Days: <input name="prod_days" style="width:43%;" class="form-control content-control" type="text"/></span>
-				<span class="col-lg-3">Due Date: <input name="due_date" style="width:67%;" class="form-control content-control" type="text"/></span>
+				<span class="col-lg-3">Due Date: <input name="due_date" style="width:67%;" class="form-control content-control" type="date"/></span>
 			</div>
 			<div  class="col-lg-12" id="content-datebox-lower">
 				<span class="col-lg-6">Garments: <input name="garments" style="width:50%;" class="form-control content-control" type="text"/></span>
@@ -188,7 +188,7 @@
 						</div>
 						<div class="col-lg-6 input-group">
 							<span class="input-group-addon">$</span>
-							<input id="adds1_val" name="adds1_val" type="number" value="0" class="form-control"/>
+							<input id="adds1_val" name="adds1_val" type="text" value="0" class="ta-right form-control"/>
 						</div>
 					</div>
 					<div class="col-lg-12 content-footer-adds">
@@ -197,18 +197,18 @@
 						</div>
 						<div class="col-lg-6 input-group">
 							<span class="input-group-addon">$</span>
-							<input id="adds2_val" name="adds2_val" type="number" value="0" class="form-control"/>
+							<input id="adds2_val" name="adds2_val" type="text" value="0" class="ta-right form-control"/>
 						</div>
 					</div>
 					<div id="content-footer-total" class="col-lg-12">
 						<h3 class="col-lg-6">TOTAL: </h3>
 						<div class="col-lg-6 input-group">
 							<span class="input-group-addon">$</span>
-							<input id="grand_total" name="grand_total" disabled type="text" class="col-lg-6 form-control" value="{{grand_total}}"/>
+							<input id="grand_total" name="grand_total" disabled type="text" class="ta-right form-control" value="{{grand_total}}"/>
 						</div>
 					</div>
 					<div id="content-footer-subwrap" class="col-lg-12">
-						<input id="content-footer-submit" class="btn btn-primary" type="button" value="PROCEED"/>
+						<button id="content-footer-submit" class="btn btn-primary" type="button">PROCEED</button>
 					</div>
 				</div>
 			</div>
@@ -216,33 +216,546 @@
 		{{/if}}
 		<!--  -->
 		{{#if screenPrinting}}
+		<div id="content-head" class="col-lg-12">
+			<input name="service" type="hidden" value="Screen Printing"/>
+			<div class="col-lg-2">
+				<img class="logo" src="GCLogoColor.png"/>
+			</div>
+			<div class="col-lg-4">
+				<p id="address">
+					<strong>GRAPHIC CONNECTIONS</strong><br/>
+					145 Mount Auburn Street<br/>
+					Watertown, MA  02742<br/>
+					617 - 926 - 1155 
+				</p>
+			</div>
+			<div id="content-head-form" class="col-lg-6">
+				<table class="table">
+					<tr>
+						<td>Company Name: </td>
+						<td><input name="company_name" class="form-control content-control" type="text"/></td>
+					</tr>
+					<tr>
+						<td>Name: </td>
+						<td><input name="user_name" class="form-control content-control" type="text" value="{{currentUser.profile.name}}"/></td>
+					</tr>
+					<tr>
+						<td>Address: </td>
+						<td><input name="address" class="form-control content-control" type="text"/></td>
+					</tr>
+					<tr>
+						<td>Phone: </td>
+						<td><input name="phone" class="form-control content-control" type="text"/></td>
+					</tr>
+				</table>
+			</div>
+		</div>
 		<div id="content-datebox" class="col-lg-12">
+			<div class="col-lg-12" id="content-datebox-upper">
+				<span class="col-lg-4">Salesperson: <input name="salesperson" style="width:65%;" class="form-control content-control" type="text"/></span>
+				<span id="dateToday" class="col-lg-4">Today's Date: <u>{{ dateToday }}</u></span>
+				<span class="col-lg-4">Due Date: <input name="due_date" style="width:67%;" class="form-control content-control" type="date"/></span>
+			</div>
+			<div  class="col-lg-12" id="content-datebox-lower">
+				<label class="col-lg-4">NEW ORDER: <input name="retail" type="checkbox"/></label>
+				<label class="col-lg-4">REPEAT ORDER: <input name="wholesale" type="checkbox"/></label>
+				<label class="col-lg-4">RUSH: <input name="rush" type="checkbox"/></label>
+			</div>
 		</div>
 		<div id="content-title" class="col-lg-12">
-			SCREEN PRINTING
+			<div class="col-lg-6" style="padding-left:0px;">
+				<strong>SCREEN PRINTING</strong>
+			</div>
+			<div class="col-lg-3">
+				INVOICE #:<br/>
+				<input name="invoice" type="text" class="form-control">
+			</div>
 		</div>
 		<div id="content-table" class="col-lg-12">
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<td>QTY</td>
+						<td style="width:8%">Item #</td>
+						<td style="width:25%">Description</td>
+						<td style="width:8%">Color</td>
+						<td>S</td>
+						<td>M</td>
+						<td>L</td>
+						<td>XL</td>
+						<td>2X</td>
+						<td>3X</td>
+						<td style="font-size:10px">OTHER<input name="other_size" type="text" class="form-control" style="height:20px"></td>
+						<td style="width:8%">Unit Price</td>
+						<td style="width:8%">Totals</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>
+							<input id="qty" type="text" class="form-control content-control">
+						</td>
+						<td>
+							<input id="itemNum" type="text" class="form-control content-control">
+						</td>
+						<td>
+							<input id="desc" type="text" class="form-control content-control" value="{{findItem.item}}">
+						</td>
+						<td>
+							<input id="color" type="text" class="form-control content-control" value="{{findItem.color}}">
+						</td>
+						<td>
+							<input id="s" type="text" class="form-control content-control" value="0">
+						</td>
+						<td>
+							<input id="m" type="text" class="form-control content-control" value="0">
+						</td>
+						<td>
+							<input id="l" type="text" class="form-control content-control" value="0">
+						</td>
+						<td>
+							<input id="xl" type="text" class="form-control content-control" value="0">
+						</td>
+						<td>
+							<input id="x2" type="text" class="form-control content-control" value="0">
+						</td>
+						<td>
+							<input id="x3" type="text" class="form-control content-control" value="0">
+						</td>
+						<td>
+							<input id="other" type="text" class="form-control content-control" value="0">
+						</td>
+						<td>
+							<input id="unitPrice" type="text" class="form-control content-control" value="{{findItem.unitPrice}}">
+						</td>
+						<td>
+							<input id="totals" type="text" class="form-control content-control">
+						</td>
+					</tr>
+					{{#each orders}}
+					<tr>
+						<td>{{qty}}</td>
+						<td>{{itemNum}}</td>
+						<td>{{desc}}</td>
+						<td>{{color}}</td>
+						<td>{{s}}</td>
+						<td>{{m}}</td>
+						<td>{{l}}</td>
+						<td>{{xl}}</td>
+						<td>{{x2}}</td>
+						<td>{{x3}}</td>
+						<td>{{other}}</td>
+						<td>{{unitPrice}}</td>
+						<td>{{totals}}</td>
+					</tr>
+					{{/each}}
+				</tbody>
+			</table>
+		</div>
+		<div id="content-footer" class="col-lg-12">
+			<div class="col-lg-6">
+				<p class="col-lg-12"><i>
+					Each order placed with GC is unique and individual and as such, additional costs may incur, that may not have been perceived especially if changes are made. It is our practice to provide an excellent  experience, and quality product. A 50% deposit is required to facilitate your order.
+				</i></p>
+				<div class="col-lg-12">
+					<strong class="col-lg-12">Customer Signature</strong>
+				</div>
+			</div>
+			<div class="col-lg-6">
+				<div class="col-lg-10 pull-right">
+					<div class="col-lg-12 content-footer-adds">
+						<div class="col-lg-6">
+							<input id="adds1" name="adds1" type="text" class="form-control"/>
+						</div>
+						<div class="col-lg-6 input-group">
+							<span class="input-group-addon">$</span>
+							<input id="adds1_val" name="adds1_val" type="text" value="0" class="ta-right form-control"/>
+						</div>
+					</div>
+					<div class="col-lg-12 content-footer-adds">
+						<div class="col-lg-6">
+							<input id="adds2" name="adds2" type="text" class="form-control"/>
+						</div>
+						<div class="col-lg-6 input-group">
+							<span class="input-group-addon">$</span>
+							<input id="adds2_val" name="adds2_val" type="text" value="0" class="ta-right form-control"/>
+						</div>
+					</div>
+					<div id="content-footer-total" class="col-lg-12">
+						<h3 class="col-lg-6">TOTAL: </h3>
+						<div class="col-lg-6 input-group">
+							<span class="input-group-addon">$</span>
+							<input id="grand_total" name="grand_total" disabled type="text" class="ta-right form-control" value="{{grand_total}}"/>
+						</div>
+					</div>
+					<div id="content-footer-subwrap" class="col-lg-12">
+						<button id="content-footer-submit" class="btn btn-primary" type="button">PROCEED</button>
+					</div>
+
+				</div>
+			</div>
 		</div>
 		{{/if}}
 		<!--  -->
 		{{#if promotional}}
+		<div id="content-head" class="col-lg-12">
+			<input name="service" type="hidden" value="Promotional"/>
+			<div class="col-lg-2">
+				<img class="logo" src="GCLogoColor.png"/>
+			</div>
+			<div class="col-lg-4">
+				<p id="address">
+					<strong>GRAPHIC CONNECTIONS</strong><br/>
+					145 Mount Auburn Street<br/>
+					Watertown, MA  02742<br/>
+					617 - 926 - 1155 
+				</p>
+			</div>
+			<div id="content-head-form" class="col-lg-6">
+				<table class="table">
+					<tr>
+						<td>Company Name: </td>
+						<td><input name="company_name" class="form-control content-control" type="text"/></td>
+					</tr>
+					<tr>
+						<td>Name: </td>
+						<td><input name="user_name" class="form-control content-control" type="text" value="{{currentUser.profile.name}}"/></td>
+					</tr>
+					<tr>
+						<td>Address: </td>
+						<td><input name="address" class="form-control content-control" type="text"/></td>
+					</tr>
+					<tr>
+						<td>Phone: </td>
+						<td><input name="phone" class="form-control content-control" type="text"/></td>
+					</tr>
+				</table>
+			</div>
+		</div>
 		<div id="content-datebox" class="col-lg-12">
+			<div class="col-lg-12" id="content-datebox-upper">
+				<span class="col-lg-4">Salesperson: <input name="salesperson" style="width:65%;" class="form-control content-control" type="text"/></span>
+				<span id="dateToday" class="col-lg-4">Today's Date: <u>{{ dateToday }}</u></span>
+				<span class="col-lg-4">Due Date: <input name="due_date" style="width:67%;" class="form-control content-control" type="date"/></span>
+			</div>
+			<div  class="col-lg-12" id="content-datebox-lower">
+				<label class="col-lg-4">RETAIL: <input name="retail" type="checkbox"/></label>
+				<label class="col-lg-4">WHOLESALE: <input name="wholesale" type="checkbox"/></label>
+				<label class="col-lg-4">RUSH: <input name="rush" type="checkbox"/></label>
+			</div>
 		</div>
 		<div id="content-title" class="col-lg-12">
-			PROMOTIONAL
+			<div class="col-lg-6" style="padding-left:0px;">
+				<strong>PROMOTIONAL</strong>
+			</div>
+			<div class="col-lg-3">
+				INVOICE #:<br/>
+				<input name="invoice" type="text" class="form-control">
+			</div>
 		</div>
 		<div id="content-table" class="col-lg-12">
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<td>QTY</td>
+						<td style="width:8%">Item #</td>
+						<td style="width:25%">Description</td>
+						<td style="width:8%">Color</td>
+						<td>S</td>
+						<td>M</td>
+						<td>L</td>
+						<td>XL</td>
+						<td>2X</td>
+						<td>3X</td>
+						<td style="font-size:10px">OTHER<input name="other_size" type="text" class="form-control" style="height:20px"></td>
+						<td style="width:8%">Unit Price</td>
+						<td style="width:8%">Totals</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>
+							<input id="qty" type="text" class="form-control content-control">
+						</td>
+						<td>
+							<input id="itemNum" type="text" class="form-control content-control">
+						</td>
+						<td>
+							<input id="desc" type="text" class="form-control content-control" value="{{findItem.item}}">
+						</td>
+						<td>
+							<input id="color" type="text" class="form-control content-control" value="{{findItem.color}}">
+						</td>
+						<td>
+							<input id="s" type="text" class="form-control content-control" value="0">
+						</td>
+						<td>
+							<input id="m" type="text" class="form-control content-control" value="0">
+						</td>
+						<td>
+							<input id="l" type="text" class="form-control content-control" value="0">
+						</td>
+						<td>
+							<input id="xl" type="text" class="form-control content-control" value="0">
+						</td>
+						<td>
+							<input id="x2" type="text" class="form-control content-control" value="0">
+						</td>
+						<td>
+							<input id="x3" type="text" class="form-control content-control" value="0">
+						</td>
+						<td>
+							<input id="other" type="text" class="form-control content-control" value="0">
+						</td>
+						<td>
+							<input id="unitPrice" type="text" class="form-control content-control" value="{{findItem.unitPrice}}">
+						</td>
+						<td>
+							<input id="totals" type="text" class="form-control content-control">
+						</td>
+					</tr>
+					{{#each orders}}
+					<tr>
+						<td>{{qty}}</td>
+						<td>{{itemNum}}</td>
+						<td>{{desc}}</td>
+						<td>{{color}}</td>
+						<td>{{s}}</td>
+						<td>{{m}}</td>
+						<td>{{l}}</td>
+						<td>{{xl}}</td>
+						<td>{{x2}}</td>
+						<td>{{x3}}</td>
+						<td>{{other}}</td>
+						<td>{{unitPrice}}</td>
+						<td>{{totals}}</td>
+					</tr>
+					{{/each}}
+				</tbody>
+			</table>
+		</div>
+		<div id="content-footer" class="col-lg-12">
+			<div class="col-lg-6">
+				<p class="col-lg-12"><i>
+					Each order placed with GC is unique and individual and as such, additional costs may incur, that may not have been perceived especially if changes are made. It is our practice to provide an excellent  experience, and quality product. A 50% deposit is required to facilitate your order.
+				</i></p>
+				<div class="col-lg-12">
+					<strong class="col-lg-12">Customer Signature</strong>
+				</div>
+			</div>
+			<div class="col-lg-6">
+				<div class="col-lg-10 pull-right">
+					<div class="col-lg-12 content-footer-adds">
+						<div class="col-lg-6">
+							<input id="adds1" name="adds1" type="text" class="form-control"/>
+						</div>
+						<div class="col-lg-6 input-group">
+							<span class="input-group-addon">$</span>
+							<input id="adds1_val" name="adds1_val" type="text" value="0" class="ta-right form-control"/>
+						</div>
+					</div>
+					<div class="col-lg-12 content-footer-adds">
+						<div class="col-lg-6">
+							<input id="adds2" name="adds2" type="text" class="form-control"/>
+						</div>
+						<div class="col-lg-6 input-group">
+							<span class="input-group-addon">$</span>
+							<input id="adds2_val" name="adds2_val" type="text" value="0" class="ta-right form-control"/>
+						</div>
+					</div>
+					<div id="content-footer-total" class="col-lg-12">
+						<h3 class="col-lg-6">TOTAL: </h3>
+						<div class="col-lg-6 input-group">
+							<span class="input-group-addon">$</span>
+							<input id="grand_total" name="grand_total" disabled type="text" class="ta-right form-control" value="{{grand_total}}"/>
+						</div>
+					</div>
+					<div id="content-footer-subwrap" class="col-lg-12">
+						<button id="content-footer-submit" class="btn btn-primary" type="button">PROCEED</button>
+					</div>
+				</div>
+			</div>
 		</div>
 		{{/if}}
 		<!--  -->
-		<!--  -->
 		{{#if business}}
+		<div id="content-head" class="col-lg-12">
+			<input name="service" type="hidden" value="Business Cards"/>
+			<div class="col-lg-2">
+				<img class="logo" src="GCLogoColor.png"/>
+			</div>
+			<div class="col-lg-4">
+				<p id="address">
+					<strong>GRAPHIC CONNECTIONS</strong><br/>
+					145 Mount Auburn Street<br/>
+					Watertown, MA  02742<br/>
+					617 - 926 - 1155 
+				</p>
+			</div>
+			<div id="content-head-form" class="col-lg-6">
+				<table class="table">
+					<tr>
+						<td>Company Name: </td>
+						<td><input name="company_name" class="form-control content-control" type="text"/></td>
+					</tr>
+					<tr>
+						<td>Name: </td>
+						<td><input name="user_name" class="form-control content-control" type="text" value="{{currentUser.profile.name}}"/></td>
+					</tr>
+					<tr>
+						<td>Address: </td>
+						<td><input name="address" class="form-control content-control" type="text"/></td>
+					</tr>
+					<tr>
+						<td>Phone: </td>
+						<td><input name="phone" class="form-control content-control" type="text"/></td>
+					</tr>
+				</table>
+			</div>
+		</div>
 		<div id="content-datebox" class="col-lg-12">
+			<div class="col-lg-12" id="content-datebox-upper">
+				<span class="col-lg-3">Salesperson: <input name="salesperson" style="width:50%;" class="form-control content-control" type="text"/></span>
+				<span id="dateToday" class="col-lg-3">Today's Date: <u>{{ dateToday }}</u></span>
+				<span class="col-lg-3">Est Prod Days: <input name="prod_days" style="width:43%;" class="form-control content-control" type="text"/></span>
+				<span class="col-lg-3">Due Date: <input name="due_date" style="width:67%;" class="form-control content-control" type="date"/></span>
+			</div>
+			<div  class="col-lg-12" id="content-datebox-lower">
+				<span class="col-lg-6">Garments: <input name="garments" style="width:50%;" class="form-control content-control" type="text"/></span>
+				<span class="col-lg-6">Other: <input name="other_top" style="width:50%;" class="form-control content-control" type="text"/></span>
+			</div>
 		</div>
 		<div id="content-title" class="col-lg-12">
-			BUSINESS CARDS
+			<div class="col-lg-6" style="padding-left:0px;">
+				<strong>BUSINESS CARDS</strong>
+			</div>
+			<div class="col-lg-3">
+				INVOICE #:<br/>
+				<input name="invoice" type="text" class="form-control">
+			</div>
 		</div>
 		<div id="content-table" class="col-lg-12">
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<td>QTY</td>
+						<td style="width:8%">Item #</td>
+						<td style="width:25%">Description</td>
+						<td style="width:8%">Color</td>
+						<td>S</td>
+						<td>M</td>
+						<td>L</td>
+						<td>XL</td>
+						<td>2X</td>
+						<td>3X</td>
+						<td style="font-size:10px">OTHER<input name="other_size" type="text" class="form-control" style="height:20px"></td>
+						<td style="width:8%">Unit Price</td>
+						<td style="width:8%">Totals</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>
+							<input id="qty" type="text" class="form-control content-control">
+						</td>
+						<td>
+							<input id="itemNum" type="text" class="form-control content-control">
+						</td>
+						<td>
+							<input id="desc" type="text" class="form-control content-control" value="{{findItem.item}}">
+						</td>
+						<td>
+							<input id="color" type="text" class="form-control content-control" value="{{findItem.color}}">
+						</td>
+						<td>
+							<input id="s" type="text" class="form-control content-control" value="0">
+						</td>
+						<td>
+							<input id="m" type="text" class="form-control content-control" value="0">
+						</td>
+						<td>
+							<input id="l" type="text" class="form-control content-control" value="0">
+						</td>
+						<td>
+							<input id="xl" type="text" class="form-control content-control" value="0">
+						</td>
+						<td>
+							<input id="x2" type="text" class="form-control content-control" value="0">
+						</td>
+						<td>
+							<input id="x3" type="text" class="form-control content-control" value="0">
+						</td>
+						<td>
+							<input id="other" type="text" class="form-control content-control" value="0">
+						</td>
+						<td>
+							<input id="unitPrice" type="text" class="form-control content-control" value="{{findItem.unitPrice}}">
+						</td>
+						<td>
+							<input id="totals" type="text" class="form-control content-control">
+						</td>
+					</tr>
+					{{#each orders}}
+					<tr>
+						<td>{{qty}}</td>
+						<td>{{itemNum}}</td>
+						<td>{{desc}}</td>
+						<td>{{color}}</td>
+						<td>{{s}}</td>
+						<td>{{m}}</td>
+						<td>{{l}}</td>
+						<td>{{xl}}</td>
+						<td>{{x2}}</td>
+						<td>{{x3}}</td>
+						<td>{{other}}</td>
+						<td>{{unitPrice}}</td>
+						<td>{{totals}}</td>
+					</tr>
+					{{/each}}
+				</tbody>
+			</table>
+		</div>
+		<div id="content-footer" class="col-lg-12">
+			<div class="col-lg-6">
+				<p class="col-lg-12"><i>
+					Each order placed with GC is unique and individual and as such, additional costs may incur, that may not have been perceived especially if changes are made. It is our practice to provide an excellent  experience, and quality product. A 50% deposit is required to facilitate your order.
+				</i></p>
+				<div class="col-lg-12">
+					<strong class="col-lg-12">Customer Signature</strong>
+				</div>
+			</div>
+			<div class="col-lg-6">
+				<div class="col-lg-10 pull-right">
+					<div class="col-lg-12 content-footer-adds">
+						<div class="col-lg-6">
+							<input id="adds1" name="adds1" type="text" class="form-control"/>
+						</div>
+						<div class="col-lg-6 input-group">
+							<span class="input-group-addon">$</span>
+							<input id="adds1_val" name="adds1_val" type="text" value="0" class="ta-right form-control"/>
+						</div>
+					</div>
+					<div class="col-lg-12 content-footer-adds">
+						<div class="col-lg-6">
+							<input id="adds2" name="adds2" type="text" class="form-control"/>
+						</div>
+						<div class="col-lg-6 input-group">
+							<span class="input-group-addon">$</span>
+							<input id="adds2_val" name="adds2_val" type="text" value="0" class="ta-right form-control"/>
+						</div>
+					</div>
+					<div id="content-footer-total" class="col-lg-12">
+						<h3 class="col-lg-6">TOTAL: </h3>
+						<div class="col-lg-6 input-group">
+							<span class="input-group-addon">$</span>
+							<input id="grand_total" name="grand_total" disabled type="text" class="ta-right form-control" value="{{grand_total}}"/>
+						</div>
+					</div>
+					<div id="content-footer-subwrap" class="col-lg-12">
+						<button id="content-footer-submit" class="btn btn-primary" type="button">PROCEED</button>
+					</div>
+				</div>
+			</div>
 		</div>
 		{{/if}}
 		<!--  -->

@@ -1,0 +1,149 @@
+body{
+	padding-top: 50px;
+}
+
+body ul li {
+	list-style-type: none;
+}
+
+.highlight {
+	padding: 9px 14px;
+	margin-bottom: 14px;
+	background-color: #f7f7f9;
+	border: 1px solid #e1e1e8;
+	border-radius: 4px;
+}
+
+.ta-right {
+	text-align: right;
+}
+
+#wrap {
+	padding-right: 20px;
+	margin-bottom: 20px;
+}
+
+.col-lg-2, .col-lg-3, .col-lg-4, .col-lg-6, .col-lg-8, .col-lg-9, .col-lg-10, .col-lg-12 {
+	padding-right: 0px;
+}
+
+.highlight {
+	padding: 9px 14px;
+	margin-bottom: 14px;
+	background-color: #f7f7f9;
+	border: 1px solid #e1e1e8;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+.menu-selected {
+	color: #428bca;
+}
+
+.logo {
+	height: 130px;
+}
+
+#content-head div {
+	padding: 0px;
+	display: inline-block;
+	vertical-align: top;
+}
+
+#address {
+	text-align: center;
+	font-size: 20px;
+	font-weight: bold;
+	font-family: impact;
+}
+
+#content-head-form {
+	font-size: 12px;
+}
+
+#content-head-form table td {
+	padding: 3px;
+	border-top: 0px;
+}
+
+#address strong {
+	font-size: 24px;
+}
+
+.content-control {
+	height: 26px;
+	display: inline;
+}
+
+#content-datebox {
+	border: 1px solid;
+	padding:  5px 15px;
+}
+
+#content-datebox span {
+	font-size: 13px;
+	padding-left: 0px;
+}
+
+#content-datebox-upper, #content-datebox-lower {
+	padding: 10px 0px;
+}
+
+#content-datebox-lower {
+	border-top: 2px dashed;
+}
+
+#content-title {
+	margin: 10px 0px;
+}
+
+#content-title strong{
+	font-size: 48px;
+}
+
+#content-table table thead td {
+	text-align: center;
+}
+
+#content-table .form-control {
+	padding: 5px 5px;
+}
+
+#content-footer p {
+	text-align: center;
+	font-size: 12px;
+}
+
+#content-footer strong {
+	text-align: center;
+	border-top: 2px solid;
+	margin-top: 43px;
+	padding-top: 10px;
+}
+
+#content-footer-total {
+	margin-top: 5px;
+}
+
+#content-footer-total h3 {
+	font-weight: bolder;
+	margin: 0px;
+	padding-top: 5px;
+}
+
+.content-footer-adds {
+	margin-bottom: 5px;
+}
+
+#content-footer-subwrap {
+	padding-left: 30px;
+}
+
+#content-footer-submit {
+	margin-top: 20px;
+	width: 100%;
+}
+
+.inventory_box {
+	margin-right: 20px;
+}

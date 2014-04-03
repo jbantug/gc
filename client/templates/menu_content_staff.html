@@ -1,0 +1,191 @@
+<template name="menu_staff">
+	<div class="col-lg-3">
+		<ul>
+			<li>
+				<div class="highlight">
+					<span class="menu-item">All</span>
+					<span class="label label-default pull-right">{{all}}</span>
+				</div>
+				<hr/>
+				<div class="highlight">
+					<span class="menu-item">Ordered</span>
+					<span class="label label-default pull-right">{{ordered}}</span>
+				</div>
+				<div class="highlight">
+					<span class="menu-item">Embroidering</span>
+					<span class="label label-default pull-right">{{embroidering}}</span>
+				</div>
+				<div class="highlight">
+					<span class="menu-item">Printing</span>
+					<span class="label label-default pull-right">{{printing}}</span>
+				</div>
+				<hr/>
+				<div class="highlight">
+					<span class="menu-item">Need to Order</span>
+					<span class="label label-default pull-right">{{need_to_order}}</span>
+				</div>
+				<div class="highlight">
+					<span class="menu-item">Inventory</span>
+				</div>
+				<hr/>
+			</li>
+		</ul>
+		<div>
+			<button class="logout btn btn-info pull-right">Logout</button>
+		</div>
+	</div>
+</template>
+
+<template name="content_staff">
+	<div class="col-lg-9" id="wrap">
+		<!--  -->
+		{{#if all}}
+		<div id="content-title" class="col-lg-12">
+			ALL
+		</div>
+		<div id="content_table" class="col-lg-12">
+			{{#each all_tasks}}
+			<div class="highlight col-lg-12" data-toggle="modal" data-target="#content-modal">
+				<div class="pull-left">
+					<p class="task_name">{{ name }}</p>
+					Invoice: <span class="task_invoice">{{ invoice }}</span>
+				</div>
+				<div class="pull-right" style="text-align:right">
+					<p class="task_date">{{ date }}</p>
+					<p class="task_task">{{ task }}</p>
+				</div>
+			</div>
+			{{/each}}
+		</div>
+		{{/if}}
+		<!--  -->
+		{{#if ordered}}
+		<div id="content-title" class="col-lg-12">
+			ORDERED 
+		</div>
+		<div id="content-table" class="col-lg-12">
+			{{#each ordered_tasks}}
+			<div class="highlight col-lg-12" data-toggle="modal" data-target="#content-modal">
+				<div class="pull-left">
+					<p class="task_name">{{ name }}</p>
+					Invoice: <span class="task_invoice">{{ invoice }}</span>
+				</div>
+				<div class="pull-right" style="text-align:right">
+					<p class="task_date">{{ date }}</p>
+					<p class="task_task">{{ task }}</p>
+				</div>
+			</div>
+			{{/each}}
+		</div>
+		{{/if}}
+		<!--  -->
+		{{#if embroidering}}
+		<div id="content-title" class="col-lg-12">
+			EMBROIDERING 
+		</div>
+		<div id="content-table" class="col-lg-12">
+			{{#each embroidering_tasks}}
+			<div class="highlight col-lg-12" data-toggle="modal" data-target="#content-modal">
+				<div class="pull-left">
+					<p class="task_name">{{ name }}</p>
+					Invoice: <span class="task_invoice">{{ invoice }}</span>
+				</div>
+				<div class="pull-right" style="text-align:right">
+					<p class="task_date">{{ date }}</p>
+					<p class="task_task">{{ task }}</p>
+				</div>
+			</div>
+			{{/each}}
+		</div>
+		{{/if}}
+		<!--  -->
+		{{#if printing}}
+		<div id="content-title" class="col-lg-12">
+			PRINTING 
+		</div>
+		<div id="content-table" class="col-lg-12">
+			{{#each printing_tasks}}
+			<div class="highlight col-lg-12" data-toggle="modal" data-target="#content-modal">
+				<div class="pull-left">
+					<p class="task_name">{{ name }}</p>
+					Invoice: <span class="task_invoice">{{ invoice }}</span>
+				</div>
+				<div class="pull-right" style="text-align:right">
+					<p class="task_date">{{ date }}</p>
+					<p class="task_task">{{ task }}</p>
+				</div>
+			</div>
+			{{/each}}
+		</div>
+		{{/if}}
+		<!--  -->
+		{{#if need_to_order}}
+		<div id="content-title" class="col-lg-12">
+			NEED TO ORDER
+		</div>
+		<div id="content-table" class="col-lg-12">
+			{{#each need_to_order_tasks}}
+			<div class="highlight col-lg-12" data-toggle="modal" data-target="#content-modal">
+				<div class="pull-left">
+					<p class="task_name">{{ name }}</p>
+					Invoice: <span class="task_invoice">{{ invoice }}</span>
+				</div>
+				<div class="pull-right" style="text-align:right">
+					<p class="task_date">{{ date }}</p>
+					<p class="task_task">{{ task }}</p>
+				</div>
+			</div>
+			{{/each}}
+		</div>
+		{{/if}}
+		<!--  -->
+		{{#if inventory}}
+		<div id="content-title" class="col-lg-12">
+			INVENTORY&nbsp;
+			<button class="btn btn-primary" style="padding:0px 6px;" data-toggle="modal" data-target="#inventory-modal">
+				<span class="glyphicon glyphicon-plus"></span>
+			</button>
+		</div>
+		<div id="content-table" class="col-lg-12">
+			{{#each inventory_items}}
+			<div class="inventory_box highlight col-lg-4" rel="popover">
+				<p>Item No: <span>{{ itemNum }}</span></p>
+				<p>Item: <strong>{{ item }}</strong></p>
+				<p>Color: {{ color }}</p>
+				<p>Available: {{ qty }}</p>
+			</div>
+			{{/each}}
+		</div>
+		{{/if}}
+		<!--  -->
+		<!-- Modal -->
+		<div class="modal fade" id="content-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		        <h4 class="modal-title" id="myModalLabel">Order</h4>
+		      </div>
+		      <div class="modal-body">
+		        {{> target_modal }}
+		      </div>
+		    </div>
+		  </div>
+		</div>
+
+		<div class="modal fade" id="inventory-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		        <h4 class="modal-title" id="myModalLabel">Add Inventory</h4>
+		      </div>
+		      <div class="modal-body">
+		        {{> inventory_modal }}
+		      </div>
+		    </div>
+		  </div>
+		</div>
+
+	</div>
+</template>

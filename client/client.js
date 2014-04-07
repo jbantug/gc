@@ -1,8 +1,8 @@
-Meteor.subscribe("users");
 Meteor.subscribe("services");
 Meteor.subscribe("tasks");
 Meteor.subscribe("orders");
 Meteor.subscribe("inventory");
+Meteor.subscribe("carts");
 
 Router.map(function(){
 	this.route('login', {path:'/'});

@@ -1,6 +1,6 @@
 Meteor.startup(function () {
 
-	var username = "sales367";
+	var username = "sales439";
 	Accounts.createUser({
 		username: username,
 		password: "asdf",
@@ -10,7 +10,7 @@ Meteor.startup(function () {
 		}
 	});
 
-	var username2 = "staff367";
+	var username2 = "staff439";
 	Accounts.createUser({
 		username: username2,
 		password: "asdf",
@@ -18,6 +18,16 @@ Meteor.startup(function () {
 			name: "GC Staff",
 			role: "staff"
 		}
+	});
+
+	var username3 = "user439";
+	Accounts.createUser({
+		username: username3,
+		password: "asdf",
+		profile: {
+			name: "GC User",
+			role: "user"
+		},
 	});
 
 	Inventory.remove({});
@@ -62,7 +72,7 @@ Meteor.startup(function () {
 	Tasks.insert(
 		{
 			tags:[ "Need to Order", "Embroidery"],
-			date: "2014/01/01",
+			date: "01/01/2014",
 			invoice: "123",
 			user_id: "2345678901",
 			name: "GC Sales",
@@ -173,6 +183,10 @@ Meteor.publish("tasks", function () {
 
 Meteor.publish("orders", function () {
 	return Orders.find({});
+});
+
+Meteor.publish("carts", function () {
+	return Carts.find({});
 });
 
 Meteor.publish("inventory", function () {

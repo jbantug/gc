@@ -19,6 +19,10 @@
 					<span class="menu-item">Printing</span>
 					<span class="label label-default pull-right">{{printing}}</span>
 				</div>
+				<div class="highlight">
+					<span class="menu-item">For Delivery</span>
+					<span class="label label-default pull-right">{{for_delivery}}</span>
+				</div>
 				<hr/>
 				<div class="highlight">
 					<span class="menu-item">Need to Order</span>
@@ -105,6 +109,26 @@
 		</div>
 		<div id="content-table" class="col-lg-12">
 			{{#each printing_tasks}}
+			<div class="highlight col-lg-12" data-toggle="modal" data-target="#content-modal">
+				<div class="pull-left">
+					<p class="task_name">{{ name }}</p>
+					Invoice: <span class="task_invoice">{{ invoice }}</span>
+				</div>
+				<div class="pull-right" style="text-align:right">
+					<p class="task_date">{{ date }}</p>
+					<p class="task_task">{{ task }}</p>
+				</div>
+			</div>
+			{{/each}}
+		</div>
+		{{/if}}
+		<!--  -->
+		{{#if for_delivery}}
+		<div id="content-title" class="col-lg-12">
+			FOR DELIVERY 
+		</div>
+		<div id="content-table" class="col-lg-12">
+			{{#each for_delivery_tasks}}
 			<div class="highlight col-lg-12" data-toggle="modal" data-target="#content-modal">
 				<div class="pull-left">
 					<p class="task_name">{{ name }}</p>

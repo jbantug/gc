@@ -82,7 +82,7 @@
 			</div>
 			<div class="col-lg-3">
 				INVOICE #:<br/>
-				<input name="invoice" type="text" class="form-control">
+				<input name="invoice" type="text" class="form-control" value="{{gen_invoice}}">
 			</div>
 			<div class="col-lg-3">
 				Requested Combinations:<br/>
@@ -91,86 +91,84 @@
 			</div>
 		</div>
 		<div id="content-table" class="col-lg-12">
-			<table class="table table-bordered">
-				<thead>
-					<tr>
-						<td>QTY</td>
-						<td style="width:8%">Item #</td>
-						<td style="width:25%">Description</td>
-						<td style="width:8%">Color</td>
-						<td>S</td>
-						<td>M</td>
-						<td>L</td>
-						<td>XL</td>
-						<td>2X</td>
-						<td>3X</td>
-						<td style="font-size:10px">OTHER<input name="other_size" type="text" class="form-control" style="height:20px"></td>
-						<td style="width:8%">Unit Price</td>
-						<td style="width:8%">Totals</td>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>
-							<input id="qty" type="text" class="form-control content-control">
-						</td>
-						<td>
-							<input id="itemNum" type="text" class="form-control content-control">
-						</td>
-						<td>
-							<input id="desc" type="text" class="form-control content-control" value="{{findItem.item}}">
-						</td>
-						<td>
-							<input id="color" type="text" class="form-control content-control" value="{{findItem.color}}">
-						</td>
-						<td>
-							<input id="s" type="text" class="form-control content-control" value="0">
-						</td>
-						<td>
-							<input id="m" type="text" class="form-control content-control" value="0">
-						</td>
-						<td>
-							<input id="l" type="text" class="form-control content-control" value="0">
-						</td>
-						<td>
-							<input id="xl" type="text" class="form-control content-control" value="0">
-						</td>
-						<td>
-							<input id="x2" type="text" class="form-control content-control" value="0">
-						</td>
-						<td>
-							<input id="x3" type="text" class="form-control content-control" value="0">
-						</td>
-						<td>
-							<input id="other" type="text" class="form-control content-control" value="0">
-						</td>
-						<td>
-							<input id="unitPrice" type="text" class="form-control content-control" value="{{findItem.unitPrice}}">
-						</td>
-						<td>
-							<input id="totals" type="text" class="form-control content-control">
-						</td>
-					</tr>
-					{{#each orders}}
-					<tr>
-						<td>{{qty}}</td>
-						<td>{{itemNum}}</td>
-						<td>{{desc}}</td>
-						<td>{{color}}</td>
-						<td>{{s}}</td>
-						<td>{{m}}</td>
-						<td>{{l}}</td>
-						<td>{{xl}}</td>
-						<td>{{x2}}</td>
-						<td>{{x3}}</td>
-						<td>{{other}}</td>
-						<td>{{unitPrice}}</td>
-						<td>{{totals}}</td>
-					</tr>
-					{{/each}}
-				</tbody>
-			</table>
+			<div class="col-lg-6">
+				<div>
+					Item No: 
+					<select id="itemNum">
+						<option>Select Item</option>
+						{{#each items}}
+						<option>{{itemNum}}</option>
+						{{/each}}
+					</select>
+					<br/>
+					Description: <span id="desc">{{selectItem.item}}</span>
+					<br/>
+					Color: <span id="color">{{selectItem.color}}</span>
+					<br/>
+					Unit Price: $<span id="unitPrice">{{selectItem.unitPrice}}</span>
+					<br/><br/>
+					Qty: <span id="qty">{{line_qty}}</span>
+					<br/>
+					<strong>Line Total: $<span id="totals">{{line_total}}</span></strong>
+					<br>
+					<input id="add_order" type="button" class="btn btn-primary" value="Add"/>
+				</div>
+			</div>
+			<div class="col-lg-6">
+				<table class="table table-bordered">
+					<thead>
+						<tr>
+							<td>S</td>
+							<td>M</td>
+							<td>L</td>
+							<td>XL</td>
+							<td>2X</td>
+							<td>3X</td>
+							<td style="font-size:10px">OTHER<input name="other_size" type="text" class="form-control" style="height:20px"></td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr id="input-row">
+							<td>
+								<input id="s" type="text" class="form-control content-control" value="0">
+							</td>
+							<td>
+								<input id="m" type="text" class="form-control content-control" value="0">
+							</td>
+							<td>
+								<input id="l" type="text" class="form-control content-control" value="0">
+							</td>
+							<td>
+								<input id="xl" type="text" class="form-control content-control" value="0">
+							</td>
+							<td>
+								<input id="x2" type="text" class="form-control content-control" value="0">
+							</td>
+							<td>
+								<input id="x3" type="text" class="form-control content-control" value="0">
+							</td>
+							<td>
+								<input id="other" type="text" class="form-control content-control" value="0">
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 		</div>
+		{{#each carts}}
+		<div class="col-lg-12 highlight">
+			<div class="pull-left">
+				<div>Item No: {{itemNum}}</div>
+				<div>Description: {{desc}}</div>
+				<div>Color: {{color}}</div>
+			</div>
+			<div class="pull-right">
+				<div>Qty: {{qty}}</div>
+				<div>Unit Price: {{unitPrice}}</div>
+				<div><strong>Line Total: {{totals}}</strong></div>
+			</div>
+		</div>
+		{{/each}}
 		<div id="content-footer" class="col-lg-12">
 			<div class="col-lg-6">
 				<p class="col-lg-12"><i>
@@ -332,7 +330,7 @@
 							<input id="totals" type="text" class="form-control content-control">
 						</td>
 					</tr>
-					{{#each orders}}
+					{{#each carts}}
 					<tr>
 						<td>{{qty}}</td>
 						<td>{{itemNum}}</td>
@@ -514,7 +512,7 @@
 							<input id="totals" type="text" class="form-control content-control">
 						</td>
 					</tr>
-					{{#each orders}}
+					{{#each carts}}
 					<tr>
 						<td>{{qty}}</td>
 						<td>{{itemNum}}</td>
@@ -695,7 +693,7 @@
 							<input id="totals" type="text" class="form-control content-control">
 						</td>
 					</tr>
-					{{#each orders}}
+					{{#each carts}}
 					<tr>
 						<td>{{qty}}</td>
 						<td>{{itemNum}}</td>
@@ -761,18 +759,22 @@
 		<!--  -->
 		{{#if user_orders}}
 		<div id="content-title" class="col-lg-12">
-			YOUR ORDERS
+			<div class="col-lg-2">YOUR ORDERS</div> 
+			<div class="col-lg-2">
+				<input id="search_order" type="text" class="form-control content-control" placeholder="Search Order ID">
+			</div>
 		</div>
 		<div id="content_table" class="col-lg-12">
 			{{#each all_user_orders}}
 			<div class="highlight col-lg-12" data-toggle="modal" data-target="#content-modal">
 				<div class="pull-left">
 					<p class="task_name">{{ name }}</p>
-					Invoice: <span class="task_invoice">{{ invoice }}</span>
+					<p class="task_order_id">Order ID: {{ order_id }}</p>
 				</div>
 				<div class="pull-right" style="text-align:right">
-					<p class="task_date">{{ date }}</p>
-					<p class="task_task">{{ task }}</p>
+					<p style="display:none;">Invoice: <span class="task_invoice">{{ invoice }}</span></p>
+					<p class="task_date">Date Ordered: {{ date }}</p>
+					<p class="task_status">Status: <strong>{{ status }}</strong></p>
 				</div>
 			</div>
 			{{/each}}

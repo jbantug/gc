@@ -105,6 +105,13 @@ Template.content_staff.printing = function () {
 	return false;
 };
 
+Template.content_staff.for_delivery = function () {
+	if(Session.get("getMenu") == "For Delivery"){
+		return true;
+	}
+	return false;
+};
+
 Template.content_staff.inventory = function () {
 	if(Session.get("getMenu") == "Inventory"){
 		return true;
@@ -148,6 +155,13 @@ Template.menu_staff.printing = function () {
 	return total;
 };
 
+Template.menu_staff.for_delivery = function () {
+	var total = 0;
+	var task = Tasks.find({tags:{$all:["For Delivery"]}}).fetch();
+	total = _.size(task);
+	return total;
+};
+
 Template.content_staff.all_tasks = function () {
 	return Tasks.find({}, {sort: {date: -1}});
 };
@@ -166,6 +180,10 @@ Template.content_staff.embroidering_tasks = function () {
 
 Template.content_staff.printing_tasks = function () {
 	return Tasks.find({tags:{$all:["Printing"]}}, {sort: {date: -1}});
+};
+
+Template.content_staff.for_delivery_tasks = function () {
+	return Tasks.find({tags:{$all:["For Delivery"]}}, {sort: {date: -1}});
 };
 
 Template.content_staff.inventory_items = function () {

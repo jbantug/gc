@@ -1,22 +1,21 @@
 <template name="target_modal">
-	<p>Status: {{ target_task.task }}</p>
-	<p>Service: {{ target_task.service }}</p>
-	<br/>
-	<p>Invoice: {{ target_task.invoice }}</p>
-	<p>Date Ordered: {{ target_task.date }}</p>
-	<p>Customer: {{ target_task.name }}</p>
-	<br/>
-	<p>Item: {{ target_task.itemNum }}</p>
-	<p>Quantity: {{ target_task.qty }}</p>
-	<p>Total Cost: {{ target_task.totals }}</p>
-	<br/>
-	Update Status:<br/>
 	{{#unless checkUser}}
+		<p>Invoice: {{ target_task.invoice }}</p>
+		<p>Service: {{ target_task.service }}</p>
+		<br/>
+		<p>Date Ordered: {{ target_task.date }}</p>
+		<p>Customer: {{ target_task.name }}</p>
+		<p>Item: {{ target_task.itemNum }}</p>
+		<p>Qty: {{ target_task.qty }}</p>
+		<p>Line Total: ${{ target_task.totals }}</p>
+		<br/>
+		Update Status:<br/>
 		{{#if check_task}}
 		<select id="target_select" class="form-control" style="width: 30%">
 		  	<option>Ordered</option>
 		  	<option>Embroidering</option>
 		  	<option>Printing</option>
+		  	<option>For Delivery</option>
 		</select>
 		{{else}}
 		<select id="target_select" class="form-control" style="width: 30%">
@@ -24,6 +23,24 @@
 			<option>Ordered</option>
 		</select>
 		{{/if}}
+	{{else}}
+		<p>Order ID: {{ target_task.order_id }}</p>
+		<p>Service: {{ target_task.service }}</p>
+		<p>Status: <strong>{{ target_task.status }}</strong></p>
+		<br/>
+		<p>Invoice: {{ target_task.invoice }}</p>
+		<p>Date Ordered: {{ target_task.date }}</p>
+		<p>Customer: {{ target_task.name }}</p>
+		<p>Total: ${{target_task.grand_total}}</p>
+		<br/>
+		{{#each order_task}}
+		<div class="highlight">
+			<p>Item: {{ itemNum }}</p>
+			<p>Quantity: {{ qty }}</p>
+			<p>Line Cost: ${{ totals }}</p>
+			<p>Status: {{ task }}</p>
+		</div>
+		{{/each}}
 	{{/unless}}
 </template>
 

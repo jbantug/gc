@@ -6,12 +6,8 @@ body ul li {
 	list-style-type: none;
 }
 
-.highlight {
-	padding: 9px 14px;
-	margin-bottom: 14px;
-	background-color: #f7f7f9;
-	border: 1px solid #e1e1e8;
-	border-radius: 4px;
+.content{
+	margin-bottom: 50px;
 }
 
 .ta-right {
@@ -99,6 +95,10 @@ body ul li {
 
 #content-title strong{
 	font-size: 48px;
+}
+
+#content-table {
+	margin-bottom: 30px;
 }
 
 #content-table table thead td {

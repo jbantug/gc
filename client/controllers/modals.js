@@ -3,6 +3,10 @@
  */
 
 Template.target_modal.events({
+	'click .highlight': function (event) {
+		event.preventDefault();
+	},
+
 	'change #target_select': function (event) {
 		var select_val = $('#target_select').val();
 		var findTarget = Tasks.findOne({invoice:Session.get("target_invoice")});
@@ -21,20 +25,20 @@ Template.target_modal.events({
 						$inc: {qty: -findTarget.qty}
 					}
 				);
-
-				Tasks.update(
-					{
-						_id:findTarget._id
-					},
-					{
-						$set: {
-							task: select_val,
-							tags: tag
-						}
-					}
-				);
 			}
 		}
+
+		Tasks.update(
+			{
+				_id:findTarget._id
+			},
+			{
+				$set: {
+					task: select_val,
+					tags: tag
+				}
+			}
+		);
 
 	},
 });
@@ -56,6 +60,9 @@ Template.inventory_modal.events({
 
 Template.target_modal.target_task = function () {
 	if(Session.get("target_invoice")){
+		if(Meteor.user().profile.role == "user"){
+			return Orders.findOne({invoice:Session.get("target_invoice"), user_id:Meteor.userId()});
+		}
 		return Tasks.findOne({invoice:Session.get("target_invoice")});
 	}
 };
@@ -76,4 +83,17 @@ Template.target_modal.rendered = function () {
 		var status = findTarget.task;
 		$('#target_select').val(status);
 	}
+};
+
+
+Template.target_modal.checkUser = function () {
+	if(Meteor.user() != null){
+		if(Meteor.user().profile.role == "user"){
+			return true;
+		}
+	}
+};
+
+Template.target_modal.order_task = function () {
+	return Tasks.find({user_id:Meteor.userId(), invoice:Session.get("target_invoice")});
 };

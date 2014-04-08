@@ -51,8 +51,8 @@ Template.content_sales.events({
 	'click #add_order': function (event) {
 
 		var qty = $('#qty').text();
-		var itemNum = $('#itemNum').val();
-		var desc = $('#desc').text();
+		var itemNum = $('#itemNum').text();
+		var desc = $('#item').val();
 		var color = $('#color').text();
 		var s = $('#s').value;
 		var m = $('#m').value;
@@ -64,30 +64,28 @@ Template.content_sales.events({
 		var unitPrice = $('#unitPrice').text();
 		var totals = $('#totals').text();
 
-		var username = $('#select_user').val();
+		var username = Meteor.user().username;
 
-		if(username == ""){
-			username = Meteor.user().username;
+		if(parseInt(qty) > 0){
+			Carts.insert(
+				{
+					username: username,
+					qty: parseInt(qty),
+					itemNum: parseInt(itemNum),
+					desc: desc,
+					color: color,
+					s: s,
+					m: m,
+					l: l,
+					xl: xl,
+					x2: x2,
+					x3: x3,
+					other: other,
+					unitPrice: parseFloat(unitPrice),
+					totals: parseFloat(totals)
+				}
+			);
 		}
-
-		Carts.insert(
-			{
-				username: username,
-				qty: parseInt(qty),
-				itemNum: parseInt(itemNum),
-				desc: desc,
-				color: color,
-				s: s,
-				m: m,
-				l: l,
-				xl: xl,
-				x2: x2,
-				x3: x3,
-				other: other,
-				unitPrice: parseFloat(unitPrice),
-				totals: parseFloat(totals)
-			}
-		);
 	},
 
 	'keydown #search_order': function (event) {
@@ -154,13 +152,6 @@ Template.content_sales.events({
 		}
 
 		var username = Meteor.user().username;
-		if(data['select_user']){
-			var user = Meteor.users.findOne({username:data['select_user']});
-			if(user){
-				data['user_name'] = user.profile.name;
-				username = user.username;
-			}
-		}
 
 		var gen_order_id = "";
 		var possible = "0123456789";
@@ -239,7 +230,7 @@ Template.content_sales.events({
 			$('#content-title input').val("");
 			$('#content-table tbody input').val("0");
 			$('.content-footer-adds div .ta-right').val("0");
-			$('#itemNum').val("Select Item");
+			$('#item').val("Select Item");
 		});
 
 
@@ -247,8 +238,9 @@ Template.content_sales.events({
 		alert("Order Added!\nOrder ID:"+gen_order_id);
 	},
 
-	'change #itemNum': function (event) {
-		Session.set("itemNum", $('#itemNum').val());
+	'change #item': function (event) {
+		var find_item = Inventory.findOne({item:$('#item').val()});
+		Session.set("itemNum", find_item.itemNum);
 	},
 
 	'mouseenter .inventory-box': function (event) {
@@ -261,11 +253,7 @@ Template.content_sales.events({
 Template.content_sales.grand_total = function () {
 	var grand_total = 0;
 
-	if(Meteor.user().profile.role == "sales"){
-		var carts = Carts.find({username: $('#select_user').val()});
-	}else{
-		var carts = Carts.find({username: Meteor.user().username});
-	}
+	var carts = Carts.find({username: Meteor.user().username});
 	carts.forEach(function(cart){
 		grand_total += parseFloat(cart.totals);
 	});
@@ -315,10 +303,15 @@ Template.content_sales.business = function () {
 	return false;
 };
 
+Template.content_sales.sales_orders = function () {
+	if(Session.get("getMenu") == "Orders"){
+		return true;
+	}
+	return false;
+};
+
 Template.content_sales.carts = function () {
 	if(Meteor.user().profile.role == "sales"){
-		return Carts.find({username: $('#select_user').val()});
-	}else{
 		return Carts.find({username: Meteor.user().username});
 	}
 	
@@ -330,6 +323,58 @@ Template.content_sales.items = function () {
 
 Template.content_sales.selectItem = function () {
 	return Inventory.findOne({itemNum:parseInt(Session.get('itemNum'))});
+};
+
+Template.menu_sales.sales_orders_count = function () {
+	if(Meteor.user()){
+		return _.size(Orders.find({username:Meteor.user().username}).fetch());
+	}
+};
+
+Template.content_sales.all_sales_orders = function () {
+	var find_orders =  Orders.find({username:Meteor.user().username}).fetch();
+	$.each(find_orders, function(i, el){
+		var status = "Not Started";
+		var find_tasks = Tasks.find({username:Meteor.user().username, invoice:el.invoice}).fetch();
+		$.each(find_tasks, function(i, el){
+
+			if(status == "Completed"){
+				status = "Started";
+			}else{
+				status = "Not Started";
+			}
+
+			if(el.task == "Ordered"){
+				status = "Started";
+				return true;
+			}else if(el.task == "Embroidering" || el.task == "Printing"){
+				status = el.task;
+				return true;
+			}else if(el.task == "Completed"){
+				status = el.task;
+			}
+
+		});
+
+		Orders.update(
+			{
+				_id: el._id,
+			},
+			{
+				$set: {status: status}
+			}
+		);
+	});
+
+
+
+	if(Session.get("find_order")){
+		if(Session.get("find_order") == ""){
+			return Orders.find({username:Meteor.user().username});
+		}
+		return Orders.find({username:Meteor.user().username, order_id:Session.get("find_order")});
+	}
+	return Orders.find({username:Meteor.user().username});
 };
 
 Template.content_sales.findItem = function () {

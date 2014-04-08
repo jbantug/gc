@@ -90,15 +90,15 @@
 		<div id="content-table" class="col-lg-12">
 			<div class="col-lg-6">
 				<div>
-					Item No: 
-					<select id="itemNum">
+					Item: 
+					<select id="item">
 						<option>Select Item</option>
 						{{#each items}}
-						<option>{{itemNum}}</option>
+						<option>{{item}}</option>
 						{{/each}}
 					</select>
 					<br/>
-					Description: <span id="desc">{{selectItem.item}}</span>
+					Item No: <span id="itemNum">{{selectItem.itemNum}}</span>
 					<br/>
 					Color: <span id="color">{{selectItem.color}}</span>
 					<br/>

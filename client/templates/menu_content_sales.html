@@ -9,6 +9,14 @@
 				</div>
 			</li>
 			{{/each}}
+			<hr/>
+			<li>
+				<div class="highlight">
+					<span class="menu-item">Orders</span>
+					<span class="label label-default pull-right">{{sales_orders_count}}</span>
+				</div>
+			</li>
+			<hr/>
 		</ul>
 		<div>
 			<button class="logout btn btn-info pull-right">Logout</button>
@@ -34,15 +42,29 @@
 				</p>
 			</div>
 			<div id="content-head-form" class="col-lg-6">
-				<div id="sales-username" class="col-lg-6">
-				GC Username: 
-				<input name="select_user" id="select_user" class="form-control content-control col" type="text"/>
-				</div>
+				<table class="table">
+					<tr>
+						<td>Company Name: </td>
+						<td><input name="company_name" class="form-control content-control" type="text"/></td>
+					</tr>
+					<tr>
+						<td>Name: </td>
+						<td><input name="user_name" class="form-control content-control" type="text" value=""/></td>
+					</tr>
+					<tr>
+						<td>Address: </td>
+						<td><input name="address" class="form-control content-control" type="text"/></td>
+					</tr>
+					<tr>
+						<td>Phone: </td>
+						<td><input name="phone" class="form-control content-control" type="text"/></td>
+					</tr>
+				</table>
 			</div>
 		</div>
 		<div id="content-datebox" class="col-lg-12">
 			<div class="col-lg-12" id="content-datebox-upper">
-				<span class="col-lg-3">Salesperson: <input name="salesperson" style="width:50%;" class="form-control content-control" type="text"/></span>
+				<span class="col-lg-3">Salesperson: <input name="salesperson" style="width:50%;" class="form-control content-control" type="text" value="{{currentUser.profile.name}}"/></span>
 				<span id="dateToday" class="col-lg-3">Today's Date: <u>{{ dateToday }}</u></span>
 				<span class="col-lg-3">Est Prod Days: <input name="prod_days" style="width:43%;" class="form-control content-control" type="text"/></span>
 				<span class="col-lg-3">Due Date: <input name="due_date" style="width:67%;" class="form-control content-control" type="date"/></span>
@@ -69,15 +91,15 @@
 		<div id="content-table" class="col-lg-12">
 			<div class="col-lg-6">
 				<div>
-					Item No: 
-					<select id="itemNum">
+					Item:
+					<select id="item">
 						<option>Select Item</option>
 						{{#each items}}
-						<option>{{itemNum}}</option>
+						<option>{{item}}</option>
 						{{/each}}
 					</select>
 					<br/>
-					Description: <span id="desc">{{selectItem.item}}</span>
+					Item No: <span id="itemNum">{{selectItem.itemNum}}</span>
 					<br/>
 					Color: <span id="color">{{selectItem.color}}</span>
 					<br/>
@@ -732,6 +754,31 @@
 			</div>
 		</div>
 		{{/if}}
+		<!--  -->
+		{{#if sales_orders}}
+		<div id="content-title" class="col-lg-12">
+			<div class="col-lg-2">ORDERS</div> 
+			<div class="col-lg-2">
+				<input id="search_order" type="text" class="form-control content-control" placeholder="Search Order ID">
+			</div>
+		</div>
+		<div id="content_table" class="col-lg-12">
+			{{#each all_sales_orders}}
+			<div class="highlight col-lg-12" data-toggle="modal" data-target="#content-modal">
+				<div class="pull-left">
+					<p class="task_name">{{ name }}</p>
+					<p class="task_order_id">Order ID: {{ order_id }}</p>
+				</div>
+				<div class="pull-right" style="text-align:right">
+					<p style="display:none;">Invoice: <span class="task_invoice">{{ invoice }}</span></p>
+					<p class="task_date">Date Ordered: {{ date }}</p>
+					<p class="task_status">Status: <strong>{{ status }}</strong></p>
+				</div>
+			</div>
+			{{/each}}
+		</div>
+		{{/if}}
+		<!--  -->
 		<!-- Modal -->
 		<div class="modal fade" id="content-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		  <div class="modal-dialog">

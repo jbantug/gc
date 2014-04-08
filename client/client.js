@@ -3,10 +3,12 @@ Meteor.subscribe("tasks");
 Meteor.subscribe("orders");
 Meteor.subscribe("inventory");
 Meteor.subscribe("carts");
+Meteor.subscribe("users");
 
 Router.map(function(){
 	this.route('login', {path:'/'});
 	this.route('sales', {path:'/sales'});
+	this.route('user', {path:'/user'});
 	this.route('staff', {path:'/staff'});
 	this.route('register', {path:'/register'});
 });
@@ -20,14 +22,16 @@ Template.login.events({
 
 		Meteor.loginWithPassword(data['username'], data['password'], function(err){
 			if(err){
-				Session.set("login_errors", err.reason);
+				alert(err.reason);
 			}
 			else{
 				if(Meteor.user() != null){
 					if(Meteor.user().profile.role == "staff"){
 						Router.go("/staff");
-					}else{
+					}else if(Meteor.user().profile.role == "sales"){
 						Router.go("/sales");
+					}else{
+						Router.go("/user");
 					}
 				}else{
 					console.log("no user");
@@ -52,23 +56,23 @@ Template.register.events({
 		});
 
 		Accounts.createUser(
-		{
-			username: data['username'],
-			password: data['password'],
-			profile: {
-				name: data['username'],
-				role: "user",
+			{
+				username: data['username'],
+				password: data['password'],
+				profile: {
+					name: data['username'],
+					role: "user",
+				}
+			}, 
+			function(err){
+				if(err){
+					alert(err.reason);
+				}else{
+					Router.go("/user");
+				}
 			}
-		}, 
-		function(cb){
-			if(Meteor.user() != null){
-				Router.go("/sales");
-			}else{
-				console.log("no user");
-			}
-		});
+		);
 
-		
 		return false;
 	},
 });

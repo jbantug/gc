@@ -45,6 +45,9 @@ Template.content_staff.events({
 	'click .highlight': function (event) {
 		var id = $(event.currentTarget).find('.task_invoice').text();
 		Session.set("target_invoice", id);
+
+		var id = $(event.currentTarget).find('.task_id').val();
+		Session.set("target_id", id);
 	},
 
 	'click .inventory_box': function () {
@@ -105,8 +108,8 @@ Template.content_staff.printing = function () {
 	return false;
 };
 
-Template.content_staff.for_delivery = function () {
-	if(Session.get("getMenu") == "For Delivery"){
+Template.content_staff.completed = function () {
+	if(Session.get("getMenu") == "Completed"){
 		return true;
 	}
 	return false;
@@ -155,9 +158,9 @@ Template.menu_staff.printing = function () {
 	return total;
 };
 
-Template.menu_staff.for_delivery = function () {
+Template.menu_staff.completed = function () {
 	var total = 0;
-	var task = Tasks.find({tags:{$all:["For Delivery"]}}).fetch();
+	var task = Tasks.find({tags:{$all:["Completed"]}}).fetch();
 	total = _.size(task);
 	return total;
 };
@@ -182,8 +185,8 @@ Template.content_staff.printing_tasks = function () {
 	return Tasks.find({tags:{$all:["Printing"]}}, {sort: {date: -1}});
 };
 
-Template.content_staff.for_delivery_tasks = function () {
-	return Tasks.find({tags:{$all:["For Delivery"]}}, {sort: {date: -1}});
+Template.content_staff.completed_tasks = function () {
+	return Tasks.find({tags:{$all:["Completed"]}}, {sort: {date: -1}});
 };
 
 Template.content_staff.inventory_items = function () {

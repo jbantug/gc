@@ -20,8 +20,8 @@
 					<span class="label label-default pull-right">{{printing}}</span>
 				</div>
 				<div class="highlight">
-					<span class="menu-item">For Delivery</span>
-					<span class="label label-default pull-right">{{for_delivery}}</span>
+					<span class="menu-item">Completed</span>
+					<span class="label label-default pull-right">{{completed}}</span>
 				</div>
 				<hr/>
 				<div class="highlight">
@@ -50,6 +50,7 @@
 		<div id="content_table" class="col-lg-12">
 			{{#each all_tasks}}
 			<div class="highlight col-lg-12" data-toggle="modal" data-target="#content-modal">
+				<input class="task_id" type="hidden" value="{{_id}}">
 				<div class="pull-left">
 					<p class="task_name">{{ name }}</p>
 					Invoice: <span class="task_invoice">{{ invoice }}</span>
@@ -70,6 +71,7 @@
 		<div id="content-table" class="col-lg-12">
 			{{#each ordered_tasks}}
 			<div class="highlight col-lg-12" data-toggle="modal" data-target="#content-modal">
+				<input class="task_id" type="hidden" value="{{_id}}">
 				<div class="pull-left">
 					<p class="task_name">{{ name }}</p>
 					Invoice: <span class="task_invoice">{{ invoice }}</span>
@@ -90,6 +92,7 @@
 		<div id="content-table" class="col-lg-12">
 			{{#each embroidering_tasks}}
 			<div class="highlight col-lg-12" data-toggle="modal" data-target="#content-modal">
+				<input class="task_id" type="hidden" value="{{_id}}">
 				<div class="pull-left">
 					<p class="task_name">{{ name }}</p>
 					Invoice: <span class="task_invoice">{{ invoice }}</span>
@@ -110,6 +113,7 @@
 		<div id="content-table" class="col-lg-12">
 			{{#each printing_tasks}}
 			<div class="highlight col-lg-12" data-toggle="modal" data-target="#content-modal">
+				<input type="hidden" value="{{_id}}">
 				<div class="pull-left">
 					<p class="task_name">{{ name }}</p>
 					Invoice: <span class="task_invoice">{{ invoice }}</span>
@@ -123,13 +127,14 @@
 		</div>
 		{{/if}}
 		<!--  -->
-		{{#if for_delivery}}
+		{{#if completed}}
 		<div id="content-title" class="col-lg-12">
-			FOR DELIVERY 
+			COMPLETED
 		</div>
 		<div id="content-table" class="col-lg-12">
-			{{#each for_delivery_tasks}}
+			{{#each completed_tasks}}
 			<div class="highlight col-lg-12" data-toggle="modal" data-target="#content-modal">
+				<input class="task_id" type="hidden" value="{{_id}}">
 				<div class="pull-left">
 					<p class="task_name">{{ name }}</p>
 					Invoice: <span class="task_invoice">{{ invoice }}</span>
@@ -150,6 +155,7 @@
 		<div id="content-table" class="col-lg-12">
 			{{#each need_to_order_tasks}}
 			<div class="highlight col-lg-12" data-toggle="modal" data-target="#content-modal">
+				<input class="task_id" type="hidden" value="{{_id}}">
 				<div class="pull-left">
 					<p class="task_name">{{ name }}</p>
 					Invoice: <span class="task_invoice">{{ invoice }}</span>
@@ -172,11 +178,13 @@
 		</div>
 		<div id="content-table" class="col-lg-12">
 			{{#each inventory_items}}
-			<div class="inventory_box highlight col-lg-4" rel="popover">
-				<p>Item No: <span>{{ itemNum }}</span></p>
-				<p>Item: <strong>{{ item }}</strong></p>
-				<p>Color: {{ color }}</p>
-				<p>Available: {{ qty }}</p>
+			<div class="col-lg-4" rel="popover">
+				<div class="inventory_box highlight">
+					<p>Item No: <span>{{ itemNum }}</span></p>
+					<p>Item: <strong>{{ item }}</strong></p>
+					<p>Color: {{ color }}</p>
+					<p>Available: {{ qty }}</p>
+				</div>
 			</div>
 			{{/each}}
 		</div>
@@ -210,6 +218,5 @@
 		    </div>
 		  </div>
 		</div>
-
 	</div>
 </template>

@@ -1,6 +1,8 @@
 Meteor.startup(function () {
 
-	var username = "sales439";
+	Meteor.users.remove({});
+
+	var username = "sales";
 	Accounts.createUser({
 		username: username,
 		password: "asdf",
@@ -10,7 +12,7 @@ Meteor.startup(function () {
 		}
 	});
 
-	var username2 = "staff439";
+	var username2 = "staff";
 	Accounts.createUser({
 		username: username2,
 		password: "asdf",
@@ -20,7 +22,7 @@ Meteor.startup(function () {
 		}
 	});
 
-	var username3 = "user439";
+	var username3 = "user";
 	Accounts.createUser({
 		username: username3,
 		password: "asdf",
@@ -39,6 +41,26 @@ Meteor.startup(function () {
 			itemNum: 123,
 			color: "Blue",
 			unitPrice: 10 
+		}
+	);
+	Inventory.insert(
+		{
+			type: "Canvas",
+			item: "Tarpaulin",
+			qty: 0,
+			itemNum: 234,
+			color: "Red",
+			unitPrice: 50 
+		}
+	);
+	Inventory.insert(
+		{
+			type: "Garment",
+			item: "Leather",
+			qty: 0,
+			itemNum: 345,
+			color: "Green",
+			unitPrice: 20 
 		}
 	);
 
@@ -68,14 +90,26 @@ Meteor.startup(function () {
 		}
 	);
 
+	Orders.remove({});
+	Orders.insert({
+		date: "01/01/2014",
+		order_id: 1234,
+		invoice: "12345678",
+		username: username3,
+		name: "GC User",
+		grand_total: 10,
+		service: "Embroidery",
+		status: "Waiting",
+	});
+
 	Tasks.remove({});
 	Tasks.insert(
 		{
-			tags:[ "Need to Order", "Embroidery"],
+			tags:["Need to Order", "Embroidery"],
 			date: "01/01/2014",
-			invoice: "123",
-			user_id: "2345678901",
-			name: "GC Sales",
+			invoice: "12345678",
+			username: "user",
+			name: "GC User",
 			itemNum: 123,
 			qty: 1,
 			s: 1,
@@ -88,90 +122,13 @@ Meteor.startup(function () {
 			unitPrice: 10,
 			totals: 10,
 			task: "Need to Order",
-			service: "Embroidery"
+			service: "Embroidery",
 		}
 	);
-	// Tasks.insert(
-	// 	{
-	// 		tags:[ "Need to Order", "Screen Printing"],
-	// 		date: "2014/01/02",
-	// 		invoice: "234",
-	// 		user_id: "3456789012",
-	// 		name: "dandify",
-	// 		phone: "234",
-	// 		total: 20,
-	// 		task: "Need to Order",
-	// 		service: "Screen Printing"
-	// 	}
-	// );
-	// Tasks.insert(
-	// 	{
-	// 		tags:[ "Ordered", "Promotional"],
-	// 		order_id: "3456789012",
-	// 		date: "2014/01/03",
-	// 		invoice: "345",
-	// 		user_id: "4567890123",
-	// 		name: "heydandi",
-	// 		phone: "345",
-	// 		task: "Ordered",
-	// 		service: "Promotional"
-	// 	}
-	// );
-	// Tasks.insert(
-	// 	{
-	// 		tags:[ "Embroidering", "Business Cards"],
-	// 		order_id: "4567890123",
-	// 		date: "2014/01/02",
-	// 		invoice: "456",
-	// 		user_id: "5678901234",
-	// 		name: "Rad Apdal",
-	// 		phone: "456",
-	// 		task: "Embroidering",
-	// 		service: "Business Cards"
-	// 	}
-	// );
-	// Tasks.insert(
-	// 	{
-	// 		tags:[ "Printing", "Embroidery"],
-	// 		order_id: "5678901234",
-	// 		date: "2014/01/02",
-	// 		invoice: "567",
-	// 		user_id: "6789012345",
-	// 		name: "dandify",
-	// 		phone: "567",
-	// 		task: "Printing",
-	// 		service: "Embroidery"
-	// 	}
-	// );
-	
-	Orders.remove({});
-	// Orders.insert({
-	// 	{
-	// 		"user_id": Meteor.userId();
-	// 		"qty": 7,
-	// 		"itemNum": 123,
-	// 		"desc": "tshirt",
-	// 		"color": "red",
-	// 		"s": 1,
-	// 		"m": 1,
-	// 		"l": 1,
-	// 		"xl": 1,
-	// 		"2x": 1,
-	// 		"3x": 1,
-	// 		"other": 1,
-	// 		"unitPrice": 10.00,
-	// 		"totals": 70.00
-	// 	}
-	// });
+
+	Carts.remove({});
 });
 
-// Meteor.publish("users", function () {
-// 	if(this.userId){
-// 		return Meteor.users.find({_id: this.userId});
-// 	}else{
-// 		this.ready();
-// 	}
-// });
 
 Meteor.publish("services", function () {
   return Services.find({});
@@ -191,4 +148,13 @@ Meteor.publish("carts", function () {
 
 Meteor.publish("inventory", function () {
 	return Inventory.find({});
+});
+
+Meteor.publish("users", function(){
+	var user = Meteor.users.findOne(this.userId);
+	if(user && user.profile.role === "sales"){
+		return Meteor.users.find();
+	}else{
+		return null;
+	}
 });

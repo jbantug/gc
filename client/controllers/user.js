@@ -1,33 +1,33 @@
 /*
- * SALES
+ * USER
  */
 
-Template.sales.rendered = function () {
+Template.user.rendered = function () {
 	var user = Meteor.user();
 	if(user == null){
 		Router.go("/");
-	}else if(user.profile.role == "staff" || user.profile.role == "user"){
+	}else if(user.profile.role == "staff"){
 		Meteor.logout(function(cb){
 			Router.go("/");
 		});
-	}else if(user.profile.role == "sales"){
+	}else if(user.profile.role == "user" || user.profile.role == "user"){
 		if(!Session.get("grand_total")){
 			Session.set("grand_total", 0);
 		}
 		if(!Session.get("line_qty")){
 			Session.set("line_qty", 0);
 		}
-		Router.go("/sales");
+		Router.go("/user");
 	}
 };
 
-Template.menu_sales.services = function () {
+Template.menu_user.services = function () {
 	return Services.find({});
 };
 
 /* EVENTS */
 
-Template.menu_sales.events({
+Template.menu_user.events({
 	'click .highlight': function (event) {
 		Session.set("getMenu", event.currentTarget.firstElementChild.innerHTML);
 		$('.menu-item').removeClass("menu-selected");
@@ -42,7 +42,7 @@ Template.menu_sales.events({
 	}
 });
 
-Template.content_sales.events({
+Template.content_user.events({
 	'click .highlight': function (event) {
 		var id = $(event.currentTarget).find('.task_invoice').text();
 		Session.set("target_invoice", id);
@@ -64,30 +64,26 @@ Template.content_sales.events({
 		var unitPrice = $('#unitPrice').text();
 		var totals = $('#totals').text();
 
-		var username = $('#select_user').val();
-
-		if(username == ""){
-			username = Meteor.user().username;
+		if(parseInt(qty) > 0){
+			Carts.insert(
+				{
+					username: Meteor.user().username,
+					qty: parseInt(qty),
+					itemNum: parseInt(itemNum),
+					desc: desc,
+					color: color,
+					s: s,
+					m: m,
+					l: l,
+					xl: xl,
+					x2: x2,
+					x3: x3,
+					other: other,
+					unitPrice: parseFloat(unitPrice),
+					totals: parseFloat(totals)
+				}
+			);
 		}
-
-		Carts.insert(
-			{
-				username: username,
-				qty: parseInt(qty),
-				itemNum: parseInt(itemNum),
-				desc: desc,
-				color: color,
-				s: s,
-				m: m,
-				l: l,
-				xl: xl,
-				x2: x2,
-				x3: x3,
-				other: other,
-				unitPrice: parseFloat(unitPrice),
-				totals: parseFloat(totals)
-			}
-		);
 	},
 
 	'keydown #search_order': function (event) {
@@ -153,15 +149,6 @@ Template.content_sales.events({
 			return false;
 		}
 
-		var username = Meteor.user().username;
-		if(data['select_user']){
-			var user = Meteor.users.findOne({username:data['select_user']});
-			if(user){
-				data['user_name'] = user.profile.name;
-				username = user.username;
-			}
-		}
-
 		var gen_order_id = "";
 		var possible = "0123456789";
 		for( var i=0; i < 4; i++ )
@@ -171,7 +158,7 @@ Template.content_sales.events({
 			date: $('#dateToday u').text(),
 			order_id: parseInt(gen_order_id),
 			invoice: data['invoice'],
-			username: username,
+			username: Meteor.user().username,
 			name: data['user_name'],
 			grand_total: parseFloat($('#grand_total').val()),
 			service: data['service'],
@@ -188,7 +175,7 @@ Template.content_sales.events({
 			}
 		);
 
-		var carts = Carts.find({username: username});
+		var carts = Carts.find({username: Meteor.user().username});
 		carts.forEach(function(cart){
 			var task_status = "Ordered";
 			var check_inventory = Inventory.findOne({itemNum:cart.itemNum});
@@ -210,7 +197,7 @@ Template.content_sales.events({
 					tags:[task_status, data['service']],
 					date: $('#dateToday u').text(),
 					invoice: data['invoice'],
-					username: username,
+					username: Meteor.user().username,
 					name: data['user_name'],
 					itemNum: cart.itemNum,
 					item: cart.desc,
@@ -258,14 +245,10 @@ Template.content_sales.events({
 
 /* --- */
 
-Template.content_sales.grand_total = function () {
+Template.content_user.grand_total = function () {
 	var grand_total = 0;
 
-	if(Meteor.user().profile.role == "sales"){
-		var carts = Carts.find({username: $('#select_user').val()});
-	}else{
-		var carts = Carts.find({username: Meteor.user().username});
-	}
+	var carts = Carts.find({username: Meteor.user().username});
 	carts.forEach(function(cart){
 		grand_total += parseFloat(cart.totals);
 	});
@@ -275,7 +258,7 @@ Template.content_sales.grand_total = function () {
 	return grand_total;
 }
  
-Template.content_sales.dateToday = function () {
+Template.content_user.dateToday = function () {
 	var d = new Date();
 
 	var month = d.getMonth()+1;
@@ -287,60 +270,123 @@ Template.content_sales.dateToday = function () {
 	return output;
 };
 
-Template.content_sales.embroidery = function () {
+Template.content_user.embroidery = function () {
 	if(Session.get("getMenu") == "Embroidery"){
 		return true;
 	}
 	return false;
 };
 
-Template.content_sales.screenPrinting = function () {
+Template.content_user.screenPrinting = function () {
 	if(Session.get("getMenu") == "Screen Printing"){
 		return true;
 	}
 	return false;
 };
 
-Template.content_sales.promotional = function () {
+Template.content_user.promotional = function () {
 	if(Session.get("getMenu") == "Promotional"){
 		return true;
 	}
 	return false;
 };
 
-Template.content_sales.business = function () {
+Template.content_user.business = function () {
 	if(Session.get("getMenu") == "Business Cards"){
 		return true;
 	}
 	return false;
 };
 
-Template.content_sales.carts = function () {
-	if(Meteor.user().profile.role == "sales"){
-		return Carts.find({username: $('#select_user').val()});
-	}else{
-		return Carts.find({username: Meteor.user().username});
+Template.content_user.user_orders = function () {
+	if(Session.get("getMenu") == "Orders"){
+		return true;
 	}
-	
+	return false;
 };
 
-Template.content_sales.items = function () {
+Template.content_user.carts = function () {
+	return Carts.find({username: Meteor.user().username});
+};
+
+Template.menu_user.checkUser = function () {
+	if(Meteor.user() != null){
+		if(Meteor.user().profile.role == "user"){
+			return true;
+		}
+	}
+	return false;
+};
+
+Template.content_user.items = function () {
 	return Inventory.find({});
 };
 
-Template.content_sales.selectItem = function () {
+Template.content_user.selectItem = function () {
 	return Inventory.findOne({itemNum:parseInt(Session.get('itemNum'))});
 };
 
-Template.content_sales.findItem = function () {
+Template.menu_user.user_orders_count = function () {
+	if(Meteor.user()){
+		return _.size(Orders.find({username:Meteor.user().username}).fetch());
+	}
+};
+
+Template.content_user.all_user_orders = function () {
+	var find_orders =  Orders.find({username:Meteor.user().username}).fetch();
+	$.each(find_orders, function(i, el){
+		var status = "Not Started";
+		var find_tasks = Tasks.find({username:Meteor.user().username, invoice:el.invoice}).fetch();
+		$.each(find_tasks, function(i, el){
+
+			if(status == "Completed"){
+				status = "Started";
+			}else{
+				status = "Not Started";
+			}
+
+			if(el.task == "Ordered"){
+				status = "Started";
+				return true;
+			}else if(el.task == "Embroidering" || el.task == "Printing"){
+				status = el.task;
+				return true;
+			}else if(el.task == "Completed"){
+				status = el.task;
+			}
+
+		});
+
+		Orders.update(
+			{
+				_id: el._id,
+			},
+			{
+				$set: {status: status}
+			}
+		);
+	});
+
+
+
+	if(Session.get("find_order")){
+		if(Session.get("find_order") == ""){
+			return Orders.find({username:Meteor.user().username});
+		}
+		return Orders.find({username:Meteor.user().username, order_id:Session.get("find_order")});
+	}
+	return Orders.find({username:Meteor.user().username});
+};
+
+Template.content_user.findItem = function () {
 	return Inventory.findOne({itemNum:parseInt(Session.get("itemNum"))});
 };
 
-Template.content_sales.line_qty = function () {
+Template.content_user.line_qty = function () {
 	return Session.get("line_qty");
 };
 
-Template.content_sales.line_total = function () {
+Template.content_user.line_total = function () {
 	if(Session.get("itemNum")){
 		if(Session.get("itemNum") != "Select Item"){
 			var find = Inventory.findOne({itemNum:parseInt(Session.get("itemNum"))});
@@ -350,7 +396,7 @@ Template.content_sales.line_total = function () {
 	}
 };
 
-Template.content_sales.gen_invoice = function () {
+Template.content_user.gen_invoice = function () {
 	var gen_invoice = "";
 	var possible = "0123456789";
 	for( var i=0; i < 9; i++ )

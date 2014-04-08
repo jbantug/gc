@@ -5,17 +5,25 @@
 Template.target_modal.events({
 	'click .highlight': function (event) {
 		event.preventDefault();
+		return false;
 	},
 
 	'change #target_select': function (event) {
 		var select_val = $('#target_select').val();
-		var findTarget = Tasks.findOne({invoice:Session.get("target_invoice")});
+
+		if(Session.get("target_id")){
+			var findTarget = Tasks.findOne({_id:Session.get("target_id")});
+		}else{
+			var findTarget = Tasks.findOne({invoice:Session.get("target_invoice")});
+		}
+
 		var tag = [select_val, findTarget.service];
 
 		if(findTarget.task == "Need to Order"){
 			var check_inventory = Inventory.findOne({itemNum:findTarget.itemNum});
 			if(check_inventory.qty < findTarget.qty){
 				alert("You don't have enough supply.");
+				return false;
 			}else{
 				Inventory.update(
 					{
@@ -39,7 +47,6 @@ Template.target_modal.events({
 				}
 			}
 		);
-
 	},
 });
 
@@ -59,9 +66,12 @@ Template.inventory_modal.events({
 });
 
 Template.target_modal.target_task = function () {
-	if(Session.get("target_invoice")){
+	if(Session.get("target_id")){
+		return Tasks.findOne({_id:Session.get("target_id")});
+	}
+	else if(Session.get("target_invoice")){
 		if(Meteor.user().profile.role == "user"){
-			return Orders.findOne({invoice:Session.get("target_invoice"), user_id:Meteor.userId()});
+			return Orders.findOne({invoice:Session.get("target_invoice"), username:Meteor.user().username});
 		}
 		return Tasks.findOne({invoice:Session.get("target_invoice")});
 	}
@@ -92,8 +102,9 @@ Template.target_modal.checkUser = function () {
 			return true;
 		}
 	}
+	return false;
 };
 
 Template.target_modal.order_task = function () {
-	return Tasks.find({user_id:Meteor.userId(), invoice:Session.get("target_invoice")});
+	return Tasks.find({username:Meteor.user().username, invoice:Session.get("target_invoice")});
 };

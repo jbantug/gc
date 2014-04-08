@@ -51,8 +51,8 @@ Template.content_user.events({
 	'click #add_order': function (event) {
 
 		var qty = $('#qty').text();
-		var itemNum = $('#itemNum').val();
-		var desc = $('#desc').text();
+		var itemNum = $('#itemNum').text();
+		var desc = $('#item').val();
 		var color = $('#color').text();
 		var s = $('#s').value;
 		var m = $('#m').value;
@@ -226,7 +226,7 @@ Template.content_user.events({
 			$('#content-title input').val("");
 			$('#content-table tbody input').val("0");
 			$('.content-footer-adds div .ta-right').val("0");
-			$('#itemNum').val("Select Item");
+			$('#item').val("Select Item");
 		});
 
 
@@ -234,8 +234,9 @@ Template.content_user.events({
 		alert("Order Added!\nOrder ID:"+gen_order_id);
 	},
 
-	'change #itemNum': function (event) {
-		Session.set("itemNum", $('#itemNum').val());
+	'change #item': function (event) {
+		var find_item = Inventory.findOne({item:$('#item').val()});
+		Session.set("itemNum", find_item.itemNum);
 	},
 
 	'mouseenter .inventory-box': function (event) {

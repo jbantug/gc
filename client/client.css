@@ -1,9 +1,14 @@
 body{
-	padding-top: 50px;
+	padding-top: 25px;
 }
 
 body ul li {
 	list-style-type: none;
+}
+
+.next {
+	padding: 1px 12px;
+	margin-top: 10px;
 }
 
 .content{
@@ -98,7 +103,11 @@ body ul li {
 }
 
 #content-table {
-	margin-bottom: 30px;
+	margin-bottom: 20px;
+}
+
+#content-table ul {
+	padding-left: 0px;
 }
 
 #content-table table thead td {
@@ -112,6 +121,7 @@ body ul li {
 #content-footer p {
 	text-align: center;
 	font-size: 12px;
+	margin-top: 20px;
 }
 
 #content-footer strong {

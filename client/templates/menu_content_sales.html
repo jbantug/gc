@@ -1,5 +1,5 @@
 <template name="menu_sales">
-	<div class="col-lg-3">
+	<div class="col-md-3">
 		<ul>
 			{{#each services}}
 			<li>
@@ -25,15 +25,15 @@
 </template>
 
 <template name="content_sales">
-	<form class="col-lg-9" id="wrap">
+	<form class="col-md-9" id="wrap">
 		<!--  -->
 		{{#if embroidery}}
-		<div id="content-head" class="col-lg-12">
+		<div id="content-head" class="col-md-12">
 			<input name="service" type="hidden" value="Embroidery"/>
-			<div class="col-lg-2">
+			<div class="col-md-2">
 				<img class="logo" src="GCLogoColor.png"/>
 			</div>
-			<div class="col-lg-4">
+			<div class="col-md-4">
 				<p id="address">
 					<strong>GRAPHIC CONNECTIONS</strong><br/>
 					145 Mount Auburn Street<br/>
@@ -41,7 +41,7 @@
 					617 - 926 - 1155 
 				</p>
 			</div>
-			<div id="content-head-form" class="col-lg-6">
+			<div id="content-head-form" class="col-md-6">
 				<table class="table">
 					<tr>
 						<td>Company Name: </td>
@@ -62,148 +62,171 @@
 				</table>
 			</div>
 		</div>
-		<div id="content-datebox" class="col-lg-12">
-			<div class="col-lg-12" id="content-datebox-upper">
-				<span class="col-lg-3">Salesperson: <input name="salesperson" style="width:50%;" class="form-control content-control" type="text" value="{{currentUser.profile.name}}"/></span>
-				<span id="dateToday" class="col-lg-3">Today's Date: <u>{{ dateToday }}</u></span>
-				<span class="col-lg-3">Est Prod Days: <input name="prod_days" style="width:43%;" class="form-control content-control" type="text"/></span>
-				<span class="col-lg-3">Due Date: <input name="due_date" style="width:67%;" class="form-control content-control" type="date"/></span>
+		<div id="content-datebox" class="col-md-12">
+			<div class="col-md-12" id="content-datebox-upper">
+				<span class="col-md-3">Salesperson: <input name="salesperson" style="width:50%;" class="form-control content-control" type="text" value="{{currentUser.profile.name}}"/></span>
+				<span id="dateToday" class="col-md-3">Today's Date: <u>{{ dateToday }}</u></span>
+				<span class="col-md-3">Est Prod Days: <input name="prod_days" style="width:43%;" class="form-control content-control" type="text"/></span>
+				<span class="col-md-3">Due Date: <input name="due_date" style="width:67%;" class="form-control content-control" type="date"/></span>
 			</div>
-			<div  class="col-lg-12" id="content-datebox-lower">
-				<span class="col-lg-6">Garments: <input name="garments" style="width:50%;" class="form-control content-control" type="text"/></span>
-				<span class="col-lg-6">Other: <input name="other_top" style="width:50%;" class="form-control content-control" type="text"/></span>
+			<div  class="col-md-12" id="content-datebox-lower">
+				<span class="col-md-6">Garments: <input name="garments" style="width:50%;" class="form-control content-control" type="text"/></span>
+				<span class="col-md-6">Other: <input name="other_top" style="width:50%;" class="form-control content-control" type="text"/></span>
 			</div>
 		</div>
-		<div id="content-title" class="col-lg-12">
-			<div class="col-lg-6" style="padding-left:0px;">
+		<div id="content-title" class="col-md-12">
+			<div class="col-md-6" style="padding-left:0px;">
 				<strong>EMBROIDERY</strong>
 			</div>
-			<div class="col-lg-3">
+			<div class="col-md-3">
 				INVOICE #:<br/>
 				<input name="invoice" type="text" class="form-control" value="{{gen_invoice}}">
 			</div>
-			<div class="col-lg-3">
+			<div class="col-md-3">
 				Requested Combinations:<br/>
 				<input name="screen_print" type="checkbox" value="screen_print"/>SCREEN PRINT<br/>
 				<input name="vinyl" type="checkbox" value="vinyl"/>VINYL
 			</div>
 		</div>
-		<div id="content-table" class="col-lg-12">
-			<div class="col-lg-6">
-				<div>
-					Item:
-					<select id="item">
-						<option>Select Item</option>
-						{{#each items}}
-						<option>{{item}}</option>
-						{{/each}}
-					</select>
-					<br/>
-					Item No: <span id="itemNum">{{selectItem.itemNum}}</span>
-					<br/>
-					Color: <span id="color">{{selectItem.color}}</span>
-					<br/>
-					Unit Price: $<span id="unitPrice">{{selectItem.unitPrice}}</span>
-					<br/><br/>
-					Qty: <span id="qty">{{line_qty}}</span>
-					<br/>
-					<strong>Line Total: $<span id="totals">{{line_total}}</span></strong>
-					<br>
-					<input id="add_order" type="button" class="btn btn-primary" value="Add"/>
-				</div>
-			</div>
-			<div class="col-lg-6">
-				<table class="table table-bordered">
-					<thead>
-						<tr>
-							<td>S</td>
-							<td>M</td>
-							<td>L</td>
-							<td>XL</td>
-							<td>2X</td>
-							<td>3X</td>
-							<td style="font-size:10px">OTHER<input name="other_size" type="text" class="form-control" style="height:20px"></td>
-						</tr>
-					</thead>
-					<tbody>
-						<tr id="input-row">
-							<td>
-								<input id="s" type="text" class="form-control content-control" value="0">
-							</td>
-							<td>
-								<input id="m" type="text" class="form-control content-control" value="0">
-							</td>
-							<td>
-								<input id="l" type="text" class="form-control content-control" value="0">
-							</td>
-							<td>
-								<input id="xl" type="text" class="form-control content-control" value="0">
-							</td>
-							<td>
-								<input id="x2" type="text" class="form-control content-control" value="0">
-							</td>
-							<td>
-								<input id="x3" type="text" class="form-control content-control" value="0">
-							</td>
-							<td>
-								<input id="other" type="text" class="form-control content-control" value="0">
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
+		<div id="content-table" class="col-md-12">
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<td>Item</td>
+						<td>Item No</td>
+						<td>Color</td>
+						<td>S</td>
+						<td>M</td>
+						<td>L</td>
+						<td>XL</td>
+						<td>2X</td>
+						<td>3X</td>
+						<td style="font-size:10px">OTHER<input name="other_size" type="text" class="form-control" style="height:20px"></td>
+						<td>Unit Price</td>
+						<td>Qty</td>
+						<td>Line Total</td>
+						<td></td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr id="input-row">
+						<td>
+							<select id="item">
+								<option>Select Item</option>
+								{{#each items}}
+								<option>{{item}}</option>
+								{{/each}}
+							</select>
+						</td>
+						<td>
+							<span id="itemNum">{{selectItem.itemNum}}</span>
+						</td>
+						<td>
+							<select id="color">
+								{{#each selectItem.colors}}
+								<option>{{this.color}}</option>
+								{{/each}}
+							</select>
+						</td>
+						<td>
+							<input id="s" type="text" class="form-control content-control" value="0">
+						</td>
+						<td>
+							<input id="m" type="text" class="form-control content-control" value="0">
+						</td>
+						<td>
+							<input id="l" type="text" class="form-control content-control" value="0">
+						</td>
+						<td>
+							<input id="xl" type="text" class="form-control content-control" value="0">
+						</td>
+						<td>
+							<input id="x2" type="text" class="form-control content-control" value="0">
+						</td>
+						<td>
+							<input id="x3" type="text" class="form-control content-control" value="0">
+						</td>
+						<td>
+							<input id="other" type="text" class="form-control content-control" value="0">
+						</td>
+						<td>
+							$<span id="unitPrice">{{selectItem.unitPrice}}</span>
+						</td>
+						<td>
+							<span id="qty">{{line_qty}}</span>
+						</td>
+						<td>
+							<strong>$<span id="totals">{{line_total}}</span></strong>
+						</td>
+						<td>
+							<button id="add_order" type="button" class="btn btn-primary">
+								<span class="glyphicon glyphicon-plus"></span>
+							</button>
+						</td>
+					</tr>
+					{{#each carts}}
+					<tr>
+						<input class="cart_id" value="{{_id}}" type="hidden">
+						<td>{{desc}}</td>
+						<td>{{itemNum}}</td>
+						<td>{{color}}</td>
+						<td>{{s}}</td>
+						<td>{{m}}</td>
+						<td>{{l}}</td>
+						<td>{{xl}}</td>
+						<td>{{x2}}</td>
+						<td>{{x3}}</td>
+						<td>{{other}}</td>
+						<td>{{unitPrice}}</td>
+						<td>{{qty}}</td>
+						<td>{{totals}}</td>
+						<td>
+							<button class="delete_order btn btn-danger" type="button">
+								<span class="glyphicon glyphicon-trash"></span>
+							</button>
+						</td>
+					</tr>
+					{{/each}}
+				</tbody>
+			</table>
 		</div>
-		{{#each carts}}
-		<div class="col-lg-12 highlight">
-			<div class="pull-left">
-				<div>Item No: {{itemNum}}</div>
-				<div>Description: {{desc}}</div>
-				<div>Color: {{color}}</div>
-			</div>
-			<div class="pull-right">
-				<div>Qty: {{qty}}</div>
-				<div>Unit Price: {{unitPrice}}</div>
-				<div><strong>Line Total: {{totals}}</strong></div>
-			</div>
-		</div>
-		{{/each}}
-		<div id="content-footer" class="col-lg-12">
-			<div class="col-lg-6">
-				<p class="col-lg-12"><i>
+		<div id="content-footer" class="col-md-12">
+			<div class="col-md-6">
+				<p class="col-md-12"><i>
 					Each order placed with GC is unique and individual and as such, additional costs may incur, that may not have been perceived especially if changes are made. It is our practice to provide an excellent  experience, and quality product. A 50% deposit is required to facilitate your order.
 				</i></p>
-				<div class="col-lg-12">
-					<strong class="col-lg-12">Customer Signature</strong>
+				<div class="col-md-12">
+					<strong class="col-md-12">Customer Signature</strong>
 				</div>
 			</div>
-			<div class="col-lg-6">
-				<div class="col-lg-10 pull-right">
-					<div class="col-lg-12 content-footer-adds">
-						<div class="col-lg-6">
+			<div class="col-md-6">
+				<div class="col-md-10 pull-right">
+					<div class="col-md-12 content-footer-adds">
+						<div class="col-md-6">
 							<input id="adds1" name="adds1" type="text" class="form-control"/>
 						</div>
-						<div class="col-lg-6 input-group">
+						<div class="col-md-6 input-group">
 							<span class="input-group-addon">$</span>
 							<input id="adds1_val" name="adds1_val" type="text" value="0" class="ta-right form-control"/>
 						</div>
 					</div>
-					<div class="col-lg-12 content-footer-adds">
-						<div class="col-lg-6">
+					<div class="col-md-12 content-footer-adds">
+						<div class="col-md-6">
 							<input id="adds2" name="adds2" type="text" class="form-control"/>
 						</div>
-						<div class="col-lg-6 input-group">
+						<div class="col-md-6 input-group">
 							<span class="input-group-addon">$</span>
 							<input id="adds2_val" name="adds2_val" type="text" value="0" class="ta-right form-control"/>
 						</div>
 					</div>
-					<div id="content-footer-total" class="col-lg-12">
-						<h3 class="col-lg-6">TOTAL: </h3>
-						<div class="col-lg-6 input-group">
+					<div id="content-footer-total" class="col-md-12">
+						<h3 class="col-md-6">TOTAL: </h3>
+						<div class="col-md-6 input-group">
 							<span class="input-group-addon">$</span>
 							<input id="grand_total" name="grand_total" disabled type="text" class="ta-right form-control" value="{{grand_total}}"/>
 						</div>
 					</div>
-					<div id="content-footer-subwrap" class="col-lg-12">
+					<div id="content-footer-subwrap" class="col-md-12">
 						<button id="content-footer-submit" class="btn btn-primary" type="button">PROCEED</button>
 					</div>
 				</div>
@@ -212,12 +235,12 @@
 		{{/if}}
 		<!--  -->
 		{{#if screenPrinting}}
-		<div id="content-head" class="col-lg-12">
+		<div id="content-head" class="col-md-12">
 			<input name="service" type="hidden" value="Screen Printing"/>
-			<div class="col-lg-2">
+			<div class="col-md-2">
 				<img class="logo" src="GCLogoColor.png"/>
 			</div>
-			<div class="col-lg-4">
+			<div class="col-md-4">
 				<p id="address">
 					<strong>GRAPHIC CONNECTIONS</strong><br/>
 					145 Mount Auburn Street<br/>
@@ -225,7 +248,7 @@
 					617 - 926 - 1155 
 				</p>
 			</div>
-			<div id="content-head-form" class="col-lg-6">
+			<div id="content-head-form" class="col-md-6">
 				<table class="table">
 					<tr>
 						<td>Company Name: </td>
@@ -246,28 +269,28 @@
 				</table>
 			</div>
 		</div>
-		<div id="content-datebox" class="col-lg-12">
-			<div class="col-lg-12" id="content-datebox-upper">
-				<span class="col-lg-4">Salesperson: <input name="salesperson" style="width:65%;" class="form-control content-control" type="text"/></span>
-				<span id="dateToday" class="col-lg-4">Today's Date: <u>{{ dateToday }}</u></span>
-				<span class="col-lg-4">Due Date: <input name="due_date" style="width:67%;" class="form-control content-control" type="date"/></span>
+		<div id="content-datebox" class="col-md-12">
+			<div class="col-md-12" id="content-datebox-upper">
+				<span class="col-md-4">Salesperson: <input name="salesperson" style="width:65%;" class="form-control content-control" type="text"/></span>
+				<span id="dateToday" class="col-md-4">Today's Date: <u>{{ dateToday }}</u></span>
+				<span class="col-md-4">Due Date: <input name="due_date" style="width:67%;" class="form-control content-control" type="date"/></span>
 			</div>
-			<div  class="col-lg-12" id="content-datebox-lower">
-				<label class="col-lg-4">NEW ORDER: <input name="retail" type="checkbox"/></label>
-				<label class="col-lg-4">REPEAT ORDER: <input name="wholesale" type="checkbox"/></label>
-				<label class="col-lg-4">RUSH: <input name="rush" type="checkbox"/></label>
+			<div  class="col-md-12" id="content-datebox-lower">
+				<label class="col-md-4">NEW ORDER: <input name="retail" type="checkbox"/></label>
+				<label class="col-md-4">REPEAT ORDER: <input name="wholesale" type="checkbox"/></label>
+				<label class="col-md-4">RUSH: <input name="rush" type="checkbox"/></label>
 			</div>
 		</div>
-		<div id="content-title" class="col-lg-12">
-			<div class="col-lg-6" style="padding-left:0px;">
+		<div id="content-title" class="col-md-12">
+			<div class="col-md-6" style="padding-left:0px;">
 				<strong>SCREEN PRINTING</strong>
 			</div>
-			<div class="col-lg-3">
+			<div class="col-md-3">
 				INVOICE #:<br/>
 				<input name="invoice" type="text" class="form-control">
 			</div>
 		</div>
-		<div id="content-table" class="col-lg-12">
+		<div id="content-table" class="col-md-12">
 			<table class="table table-bordered">
 				<thead>
 					<tr>
@@ -348,43 +371,43 @@
 				</tbody>
 			</table>
 		</div>
-		<div id="content-footer" class="col-lg-12">
-			<div class="col-lg-6">
-				<p class="col-lg-12"><i>
+		<div id="content-footer" class="col-md-12">
+			<div class="col-md-6">
+				<p class="col-md-12"><i>
 					Each order placed with GC is unique and individual and as such, additional costs may incur, that may not have been perceived especially if changes are made. It is our practice to provide an excellent  experience, and quality product. A 50% deposit is required to facilitate your order.
 				</i></p>
-				<div class="col-lg-12">
-					<strong class="col-lg-12">Customer Signature</strong>
+				<div class="col-md-12">
+					<strong class="col-md-12">Customer Signature</strong>
 				</div>
 			</div>
-			<div class="col-lg-6">
-				<div class="col-lg-10 pull-right">
-					<div class="col-lg-12 content-footer-adds">
-						<div class="col-lg-6">
+			<div class="col-md-6">
+				<div class="col-md-10 pull-right">
+					<div class="col-md-12 content-footer-adds">
+						<div class="col-md-6">
 							<input id="adds1" name="adds1" type="text" class="form-control"/>
 						</div>
-						<div class="col-lg-6 input-group">
+						<div class="col-md-6 input-group">
 							<span class="input-group-addon">$</span>
 							<input id="adds1_val" name="adds1_val" type="text" value="0" class="ta-right form-control"/>
 						</div>
 					</div>
-					<div class="col-lg-12 content-footer-adds">
-						<div class="col-lg-6">
+					<div class="col-md-12 content-footer-adds">
+						<div class="col-md-6">
 							<input id="adds2" name="adds2" type="text" class="form-control"/>
 						</div>
-						<div class="col-lg-6 input-group">
+						<div class="col-md-6 input-group">
 							<span class="input-group-addon">$</span>
 							<input id="adds2_val" name="adds2_val" type="text" value="0" class="ta-right form-control"/>
 						</div>
 					</div>
-					<div id="content-footer-total" class="col-lg-12">
-						<h3 class="col-lg-6">TOTAL: </h3>
-						<div class="col-lg-6 input-group">
+					<div id="content-footer-total" class="col-md-12">
+						<h3 class="col-md-6">TOTAL: </h3>
+						<div class="col-md-6 input-group">
 							<span class="input-group-addon">$</span>
 							<input id="grand_total" name="grand_total" disabled type="text" class="ta-right form-control" value="{{grand_total}}"/>
 						</div>
 					</div>
-					<div id="content-footer-subwrap" class="col-lg-12">
+					<div id="content-footer-subwrap" class="col-md-12">
 						<button id="content-footer-submit" class="btn btn-primary" type="button">PROCEED</button>
 					</div>
 
@@ -394,12 +417,12 @@
 		{{/if}}
 		<!--  -->
 		{{#if promotional}}
-		<div id="content-head" class="col-lg-12">
+		<div id="content-head" class="col-md-12">
 			<input name="service" type="hidden" value="Promotional"/>
-			<div class="col-lg-2">
+			<div class="col-md-2">
 				<img class="logo" src="GCLogoColor.png"/>
 			</div>
-			<div class="col-lg-4">
+			<div class="col-md-4">
 				<p id="address">
 					<strong>GRAPHIC CONNECTIONS</strong><br/>
 					145 Mount Auburn Street<br/>
@@ -407,7 +430,7 @@
 					617 - 926 - 1155 
 				</p>
 			</div>
-			<div id="content-head-form" class="col-lg-6">
+			<div id="content-head-form" class="col-md-6">
 				<table class="table">
 					<tr>
 						<td>Company Name: </td>
@@ -428,28 +451,28 @@
 				</table>
 			</div>
 		</div>
-		<div id="content-datebox" class="col-lg-12">
-			<div class="col-lg-12" id="content-datebox-upper">
-				<span class="col-lg-4">Salesperson: <input name="salesperson" style="width:65%;" class="form-control content-control" type="text"/></span>
-				<span id="dateToday" class="col-lg-4">Today's Date: <u>{{ dateToday }}</u></span>
-				<span class="col-lg-4">Due Date: <input name="due_date" style="width:67%;" class="form-control content-control" type="date"/></span>
+		<div id="content-datebox" class="col-md-12">
+			<div class="col-md-12" id="content-datebox-upper">
+				<span class="col-md-4">Salesperson: <input name="salesperson" style="width:65%;" class="form-control content-control" type="text"/></span>
+				<span id="dateToday" class="col-md-4">Today's Date: <u>{{ dateToday }}</u></span>
+				<span class="col-md-4">Due Date: <input name="due_date" style="width:67%;" class="form-control content-control" type="date"/></span>
 			</div>
-			<div  class="col-lg-12" id="content-datebox-lower">
-				<label class="col-lg-4">RETAIL: <input name="retail" type="checkbox"/></label>
-				<label class="col-lg-4">WHOLESALE: <input name="wholesale" type="checkbox"/></label>
-				<label class="col-lg-4">RUSH: <input name="rush" type="checkbox"/></label>
+			<div  class="col-md-12" id="content-datebox-lower">
+				<label class="col-md-4">RETAIL: <input name="retail" type="checkbox"/></label>
+				<label class="col-md-4">WHOLESALE: <input name="wholesale" type="checkbox"/></label>
+				<label class="col-md-4">RUSH: <input name="rush" type="checkbox"/></label>
 			</div>
 		</div>
-		<div id="content-title" class="col-lg-12">
-			<div class="col-lg-6" style="padding-left:0px;">
+		<div id="content-title" class="col-md-12">
+			<div class="col-md-6" style="padding-left:0px;">
 				<strong>PROMOTIONAL</strong>
 			</div>
-			<div class="col-lg-3">
+			<div class="col-md-3">
 				INVOICE #:<br/>
 				<input name="invoice" type="text" class="form-control">
 			</div>
 		</div>
-		<div id="content-table" class="col-lg-12">
+		<div id="content-table" class="col-md-12">
 			<table class="table table-bordered">
 				<thead>
 					<tr>
@@ -530,43 +553,43 @@
 				</tbody>
 			</table>
 		</div>
-		<div id="content-footer" class="col-lg-12">
-			<div class="col-lg-6">
-				<p class="col-lg-12"><i>
+		<div id="content-footer" class="col-md-12">
+			<div class="col-md-6">
+				<p class="col-md-12"><i>
 					Each order placed with GC is unique and individual and as such, additional costs may incur, that may not have been perceived especially if changes are made. It is our practice to provide an excellent  experience, and quality product. A 50% deposit is required to facilitate your order.
 				</i></p>
-				<div class="col-lg-12">
-					<strong class="col-lg-12">Customer Signature</strong>
+				<div class="col-md-12">
+					<strong class="col-md-12">Customer Signature</strong>
 				</div>
 			</div>
-			<div class="col-lg-6">
-				<div class="col-lg-10 pull-right">
-					<div class="col-lg-12 content-footer-adds">
-						<div class="col-lg-6">
+			<div class="col-md-6">
+				<div class="col-md-10 pull-right">
+					<div class="col-md-12 content-footer-adds">
+						<div class="col-md-6">
 							<input id="adds1" name="adds1" type="text" class="form-control"/>
 						</div>
-						<div class="col-lg-6 input-group">
+						<div class="col-md-6 input-group">
 							<span class="input-group-addon">$</span>
 							<input id="adds1_val" name="adds1_val" type="text" value="0" class="ta-right form-control"/>
 						</div>
 					</div>
-					<div class="col-lg-12 content-footer-adds">
-						<div class="col-lg-6">
+					<div class="col-md-12 content-footer-adds">
+						<div class="col-md-6">
 							<input id="adds2" name="adds2" type="text" class="form-control"/>
 						</div>
-						<div class="col-lg-6 input-group">
+						<div class="col-md-6 input-group">
 							<span class="input-group-addon">$</span>
 							<input id="adds2_val" name="adds2_val" type="text" value="0" class="ta-right form-control"/>
 						</div>
 					</div>
-					<div id="content-footer-total" class="col-lg-12">
-						<h3 class="col-lg-6">TOTAL: </h3>
-						<div class="col-lg-6 input-group">
+					<div id="content-footer-total" class="col-md-12">
+						<h3 class="col-md-6">TOTAL: </h3>
+						<div class="col-md-6 input-group">
 							<span class="input-group-addon">$</span>
 							<input id="grand_total" name="grand_total" disabled type="text" class="ta-right form-control" value="{{grand_total}}"/>
 						</div>
 					</div>
-					<div id="content-footer-subwrap" class="col-lg-12">
+					<div id="content-footer-subwrap" class="col-md-12">
 						<button id="content-footer-submit" class="btn btn-primary" type="button">PROCEED</button>
 					</div>
 				</div>
@@ -575,12 +598,12 @@
 		{{/if}}
 		<!--  -->
 		{{#if business}}
-		<div id="content-head" class="col-lg-12">
+		<div id="content-head" class="col-md-12">
 			<input name="service" type="hidden" value="Business Cards"/>
-			<div class="col-lg-2">
+			<div class="col-md-2">
 				<img class="logo" src="GCLogoColor.png"/>
 			</div>
-			<div class="col-lg-4">
+			<div class="col-md-4">
 				<p id="address">
 					<strong>GRAPHIC CONNECTIONS</strong><br/>
 					145 Mount Auburn Street<br/>
@@ -588,7 +611,7 @@
 					617 - 926 - 1155 
 				</p>
 			</div>
-			<div id="content-head-form" class="col-lg-6">
+			<div id="content-head-form" class="col-md-6">
 				<table class="table">
 					<tr>
 						<td>Company Name: </td>
@@ -609,28 +632,28 @@
 				</table>
 			</div>
 		</div>
-		<div id="content-datebox" class="col-lg-12">
-			<div class="col-lg-12" id="content-datebox-upper">
-				<span class="col-lg-3">Salesperson: <input name="salesperson" style="width:50%;" class="form-control content-control" type="text"/></span>
-				<span id="dateToday" class="col-lg-3">Today's Date: <u>{{ dateToday }}</u></span>
-				<span class="col-lg-3">Est Prod Days: <input name="prod_days" style="width:43%;" class="form-control content-control" type="text"/></span>
-				<span class="col-lg-3">Due Date: <input name="due_date" style="width:67%;" class="form-control content-control" type="date"/></span>
+		<div id="content-datebox" class="col-md-12">
+			<div class="col-md-12" id="content-datebox-upper">
+				<span class="col-md-3">Salesperson: <input name="salesperson" style="width:50%;" class="form-control content-control" type="text"/></span>
+				<span id="dateToday" class="col-md-3">Today's Date: <u>{{ dateToday }}</u></span>
+				<span class="col-md-3">Est Prod Days: <input name="prod_days" style="width:43%;" class="form-control content-control" type="text"/></span>
+				<span class="col-md-3">Due Date: <input name="due_date" style="width:67%;" class="form-control content-control" type="date"/></span>
 			</div>
-			<div  class="col-lg-12" id="content-datebox-lower">
-				<span class="col-lg-6">Garments: <input name="garments" style="width:50%;" class="form-control content-control" type="text"/></span>
-				<span class="col-lg-6">Other: <input name="other_top" style="width:50%;" class="form-control content-control" type="text"/></span>
+			<div  class="col-md-12" id="content-datebox-lower">
+				<span class="col-md-6">Garments: <input name="garments" style="width:50%;" class="form-control content-control" type="text"/></span>
+				<span class="col-md-6">Other: <input name="other_top" style="width:50%;" class="form-control content-control" type="text"/></span>
 			</div>
 		</div>
-		<div id="content-title" class="col-lg-12">
-			<div class="col-lg-6" style="padding-left:0px;">
+		<div id="content-title" class="col-md-12">
+			<div class="col-md-6" style="padding-left:0px;">
 				<strong>BUSINESS CARDS</strong>
 			</div>
-			<div class="col-lg-3">
+			<div class="col-md-3">
 				INVOICE #:<br/>
 				<input name="invoice" type="text" class="form-control">
 			</div>
 		</div>
-		<div id="content-table" class="col-lg-12">
+		<div id="content-table" class="col-md-12">
 			<table class="table table-bordered">
 				<thead>
 					<tr>
@@ -711,43 +734,43 @@
 				</tbody>
 			</table>
 		</div>
-		<div id="content-footer" class="col-lg-12">
-			<div class="col-lg-6">
-				<p class="col-lg-12"><i>
+		<div id="content-footer" class="col-md-12">
+			<div class="col-md-6">
+				<p class="col-md-12"><i>
 					Each order placed with GC is unique and individual and as such, additional costs may incur, that may not have been perceived especially if changes are made. It is our practice to provide an excellent  experience, and quality product. A 50% deposit is required to facilitate your order.
 				</i></p>
-				<div class="col-lg-12">
-					<strong class="col-lg-12">Customer Signature</strong>
+				<div class="col-md-12">
+					<strong class="col-md-12">Customer Signature</strong>
 				</div>
 			</div>
-			<div class="col-lg-6">
-				<div class="col-lg-10 pull-right">
-					<div class="col-lg-12 content-footer-adds">
-						<div class="col-lg-6">
+			<div class="col-md-6">
+				<div class="col-md-10 pull-right">
+					<div class="col-md-12 content-footer-adds">
+						<div class="col-md-6">
 							<input id="adds1" name="adds1" type="text" class="form-control"/>
 						</div>
-						<div class="col-lg-6 input-group">
+						<div class="col-md-6 input-group">
 							<span class="input-group-addon">$</span>
 							<input id="adds1_val" name="adds1_val" type="text" value="0" class="ta-right form-control"/>
 						</div>
 					</div>
-					<div class="col-lg-12 content-footer-adds">
-						<div class="col-lg-6">
+					<div class="col-md-12 content-footer-adds">
+						<div class="col-md-6">
 							<input id="adds2" name="adds2" type="text" class="form-control"/>
 						</div>
-						<div class="col-lg-6 input-group">
+						<div class="col-md-6 input-group">
 							<span class="input-group-addon">$</span>
 							<input id="adds2_val" name="adds2_val" type="text" value="0" class="ta-right form-control"/>
 						</div>
 					</div>
-					<div id="content-footer-total" class="col-lg-12">
-						<h3 class="col-lg-6">TOTAL: </h3>
-						<div class="col-lg-6 input-group">
+					<div id="content-footer-total" class="col-md-12">
+						<h3 class="col-md-6">TOTAL: </h3>
+						<div class="col-md-6 input-group">
 							<span class="input-group-addon">$</span>
 							<input id="grand_total" name="grand_total" disabled type="text" class="ta-right form-control" value="{{grand_total}}"/>
 						</div>
 					</div>
-					<div id="content-footer-subwrap" class="col-lg-12">
+					<div id="content-footer-subwrap" class="col-md-12">
 						<button id="content-footer-submit" class="btn btn-primary" type="button">PROCEED</button>
 					</div>
 				</div>
@@ -756,15 +779,15 @@
 		{{/if}}
 		<!--  -->
 		{{#if sales_orders}}
-		<div id="content-title" class="col-lg-12">
-			<div class="col-lg-2">ORDERS</div> 
-			<div class="col-lg-2">
+		<div id="content-title" class="col-md-12">
+			<div class="col-md-2">ORDERS</div> 
+			<div class="col-md-2">
 				<input id="search_order" type="text" class="form-control content-control" placeholder="Search Order ID">
 			</div>
 		</div>
-		<div id="content_table" class="col-lg-12">
+		<div id="content_table" class="col-md-12">
 			{{#each all_sales_orders}}
-			<div class="highlight col-lg-12" data-toggle="modal" data-target="#content-modal">
+			<div class="highlight col-md-12" data-toggle="modal" data-target="#content-modal">
 				<div class="pull-left">
 					<p class="task_name">{{ name }}</p>
 					<p class="task_order_id">Order ID: {{ order_id }}</p>

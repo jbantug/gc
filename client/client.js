@@ -3,7 +3,10 @@ Meteor.subscribe("tasks");
 Meteor.subscribe("orders");
 Meteor.subscribe("inventory");
 Meteor.subscribe("carts");
-Meteor.subscribe("users");
+// Meteor.subscribe("users");
+Meteor.subscribe("order_process");
+Meteor.subscribe("purchase_process");
+Meteor.subscribe("purchase");
 
 Router.map(function(){
 	this.route('login', {path:'/'});

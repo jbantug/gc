@@ -3,4 +3,6 @@ Tasks = new Meteor.Collection("tasks");
 Orders = new Meteor.Collection("orders");
 Carts = new Meteor.Collection("carts");
 Inventory = new Meteor.Collection("inventory");
-Orderforms = new Meteor.Collection("orderforms");
+Order_process = new Meteor.Collection("order_process");
+Purchase_process = new Meteor.Collection("purchase_process");
+Purchase = new Meteor.Collection("purchase");

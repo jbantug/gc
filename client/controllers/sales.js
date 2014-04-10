@@ -17,6 +17,9 @@ Template.sales.rendered = function () {
 		if(!Session.get("line_qty")){
 			Session.set("line_qty", 0);
 		}
+		if(!Session.get("getMenu")){
+			Session.set("getMenu", "Embroidery");
+		}
 		Router.go("/sales");
 	}
 };
@@ -53,39 +56,47 @@ Template.content_sales.events({
 		var qty = $('#qty').text();
 		var itemNum = $('#itemNum').text();
 		var desc = $('#item').val();
-		var color = $('#color').text();
-		var s = $('#s').value;
-		var m = $('#m').value;
-		var l = $('#l').value;
-		var xl = $('#xl').value;
-		var x2 = $('#x2').value;
-		var x3 = $('#x3').value;
-		var other = $('#other').value;
+		var color = $('#color').val();
+		var s = $('#s').val();
+		var m = $('#m').val();
+		var l = $('#l').val();
+		var xl = $('#xl').val();
+		var x2 = $('#x2').val();
+		var x3 = $('#x3').val();
+		var other = $('#other').val();
 		var unitPrice = $('#unitPrice').text();
 		var totals = $('#totals').text();
-
-		var username = Meteor.user().username;
 
 		if(parseInt(qty) > 0){
 			Carts.insert(
 				{
-					username: username,
+					username: Meteor.user().username,
 					qty: parseInt(qty),
 					itemNum: parseInt(itemNum),
 					desc: desc,
 					color: color,
-					s: s,
-					m: m,
-					l: l,
-					xl: xl,
-					x2: x2,
-					x3: x3,
-					other: other,
+					s: parseInt(s),
+					m: parseInt(m),
+					l: parseInt(l),
+					xl: parseInt(xl),
+					x2: parseInt(x2),
+					x3: parseInt(x3),
+					other: parseInt(other),
 					unitPrice: parseFloat(unitPrice),
 					totals: parseFloat(totals)
 				}
 			);
 		}
+	},
+
+	'click .delete_order': function (event, template) {
+		var cart_id = $(event.currentTarget).closest("tr").find(".cart_id").val();
+		
+		Carts.remove(
+			{
+				_id: cart_id
+			}
+		);
 	},
 
 	'keydown #search_order': function (event) {
@@ -100,9 +111,9 @@ Template.content_sales.events({
 		if((event.keyCode > 47 && event.keyCode < 58) || (event.keyCode > 95 && event.keyCode < 106) || event.keyCode == 8 || event.keyCode == 190 || event.keyCode == 110){
 			Session.set("line_qty", 0);
 			setTimeout(function(){
-				$('#input-row td').each(function(index){
+				$('#input-row td input').each(function(index){
 					var line_qty = parseInt(Session.get("line_qty"));
-					line_qty += parseInt($(this).find('input').val());
+					line_qty += parseInt($(this).val());
 					Session.set("line_qty", line_qty);
 				});
 			}, 1);
@@ -151,8 +162,6 @@ Template.content_sales.events({
 			return false;
 		}
 
-		var username = Meteor.user().username;
-
 		var gen_order_id = "";
 		var possible = "0123456789";
 		for( var i=0; i < 4; i++ )
@@ -162,7 +171,7 @@ Template.content_sales.events({
 			date: $('#dateToday u').text(),
 			order_id: parseInt(gen_order_id),
 			invoice: data['invoice'],
-			username: username,
+			username: Meteor.user().username,
 			name: data['user_name'],
 			grand_total: parseFloat($('#grand_total').val()),
 			service: data['service'],
@@ -179,19 +188,48 @@ Template.content_sales.events({
 			}
 		);
 
-		var carts = Carts.find({username: username});
+		var carts = Carts.find({username: Meteor.user().username});
 		carts.forEach(function(cart){
-			var task_status = "Ordered";
+			var task_status = "Preparing";
+			var index = 1;
+			var available = true;
+			var color_qty = 0;
+			var colors = [];
 			var check_inventory = Inventory.findOne({itemNum:cart.itemNum});
-			if(check_inventory.qty < cart.qty){
-				task_status = "Need to Order";
+
+			check_inventory.colors.forEach(function(color){
+				var q = color.qty;
+				if(color.color == cart.color){
+					q = color.qty - cart.qty;
+					if(q < 0){
+						q = 0;
+					}
+					color_qty += color.qty;
+				}
+				colors.push(
+					{
+						color: color.color,
+						qty: q,
+					}
+				)
+			});
+
+			if(color_qty < cart.qty){
+				task_status = "Job Order";
+				available = false;
+				index = 0;
 			}else{
 				Inventory.update(
 					{
 						_id:check_inventory._id
 					},
 					{
-						$inc: {qty: -cart.qty}
+						$inc: {
+							qty: -cart.qty,
+						},
+						$set: {
+							colors: colors,
+						}
 					}
 				);
 			}
@@ -201,10 +239,12 @@ Template.content_sales.events({
 					tags:[task_status, data['service']],
 					date: $('#dateToday u').text(),
 					invoice: data['invoice'],
-					username: username,
+					order_id: parseInt(gen_order_id),
+					username: Meteor.user().username,
 					name: data['user_name'],
 					itemNum: cart.itemNum,
 					item: cart.desc,
+					color: cart.color,
 					qty: cart.qty,
 					s: cart.s,
 					m: cart.m,
@@ -216,9 +256,53 @@ Template.content_sales.events({
 					unitPrice: cart.unitPrice,
 					totals: cart.totals,
 					task: task_status,
+					index: index,
 					service: data['service'],
+					available: available,
 				}
 			);
+
+			var find_purchase = Purchase.findOne({itemNum:cart.itemNum,color:cart.color});
+
+			if(find_purchase && find_purchase.status == "Need to Order"){
+				Purchase.update(
+					{
+						_id: find_purchase._id,
+					},
+					{
+						$inc: {
+							qty: cart.qty,
+							s: cart.s,
+							m: cart.m,
+							l: cart.l,
+							xl: cart.xl,
+							x2: cart.x2,
+							x3: cart.x3,
+							other: cart.other,
+						}
+					}
+				);
+			}else{
+				Purchase.insert(
+					{
+						tags: ["Need to Order"],
+						status: "Need to Order",
+						index: 0,
+						itemNum: cart.itemNum,
+						item: cart.desc,
+						color: cart.color,
+						qty: cart.qty,
+						s: cart.s,
+						m: cart.m,
+						l: cart.l,
+						xl: cart.xl,
+						x2: cart.x2,
+						x3: cart.x3,
+						other: cart.other,
+						date: $('#dateToday u').text(),
+					}
+				);
+			}
 
 			Carts.remove({_id: cart._id});
 
@@ -344,7 +428,7 @@ Template.content_sales.all_sales_orders = function () {
 				status = "Not Started";
 			}
 
-			if(el.task == "Ordered"){
+			if(el.task == "Preparing"){
 				status = "Started";
 				return true;
 			}else if(el.task == "Embroidering" || el.task == "Printing"){

@@ -32,6 +32,48 @@ Meteor.startup(function () {
 		},
 	});
 
+	Order_process.remove({});
+	Order_process.insert({
+		process: "Job Order",
+		index: 0,
+	});
+
+	Order_process.insert({
+		process: "Preparing",
+		index: 1,
+	});
+
+	Order_process.insert({
+		process: "Embroidering",
+		index: 2,
+	});
+
+	Order_process.insert({
+		process: "Printing",
+		index: 2,
+	});
+
+	Order_process.insert({
+		process: "Completed",
+		index: 3,
+	});
+
+	Purchase_process.remove({});
+	Purchase_process.insert({
+		process: "Need to Order",
+		index: 0,
+	});
+
+	Purchase_process.insert({
+		process: "Ordered",
+		index: 1,
+	});
+
+	Purchase_process.insert({
+		process: "Delivered",
+		index: 2,
+	});
+
 	Inventory.remove({});
 	Inventory.insert(
 		{
@@ -39,7 +81,20 @@ Meteor.startup(function () {
 			item: "Shirt",
 			qty: 0,
 			itemNum: 123,
-			color: "Blue",
+			colors: [
+				{
+					color: "Red",
+					qty: 0,
+				},
+				{
+					color: "Blue",
+					qty: 0,
+				},
+				{
+					color: "Green",
+					qty: 0,
+				},
+			],
 			unitPrice: 10 
 		}
 	);
@@ -49,7 +104,16 @@ Meteor.startup(function () {
 			item: "Tarpaulin",
 			qty: 0,
 			itemNum: 234,
-			color: "Red",
+			colors: [
+				{
+					color: "Red",
+					qty: 0,
+				},
+				{
+					color: "Blue",
+					qty: 0,
+				},
+			],
 			unitPrice: 50 
 		}
 	);
@@ -59,7 +123,12 @@ Meteor.startup(function () {
 			item: "Leather",
 			qty: 0,
 			itemNum: 345,
-			color: "Green",
+			colors: [
+				{
+					color: "Red",
+					qty: 0,
+				},
+			],
 			unitPrice: 20 
 		}
 	);
@@ -105,12 +174,15 @@ Meteor.startup(function () {
 	Tasks.remove({});
 	Tasks.insert(
 		{
-			tags:["Need to Order", "Embroidery"],
+			tags:["Job Order", "Embroidery"],
 			date: "01/01/2014",
+			order_id: 1234,
 			invoice: "12345678",
 			username: "user",
 			name: "GC User",
+			item: "Shirt",
 			itemNum: 123,
+			color: "Red",
 			qty: 1,
 			s: 1,
 			m: 0,
@@ -121,12 +193,35 @@ Meteor.startup(function () {
 			other: 0,
 			unitPrice: 10,
 			totals: 10,
-			task: "Need to Order",
+			task: "Job Order",
+			index: 0,
 			service: "Embroidery",
+			available: false,
 		}
 	);
 
 	Carts.remove({});
+
+	Purchase.remove({});
+	Purchase.insert(
+		{
+			tags: ["Need to Order"],
+			status: "Need to Order",
+			index: 0,
+			item: "Shirt",
+			itemNum: 123,
+			color: "Red",
+			qty: 1,
+			s: 1,
+			m: 0,
+			l: 0,
+			xl: 0,
+			x2: 0,
+			x3: 0,
+			other: 0,
+			date: "01/01/2014",
+		}
+	);
 });
 
 
@@ -150,11 +245,95 @@ Meteor.publish("inventory", function () {
 	return Inventory.find({});
 });
 
+Meteor.publish("order_process", function () {
+	return Order_process.find({});
+});
+
+Meteor.publish("purchase_process", function () {
+	return Purchase_process.find({});
+});
+
+Meteor.publish("purchase", function () {
+	return Purchase.find({});
+});
+
+/*
 Meteor.publish("users", function(){
 	var user = Meteor.users.findOne(this.userId);
 	if(user && user.profile.role === "sales"){
 		return Meteor.users.find();
 	}else{
 		return null;
+	}
+});
+*/
+
+Meteor.methods({
+	next_purchase: function (purchase_id, itemNum, new_status, index, status, qty, color) {
+
+		if(status == "Ordered"){
+			var colors = [];
+			var check_inventory = Inventory.findOne({itemNum:itemNum});
+			check_inventory.colors.forEach(function(c){
+				var q = c.qty;
+				if(c.color == color){
+					q = c.qty + qty;
+				}
+				colors.push(
+					{
+						color: c.color,
+						qty: q,
+					}
+				)
+			});
+
+			Inventory.update(
+				{
+					itemNum: itemNum
+				},
+				{
+					$inc: {
+						qty: qty,
+					},
+					$set: {
+						colors: colors,
+					}
+				}
+			);
+		}
+
+		Purchase.update(
+			{
+				_id: purchase_id,
+			},
+			{
+				$set: {
+					tags: [new_status],
+					status: new_status,
+					index: index,
+				}
+			}
+		);
+	},
+
+	update_available: function (str) {
+		var query = Tasks.find({tags:{$all:[str]}}, {sort: {date: -1}});
+		query.forEach(function(task){
+			var check_qty = Inventory.findOne({itemNum:task.itemNum});
+			if(check_qty){
+				if(check_qty.qty >= task.qty){
+					Tasks.update(
+						{
+							_id: task._id,
+						},
+						{
+							$set:{
+								available: true,
+							}
+						}
+					);
+				}
+			}
+		});
 	}
 });

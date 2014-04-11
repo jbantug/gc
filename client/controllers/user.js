@@ -162,6 +162,16 @@ Template.content_user.events({
 			return false;
 		}
 
+		if(data['user_name'] == ""){
+			alert("Please input a name.");
+			return false;
+		}
+
+		if(parseFloat(data['deposit']) < (parseFloat($('#grand_total').val())*0.5)){
+			alert("A 50% deposit is required.");
+			return false;
+		}
+
 		var gen_order_id = "";
 		var possible = "0123456789";
 		for( var i=0; i < 4; i++ )
@@ -176,6 +186,7 @@ Template.content_user.events({
 			grand_total: parseFloat($('#grand_total').val()),
 			service: data['service'],
 			status: "Waiting",
+			deposit: parseFloat(data['deposit']),
 		});
 
 		var findTarget = Services.findOne({service:data['service']});
@@ -279,7 +290,7 @@ Template.content_user.events({
 							x2: cart.x2,
 							x3: cart.x3,
 							other: cart.other,
-						},
+						}
 					}
 				);
 			}else{
@@ -315,6 +326,7 @@ Template.content_user.events({
 			$('#content-table tbody input').val("0");
 			$('.content-footer-adds div .ta-right').val("0");
 			$('#item').val("Select Item");
+			$('#deposit').val("0");
 		});
 
 

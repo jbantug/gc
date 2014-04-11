@@ -7,47 +7,6 @@ Template.target_modal.events({
 		event.preventDefault();
 		return false;
 	},
-
-	'change #target_select': function (event) {
-		var select_val = $('#target_select').val();
-
-		if(Session.get("target_id")){
-			var findTarget = Tasks.findOne({_id:Session.get("target_id")});
-		}else{
-			var findTarget = Tasks.findOne({invoice:Session.get("target_invoice")});
-		}
-
-		var tag = [select_val, findTarget.service];
-
-		if(findTarget.task == "Need to Order"){
-			var check_inventory = Inventory.findOne({itemNum:findTarget.itemNum});
-			if(check_inventory.qty < findTarget.qty){
-				alert("You don't have enough supply.");
-				return false;
-			}else{
-				Inventory.update(
-					{
-						_id:check_inventory._id
-					},
-					{
-						$inc: {qty: -findTarget.qty}
-					}
-				);
-			}
-		}
-
-		Tasks.update(
-			{
-				_id:findTarget._id
-			},
-			{
-				$set: {
-					task: select_val,
-					tags: tag
-				}
-			}
-		);
-	},
 });
 
 Template.inventory_modal.events({
@@ -70,7 +29,7 @@ Template.target_modal.target_task = function () {
 		return Tasks.findOne({_id:Session.get("target_id")});
 	}
 	else if(Session.get("target_invoice")){
-		if(Meteor.user().profile.role == "user"){
+		if(Meteor.user().profile.role == "user" || Meteor.user().profile.role == "sales"){
 			return Orders.findOne({invoice:Session.get("target_invoice"), username:Meteor.user().username});
 		}
 		return Tasks.findOne({invoice:Session.get("target_invoice")});
@@ -98,7 +57,7 @@ Template.target_modal.rendered = function () {
 
 Template.target_modal.checkUser = function () {
 	if(Meteor.user() != null){
-		if(Meteor.user().profile.role == "user"){
+		if(Meteor.user().profile.role == "user" || Meteor.user().profile.role == "sales"){
 			return true;
 		}
 	}

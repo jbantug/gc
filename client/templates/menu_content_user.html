@@ -194,8 +194,12 @@
 				<p class="col-md-12"><i>
 					Each order placed with GC is unique and individual and as such, additional costs may incur, that may not have been perceived especially if changes are made. It is our practice to provide an excellent  experience, and quality product. A 50% deposit is required to facilitate your order.
 				</i></p>
-				<div class="col-md-12">
-					<strong class="col-md-12">Customer Signature</strong>
+				<div id="content-deposit" class="col-md-12">
+					<h4 class="col-md-3	">Deposit: </h4>
+					<div class="col-md-6 input-group">
+						<span class="input-group-addon">$</span>
+						<input id="deposit" name="deposit" type="text" class="ta-right form-control" value="0"/>
+					</div>
 				</div>
 			</div>
 			<div class="col-md-6">
@@ -780,7 +784,7 @@
 		{{#if user_orders}}
 		<div id="content-title" class="col-md-12">
 			<div class="col-md-2">YOUR ORDERS</div> 
-			<div class="col-md-2">
+			<div class="col-md-3">
 				<input id="search_order" type="text" class="form-control content-control" placeholder="Search Order ID">
 			</div>
 		</div>

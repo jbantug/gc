@@ -162,6 +162,16 @@ Template.content_sales.events({
 			return false;
 		}
 
+		if(data['user_name'] == ""){
+			alert("Please input a name.");
+			return false;
+		}
+
+		if(parseFloat(data['deposit']) < (parseFloat($('#grand_total').val())*0.5)){
+			alert("A 50% deposit is required.");
+			return false;
+		}
+
 		var gen_order_id = "";
 		var possible = "0123456789";
 		for( var i=0; i < 4; i++ )
@@ -176,6 +186,7 @@ Template.content_sales.events({
 			grand_total: parseFloat($('#grand_total').val()),
 			service: data['service'],
 			status: "Waiting",
+			deposit: parseFloat(data['deposit']),
 		});
 
 		var findTarget = Services.findOne({service:data['service']});
@@ -315,6 +326,7 @@ Template.content_sales.events({
 			$('#content-table tbody input').val("0");
 			$('.content-footer-adds div .ta-right').val("0");
 			$('#item').val("Select Item");
+			$('#deposit').val("0");
 		});
 
 
@@ -334,7 +346,7 @@ Template.content_sales.events({
 
 /* --- */
 
-Template.content_sales.grand_total = function () {
+Template.content_sales.order_total = function () {
 	var grand_total = 0;
 
 	var carts = Carts.find({username: Meteor.user().username});
@@ -394,11 +406,22 @@ Template.content_sales.sales_orders = function () {
 	return false;
 };
 
-Template.content_sales.carts = function () {
-	if(Meteor.user().profile.role == "sales"){
-		return Carts.find({username: Meteor.user().username});
+Template.content_sales.sales_sales = function () {
+	if(Session.get("getMenu") == "Sales"){
+		return true;
 	}
-	
+	return false;
+};
+
+Template.content_sales.sales_receivable = function () {
+	if(Session.get("getMenu") == "Account Receivable"){
+		return true;
+	}
+	return false;
+};
+
+Template.content_sales.carts = function () {
+	return Carts.find({username: Meteor.user().username});
 };
 
 Template.content_sales.items = function () {
@@ -461,6 +484,14 @@ Template.content_sales.all_sales_orders = function () {
 	return Orders.find({username:Meteor.user().username});
 };
 
+Template.content_sales.all_sales_sales = function () {
+	return Orders.find({});
+};
+
+Template.content_sales.all_sales_receivable = function () {
+	return Orders.find({});
+};
+
 Template.content_sales.findItem = function () {
 	return Inventory.findOne({itemNum:parseInt(Session.get("itemNum"))});
 };
@@ -487,3 +518,10 @@ Template.content_sales.gen_invoice = function () {
 
 	return gen_invoice;
 };
+
+Handlebars.registerHelper("receivable", function(grand_total, deposit) {
+  grand_total = parseFloat(grand_total);
+  deposit = parseFloat(deposit);
+
+  return grand_total-deposit;
+});

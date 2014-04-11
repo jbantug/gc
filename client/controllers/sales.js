@@ -201,8 +201,8 @@ Template.content_sales.events({
 
 		var carts = Carts.find({username: Meteor.user().username});
 		carts.forEach(function(cart){
-			var task_status = "Preparing";
-			var index = 1;
+			var task_status = "Job Order";
+			var index = 0;
 			var available = true;
 			var color_qty = 0;
 			var colors = [];
@@ -226,23 +226,7 @@ Template.content_sales.events({
 			});
 
 			if(color_qty < cart.qty){
-				task_status = "Job Order";
 				available = false;
-				index = 0;
-			}else{
-				Inventory.update(
-					{
-						_id:check_inventory._id
-					},
-					{
-						$inc: {
-							qty: -cart.qty,
-						},
-						$set: {
-							colors: colors,
-						}
-					}
-				);
 			}
 
 			Tasks.insert(

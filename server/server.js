@@ -121,12 +121,12 @@ Meteor.startup(function () {
 		{
 			type: "Garment",
 			item: "Leather",
-			qty: 0,
+			qty: 5,
 			itemNum: 345,
 			colors: [
 				{
 					color: "Red",
-					qty: 0,
+					qty: 5,
 				},
 			],
 			unitPrice: 20 

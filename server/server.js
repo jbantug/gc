@@ -169,6 +169,7 @@ Meteor.startup(function () {
 		grand_total: 10,
 		service: "Embroidery",
 		status: "Waiting",
+		deposit: 5,
 	});
 
 	Tasks.remove({});

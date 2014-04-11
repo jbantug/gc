@@ -16,6 +16,16 @@
 					<span class="label label-default pull-right">{{sales_orders_count}}</span>
 				</div>
 			</li>
+			<li>
+				<div class="highlight">
+					<span class="menu-item">Sales</span>
+				</div>
+			</li>
+			<li>
+				<div class="highlight">
+					<span class="menu-item">Account Receivable</span>
+				</div>
+			</li>
 			<hr/>
 		</ul>
 		<div>
@@ -195,8 +205,12 @@
 				<p class="col-md-12"><i>
 					Each order placed with GC is unique and individual and as such, additional costs may incur, that may not have been perceived especially if changes are made. It is our practice to provide an excellent  experience, and quality product. A 50% deposit is required to facilitate your order.
 				</i></p>
-				<div class="col-md-12">
-					<strong class="col-md-12">Customer Signature</strong>
+				<div id="content-deposit" class="col-md-12">
+					<h4 class="col-md-3	">Deposit: </h4>
+					<div class="col-md-6 input-group">
+						<span class="input-group-addon">$</span>
+						<input id="deposit" name="deposit" type="text" class="ta-right form-control" value="0"/>
+					</div>
 				</div>
 			</div>
 			<div class="col-md-6">
@@ -223,7 +237,7 @@
 						<h3 class="col-md-6">TOTAL: </h3>
 						<div class="col-md-6 input-group">
 							<span class="input-group-addon">$</span>
-							<input id="grand_total" name="grand_total" disabled type="text" class="ta-right form-control" value="{{grand_total}}"/>
+							<input id="grand_total" name="grand_total" disabled type="text" class="ta-right form-control" value="{{order_total}}"/>
 						</div>
 					</div>
 					<div id="content-footer-subwrap" class="col-md-12">
@@ -376,8 +390,12 @@
 				<p class="col-md-12"><i>
 					Each order placed with GC is unique and individual and as such, additional costs may incur, that may not have been perceived especially if changes are made. It is our practice to provide an excellent  experience, and quality product. A 50% deposit is required to facilitate your order.
 				</i></p>
-				<div class="col-md-12">
-					<strong class="col-md-12">Customer Signature</strong>
+				<div id="content-deposit" class="col-md-12">
+					<h4 class="col-md-3	">Deposit: </h4>
+					<div class="col-md-6 input-group">
+						<span class="input-group-addon">$</span>
+						<input id="deposit" name="deposit" type="text" class="ta-right form-control" value="0"/>
+					</div>
 				</div>
 			</div>
 			<div class="col-md-6">
@@ -404,7 +422,7 @@
 						<h3 class="col-md-6">TOTAL: </h3>
 						<div class="col-md-6 input-group">
 							<span class="input-group-addon">$</span>
-							<input id="grand_total" name="grand_total" disabled type="text" class="ta-right form-control" value="{{grand_total}}"/>
+							<input id="grand_total" name="grand_total" disabled type="text" class="ta-right form-control" value="{{order_total}}"/>
 						</div>
 					</div>
 					<div id="content-footer-subwrap" class="col-md-12">
@@ -586,7 +604,7 @@
 						<h3 class="col-md-6">TOTAL: </h3>
 						<div class="col-md-6 input-group">
 							<span class="input-group-addon">$</span>
-							<input id="grand_total" name="grand_total" disabled type="text" class="ta-right form-control" value="{{grand_total}}"/>
+							<input id="grand_total" name="grand_total" disabled type="text" class="ta-right form-control" value="{{order_total}}"/>
 						</div>
 					</div>
 					<div id="content-footer-subwrap" class="col-md-12">
@@ -767,7 +785,7 @@
 						<h3 class="col-md-6">TOTAL: </h3>
 						<div class="col-md-6 input-group">
 							<span class="input-group-addon">$</span>
-							<input id="grand_total" name="grand_total" disabled type="text" class="ta-right form-control" value="{{grand_total}}"/>
+							<input id="grand_total" name="grand_total" disabled type="text" class="ta-right form-control" value="{{order_total}}"/>
 						</div>
 					</div>
 					<div id="content-footer-subwrap" class="col-md-12">
@@ -781,7 +799,7 @@
 		{{#if sales_orders}}
 		<div id="content-title" class="col-md-12">
 			<div class="col-md-2">ORDERS</div> 
-			<div class="col-md-2">
+			<div class="col-md-3">
 				<input id="search_order" type="text" class="form-control content-control" placeholder="Search Order ID">
 			</div>
 		</div>
@@ -799,6 +817,80 @@
 				</div>
 			</div>
 			{{/each}}
+		</div>
+		{{/if}}
+		<!--  -->
+		{{#if sales_sales}}
+		<div id="content-title" class="col-md-12">
+			<div class="col-md-6">SALES</div> 
+			<!-- <div class="col-md-2">
+				<input id="search_order" type="text" class="form-control content-control" placeholder="Search Order ID">
+			</div> -->
+		</div>
+		<div id="content_table" class="col-md-12">
+			<div class="col-md-10">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<td><b>Date</b></td>
+							<td><b>Order ID</b></td>
+							<td><b>Service</b></td>
+							<td><b>Name</b></td>
+							<td><b>Amount</b></td>
+							<td><b>Deposit</b></td>
+						</tr>
+					</thead>
+					<tbody>
+						{{#each all_sales_sales}}
+						<tr>
+							<td>{{ date }}</td>
+							<td>{{ order_id }}</td>
+							<td>{{ service }}</td>
+							<td>{{ name }}</td>
+							<td class="ta-right">{{ grand_total }}</td>
+							<td class="ta-right">{{ deposit }}</td>
+						</tr>
+						{{/each}}
+					</tbody>
+				</table>
+			</div>
+		</div>
+		{{/if}}
+		<!--  -->
+		{{#if sales_receivable}}
+		<div id="content-title" class="col-md-12">
+			<div class="col-md-6">ACCOUNTS RECEIVABLE</div> 
+			<!-- <div class="col-md-2">
+				<input id="search_order" type="text" class="form-control content-control" placeholder="Search Order ID">
+			</div> -->
+		</div>
+		<div id="content_table" class="col-md-12">
+			<div class="col-md-10">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<td><b>Date</b></td>
+							<td><b>Order ID</b></td>
+							<td><b>Service</b></td>
+							<td><b>Name</b></td>
+							<td><b>Amount</b></td>
+							<td><b>Receivable</b></td>
+						</tr>
+					</thead>
+					<tbody>
+						{{#each all_sales_receivable}}
+						<tr>
+							<td>{{ date }}</td>
+							<td>{{ order_id }}</td>
+							<td>{{ service }}</td>
+							<td>{{ name }}</td>
+							<td class="ta-right">{{ grand_total }}</td>
+							<td class="ta-right">{{receivable grand_total deposit}}</td>
+						</tr>
+						{{/each}}
+					</tbody>
+				</table>
+			</div>
 		</div>
 		{{/if}}
 		<!--  -->

@@ -8,21 +8,6 @@
 		<p>Item: {{ target_task.itemNum }}</p>
 		<p>Qty: {{ target_task.qty }}</p>
 		<p>Line Total: ${{ target_task.totals }}</p>
-		<br/>
-		Update Status:<br/>
-		{{#if check_task}}
-		<select id="target_select" class="form-control" style="width: 30%">
-		  	<option>Ordered</option>
-		  	<option>Embroidering</option>
-		  	<option>Printing</option>
-		  	<option>Completed</option>
-		</select>
-		{{else}}
-		<select id="target_select" class="form-control" style="width: 30%">
-			<option>Need to Order</option>
-			<option>Ordered</option>
-		</select>
-		{{/if}}
 	{{else}}
 		<p>Order ID: {{ target_task.order_id }}</p>
 		<p>Service: {{ target_task.service }}</p>

@@ -6,20 +6,22 @@ Template.user.rendered = function () {
 	var user = Meteor.user();
 	if(user == null){
 		Router.go("/");
-	}else if(user.profile.role == "staff"){
+	}else if(user.profile.role == "staff" || user.profile.role == "sales"){
 		Meteor.logout(function(cb){
 			Router.go("/");
 		});
-	}else if(user.profile.role == "user" || user.profile.role == "user"){
+	}else if(user.profile.role == "user"){
 		if(!Session.get("grand_total")){
 			Session.set("grand_total", 0);
 		}
 		if(!Session.get("line_qty")){
 			Session.set("line_qty", 0);
 		}
+
 		if(!Session.get("getMenu")){
 			Session.set("getMenu", "Orders");
 		}
+
 		Router.go("/user");
 	}
 };
@@ -35,6 +37,7 @@ Template.menu_user.events({
 		Session.set("getMenu", event.currentTarget.firstElementChild.innerHTML);
 		$('.menu-item').removeClass("menu-selected");
 		$(event.currentTarget.firstElementChild).addClass("menu-selected");
+		delete Session.keys['itemNum'];
 	},
 
 	'click .logout': function (event) {
@@ -87,6 +90,10 @@ Template.content_user.events({
 				}
 			);
 		}
+
+		delete Session.keys['itemNum'];
+		$('#item').val("Select Item");
+		Session.set("line_qty", 0);
 	},
 
 	'click .delete_order': function (event, template) {
@@ -320,7 +327,11 @@ Template.content_user.events({
 
 	'change #item': function (event) {
 		var find_item = Inventory.findOne({item:$('#item').val()});
-		Session.set("itemNum", find_item.itemNum);
+		if(find_item){
+			Session.set("itemNum", find_item.itemNum);
+		}else{
+			Session.set("itemNum", "");
+		}
 	},
 
 	'mouseenter .inventory-box': function (event) {

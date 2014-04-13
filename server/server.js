@@ -272,6 +272,16 @@ Meteor.publish("users", function(){
 Meteor.methods({
 	next_purchase: function (purchase_id, itemNum, new_status, index, status, qty, color) {
 
+		var date = new Date();
+		var year = date.getFullYear();
+		var month = date.getMonth() + 1;
+		var day = date.getDate();
+		var hours = date.getHours();
+		var minutes = date.getMinutes();
+		var seconds = date.getSeconds();
+
+		var update_date = month+"/"+day+"/"+year+" "+hours+":"+minutes;
+
 		if(status == "Ordered"){
 			var colors = [];
 			var check_inventory = Inventory.findOne({itemNum:itemNum});
@@ -298,6 +308,28 @@ Meteor.methods({
 					},
 					$set: {
 						colors: colors,
+					}
+				}
+			);
+
+			Purchase.update(
+				{
+					_id: purchase_id,
+				},
+				{
+					$set: {
+						date_delivered: update_date,
+					}
+				}
+			);
+		}else if(status == "Need to Order"){
+			Purchase.update(
+				{
+					_id: purchase_id,
+				},
+				{
+					$set: {
+						date_ordered: update_date,
 					}
 				}
 			);

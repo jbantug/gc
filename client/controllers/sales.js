@@ -17,9 +17,12 @@ Template.sales.rendered = function () {
 		if(!Session.get("line_qty")){
 			Session.set("line_qty", 0);
 		}
+
 		if(!Session.get("getMenu")){
 			Session.set("getMenu", "Embroidery");
+			$(document.getElementById('service-menu').firstElementChild).find('.menu-item').addClass("menu-selected");
 		}
+
 		Router.go("/sales");
 	}
 };
@@ -35,6 +38,7 @@ Template.menu_sales.events({
 		Session.set("getMenu", event.currentTarget.firstElementChild.innerHTML);
 		$('.menu-item').removeClass("menu-selected");
 		$(event.currentTarget.firstElementChild).addClass("menu-selected");
+		delete Session.keys['itemNum'];
 	},
 
 	'click .logout': function (event) {
@@ -66,6 +70,7 @@ Template.content_sales.events({
 		var other = $('#other').val();
 		var unitPrice = $('#unitPrice').text();
 		var totals = $('#totals').text();
+		var service = $('#service').val();
 
 		if(parseInt(qty) > 0){
 			Carts.insert(
@@ -83,10 +88,15 @@ Template.content_sales.events({
 					x3: parseInt(x3),
 					other: parseInt(other),
 					unitPrice: parseFloat(unitPrice),
-					totals: parseFloat(totals)
+					totals: parseFloat(totals),
+					service: service,
 				}
 			);
 		}
+
+		delete Session.keys['itemNum'];
+		$('#item').val("Select Item");
+		Session.set("line_qty", 0);
 	},
 
 	'click .delete_order': function (event, template) {
@@ -225,10 +235,6 @@ Template.content_sales.events({
 				)
 			});
 
-			if(color_qty < cart.qty){
-				available = false;
-			}
-
 			Tasks.insert(
 				{	
 					tags:[task_status, data['service']],
@@ -320,7 +326,11 @@ Template.content_sales.events({
 
 	'change #item': function (event) {
 		var find_item = Inventory.findOne({item:$('#item').val()});
-		Session.set("itemNum", find_item.itemNum);
+		if(find_item){
+			Session.set("itemNum", find_item.itemNum);
+		}else{
+			Session.set("itemNum", "");
+		}
 	},
 
 	'mouseenter .inventory-box': function (event) {
@@ -405,7 +415,7 @@ Template.content_sales.sales_receivable = function () {
 };
 
 Template.content_sales.carts = function () {
-	return Carts.find({username: Meteor.user().username});
+	return Carts.find({username:Meteor.user().username, service:Session.get("getMenu")});
 };
 
 Template.content_sales.items = function () {

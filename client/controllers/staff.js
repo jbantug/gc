@@ -82,17 +82,48 @@ Template.content_staff.events({
 	'click .next_order': function (event) {
 		var task_id = $(event.currentTarget).parent().closest('li').find('.order_task_id').text();
 		var find_task = Tasks.findOne({_id:task_id});
+		var colors = [];
+
+		var date = new Date();
+		var year = date.getFullYear();
+		var month = date.getMonth() + 1;
+		var day = date.getDate();
+		var hours = date.getHours();
+		var minutes = date.getMinutes();
+		var seconds = date.getSeconds();
+
+		var update_date = month+"/"+day+"/"+year+" "+hours+":"+minutes;
 
 		var check_inventory = Inventory.findOne({itemNum:find_task.itemNum})
+		check_inventory.colors.forEach(function(color){
+			var q = color.qty;
+			if(color.color == find_task.color){
+				q = color.qty - find_task.qty;
+				if(q < 0){
+					q = 0;
+				}
+			}
+			colors.push(
+				{
+					color: color.color,
+					qty: q,
+				}
+			)
+		});
+
+
 		if(find_task.task == "Job Order"){
 			Inventory.update(
 				{
-					_id:check_inventory._id
+					_id:check_inventory._id,
 				},
 				{
 					$inc: {
-						qty: -find_task.qty
+						qty: -find_task.qty,
 					},
+					$set: {
+						colors: colors,
+					}
 				}
 			);
 		}
@@ -117,7 +148,8 @@ Template.content_staff.events({
 					task: new_status,
 					index: find_task.index+1,
 					service: find_task.service,
-				}
+					updated: update_date,
+ 				}
 			}
 		);
 	}

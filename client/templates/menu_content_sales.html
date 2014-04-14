@@ -270,7 +270,7 @@
 					</tr>
 					<tr>
 						<td>Name: </td>
-						<td><input name="user_name" class="form-control content-control" type="text" value="{{currentUser.profile.name}}"/></td>
+						<td><input name="user_name" class="form-control content-control" type="text" value=""/></td>
 					</tr>
 					<tr>
 						<td>Address: </td>
@@ -285,7 +285,7 @@
 		</div>
 		<div id="content-datebox" class="col-md-12">
 			<div class="col-md-12" id="content-datebox-upper">
-				<span class="col-md-4">Salesperson: <input name="salesperson" style="width:65%;" class="form-control content-control" type="text"/></span>
+				<span class="col-md-3">Salesperson: <input name="salesperson" style="width:50%;" class="form-control content-control" type="text" value="{{currentUser.profile.name}}"/></span>
 				<span id="dateToday" class="col-md-4">Today's Date: <u>{{ dateToday }}</u></span>
 				<span class="col-md-4">Due Date: <input name="due_date" style="width:67%;" class="form-control content-control" type="date"/></span>
 			</div>
@@ -301,17 +301,16 @@
 			</div>
 			<div class="col-md-3">
 				INVOICE #:<br/>
-				<input name="invoice" type="text" class="form-control">
+				<input name="invoice" type="text" class="form-control" value="{{gen_invoice}}">
 			</div>
 		</div>
 		<div id="content-table" class="col-md-12">
 			<table class="table table-bordered">
 				<thead>
 					<tr>
-						<td>QTY</td>
-						<td style="width:8%">Item #</td>
-						<td style="width:25%">Description</td>
-						<td style="width:8%">Color</td>
+						<td>Item</td>
+						<td>Item No</td>
+						<td>Color</td>
 						<td>S</td>
 						<td>M</td>
 						<td>L</td>
@@ -319,23 +318,31 @@
 						<td>2X</td>
 						<td>3X</td>
 						<td style="font-size:10px">OTHER<input name="other_size" type="text" class="form-control" style="height:20px"></td>
-						<td style="width:8%">Unit Price</td>
-						<td style="width:8%">Totals</td>
+						<td>Unit Price</td>
+						<td>Qty</td>
+						<td>Line Total</td>
+						<td></td>
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
+					<tr id="input-row">
 						<td>
-							<input id="qty" type="text" class="form-control content-control">
+							<select id="item">
+								<option>Select Item</option>
+								{{#each items}}
+								<option>{{item}}</option>
+								{{/each}}
+							</select>
 						</td>
 						<td>
-							<input id="itemNum" type="text" class="form-control content-control">
+							<span id="itemNum">{{selectItem.itemNum}}</span>
 						</td>
 						<td>
-							<input id="desc" type="text" class="form-control content-control" value="{{findItem.item}}">
-						</td>
-						<td>
-							<input id="color" type="text" class="form-control content-control" value="{{findItem.color}}">
+							<select id="color">
+								{{#each selectItem.colors}}
+								<option>{{this.color}}</option>
+								{{/each}}
+							</select>
 						</td>
 						<td>
 							<input id="s" type="text" class="form-control content-control" value="0">
@@ -359,17 +366,25 @@
 							<input id="other" type="text" class="form-control content-control" value="0">
 						</td>
 						<td>
-							<input id="unitPrice" type="text" class="form-control content-control" value="{{findItem.unitPrice}}">
+							$<span id="unitPrice">{{selectItem.unitPrice}}</span>
 						</td>
 						<td>
-							<input id="totals" type="text" class="form-control content-control">
+							<span id="qty">{{line_qty}}</span>
+						</td>
+						<td>
+							<strong>$<span id="totals">{{line_total}}</span></strong>
+						</td>
+						<td>
+							<button id="add_order" type="button" class="btn btn-primary">
+								<span class="glyphicon glyphicon-plus"></span>
+							</button>
 						</td>
 					</tr>
 					{{#each carts}}
 					<tr>
-						<td>{{qty}}</td>
-						<td>{{itemNum}}</td>
+						<input class="cart_id" value="{{_id}}" type="hidden">
 						<td>{{desc}}</td>
+						<td>{{itemNum}}</td>
 						<td>{{color}}</td>
 						<td>{{s}}</td>
 						<td>{{m}}</td>
@@ -379,7 +394,13 @@
 						<td>{{x3}}</td>
 						<td>{{other}}</td>
 						<td>{{unitPrice}}</td>
+						<td>{{qty}}</td>
 						<td>{{totals}}</td>
+						<td>
+							<button class="delete_order btn btn-danger" type="button">
+								<span class="glyphicon glyphicon-trash"></span>
+							</button>
+						</td>
 					</tr>
 					{{/each}}
 				</tbody>
@@ -428,7 +449,6 @@
 					<div id="content-footer-subwrap" class="col-md-12">
 						<button id="content-footer-submit" class="btn btn-primary" type="button">PROCEED</button>
 					</div>
-
 				</div>
 			</div>
 		</div>
@@ -456,7 +476,7 @@
 					</tr>
 					<tr>
 						<td>Name: </td>
-						<td><input name="user_name" class="form-control content-control" type="text" value="{{currentUser.profile.name}}"/></td>
+						<td><input name="user_name" class="form-control content-control" type="text" value=""/></td>
 					</tr>
 					<tr>
 						<td>Address: </td>
@@ -471,7 +491,7 @@
 		</div>
 		<div id="content-datebox" class="col-md-12">
 			<div class="col-md-12" id="content-datebox-upper">
-				<span class="col-md-4">Salesperson: <input name="salesperson" style="width:65%;" class="form-control content-control" type="text"/></span>
+				<span class="col-md-3">Salesperson: <input name="salesperson" style="width:50%;" class="form-control content-control" type="text" value="{{currentUser.profile.name}}"/></span>
 				<span id="dateToday" class="col-md-4">Today's Date: <u>{{ dateToday }}</u></span>
 				<span class="col-md-4">Due Date: <input name="due_date" style="width:67%;" class="form-control content-control" type="date"/></span>
 			</div>
@@ -487,17 +507,16 @@
 			</div>
 			<div class="col-md-3">
 				INVOICE #:<br/>
-				<input name="invoice" type="text" class="form-control">
+				<input name="invoice" type="text" class="form-control" value="{{gen_invoice}}">
 			</div>
 		</div>
 		<div id="content-table" class="col-md-12">
 			<table class="table table-bordered">
 				<thead>
 					<tr>
-						<td>QTY</td>
-						<td style="width:8%">Item #</td>
-						<td style="width:25%">Description</td>
-						<td style="width:8%">Color</td>
+						<td>Item</td>
+						<td>Item No</td>
+						<td>Color</td>
 						<td>S</td>
 						<td>M</td>
 						<td>L</td>
@@ -505,23 +524,31 @@
 						<td>2X</td>
 						<td>3X</td>
 						<td style="font-size:10px">OTHER<input name="other_size" type="text" class="form-control" style="height:20px"></td>
-						<td style="width:8%">Unit Price</td>
-						<td style="width:8%">Totals</td>
+						<td>Unit Price</td>
+						<td>Qty</td>
+						<td>Line Total</td>
+						<td></td>
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
+					<tr id="input-row">
 						<td>
-							<input id="qty" type="text" class="form-control content-control">
+							<select id="item">
+								<option>Select Item</option>
+								{{#each items}}
+								<option>{{item}}</option>
+								{{/each}}
+							</select>
 						</td>
 						<td>
-							<input id="itemNum" type="text" class="form-control content-control">
+							<span id="itemNum">{{selectItem.itemNum}}</span>
 						</td>
 						<td>
-							<input id="desc" type="text" class="form-control content-control" value="{{findItem.item}}">
-						</td>
-						<td>
-							<input id="color" type="text" class="form-control content-control" value="{{findItem.color}}">
+							<select id="color">
+								{{#each selectItem.colors}}
+								<option>{{this.color}}</option>
+								{{/each}}
+							</select>
 						</td>
 						<td>
 							<input id="s" type="text" class="form-control content-control" value="0">
@@ -545,17 +572,25 @@
 							<input id="other" type="text" class="form-control content-control" value="0">
 						</td>
 						<td>
-							<input id="unitPrice" type="text" class="form-control content-control" value="{{findItem.unitPrice}}">
+							$<span id="unitPrice">{{selectItem.unitPrice}}</span>
 						</td>
 						<td>
-							<input id="totals" type="text" class="form-control content-control">
+							<span id="qty">{{line_qty}}</span>
+						</td>
+						<td>
+							<strong>$<span id="totals">{{line_total}}</span></strong>
+						</td>
+						<td>
+							<button id="add_order" type="button" class="btn btn-primary">
+								<span class="glyphicon glyphicon-plus"></span>
+							</button>
 						</td>
 					</tr>
 					{{#each carts}}
 					<tr>
-						<td>{{qty}}</td>
-						<td>{{itemNum}}</td>
+						<input class="cart_id" value="{{_id}}" type="hidden">
 						<td>{{desc}}</td>
+						<td>{{itemNum}}</td>
 						<td>{{color}}</td>
 						<td>{{s}}</td>
 						<td>{{m}}</td>
@@ -565,7 +600,13 @@
 						<td>{{x3}}</td>
 						<td>{{other}}</td>
 						<td>{{unitPrice}}</td>
+						<td>{{qty}}</td>
 						<td>{{totals}}</td>
+						<td>
+							<button class="delete_order btn btn-danger" type="button">
+								<span class="glyphicon glyphicon-trash"></span>
+							</button>
+						</td>
 					</tr>
 					{{/each}}
 				</tbody>
@@ -576,8 +617,12 @@
 				<p class="col-md-12"><i>
 					Each order placed with GC is unique and individual and as such, additional costs may incur, that may not have been perceived especially if changes are made. It is our practice to provide an excellent  experience, and quality product. A 50% deposit is required to facilitate your order.
 				</i></p>
-				<div class="col-md-12">
-					<strong class="col-md-12">Customer Signature</strong>
+				<div id="content-deposit" class="col-md-12">
+					<h4 class="col-md-3	">Deposit: </h4>
+					<div class="col-md-6 input-group">
+						<span class="input-group-addon">$</span>
+						<input id="deposit" name="deposit" type="text" class="ta-right form-control" value="0"/>
+					</div>
 				</div>
 			</div>
 			<div class="col-md-6">
@@ -637,7 +682,7 @@
 					</tr>
 					<tr>
 						<td>Name: </td>
-						<td><input name="user_name" class="form-control content-control" type="text" value="{{currentUser.profile.name}}"/></td>
+						<td><input name="user_name" class="form-control content-control" type="text" value=""/></td>
 					</tr>
 					<tr>
 						<td>Address: </td>
@@ -652,7 +697,7 @@
 		</div>
 		<div id="content-datebox" class="col-md-12">
 			<div class="col-md-12" id="content-datebox-upper">
-				<span class="col-md-3">Salesperson: <input name="salesperson" style="width:50%;" class="form-control content-control" type="text"/></span>
+				<span class="col-md-3">Salesperson: <input name="salesperson" style="width:50%;" class="form-control content-control" type="text" value="{{currentUser.profile.name}}"/></span>
 				<span id="dateToday" class="col-md-3">Today's Date: <u>{{ dateToday }}</u></span>
 				<span class="col-md-3">Est Prod Days: <input name="prod_days" style="width:43%;" class="form-control content-control" type="text"/></span>
 				<span class="col-md-3">Due Date: <input name="due_date" style="width:67%;" class="form-control content-control" type="date"/></span>
@@ -668,17 +713,16 @@
 			</div>
 			<div class="col-md-3">
 				INVOICE #:<br/>
-				<input name="invoice" type="text" class="form-control">
+				<input name="invoice" type="text" class="form-control" value="{{gen_invoice}}">
 			</div>
 		</div>
 		<div id="content-table" class="col-md-12">
 			<table class="table table-bordered">
 				<thead>
 					<tr>
-						<td>QTY</td>
-						<td style="width:8%">Item #</td>
-						<td style="width:25%">Description</td>
-						<td style="width:8%">Color</td>
+						<td>Item</td>
+						<td>Item No</td>
+						<td>Color</td>
 						<td>S</td>
 						<td>M</td>
 						<td>L</td>
@@ -686,23 +730,31 @@
 						<td>2X</td>
 						<td>3X</td>
 						<td style="font-size:10px">OTHER<input name="other_size" type="text" class="form-control" style="height:20px"></td>
-						<td style="width:8%">Unit Price</td>
-						<td style="width:8%">Totals</td>
+						<td>Unit Price</td>
+						<td>Qty</td>
+						<td>Line Total</td>
+						<td></td>
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
+					<tr id="input-row">
 						<td>
-							<input id="qty" type="text" class="form-control content-control">
+							<select id="item">
+								<option>Select Item</option>
+								{{#each items}}
+								<option>{{item}}</option>
+								{{/each}}
+							</select>
 						</td>
 						<td>
-							<input id="itemNum" type="text" class="form-control content-control">
+							<span id="itemNum">{{selectItem.itemNum}}</span>
 						</td>
 						<td>
-							<input id="desc" type="text" class="form-control content-control" value="{{findItem.item}}">
-						</td>
-						<td>
-							<input id="color" type="text" class="form-control content-control" value="{{findItem.color}}">
+							<select id="color">
+								{{#each selectItem.colors}}
+								<option>{{this.color}}</option>
+								{{/each}}
+							</select>
 						</td>
 						<td>
 							<input id="s" type="text" class="form-control content-control" value="0">
@@ -726,17 +778,25 @@
 							<input id="other" type="text" class="form-control content-control" value="0">
 						</td>
 						<td>
-							<input id="unitPrice" type="text" class="form-control content-control" value="{{findItem.unitPrice}}">
+							$<span id="unitPrice">{{selectItem.unitPrice}}</span>
 						</td>
 						<td>
-							<input id="totals" type="text" class="form-control content-control">
+							<span id="qty">{{line_qty}}</span>
+						</td>
+						<td>
+							<strong>$<span id="totals">{{line_total}}</span></strong>
+						</td>
+						<td>
+							<button id="add_order" type="button" class="btn btn-primary">
+								<span class="glyphicon glyphicon-plus"></span>
+							</button>
 						</td>
 					</tr>
 					{{#each carts}}
 					<tr>
-						<td>{{qty}}</td>
-						<td>{{itemNum}}</td>
+						<input class="cart_id" value="{{_id}}" type="hidden">
 						<td>{{desc}}</td>
+						<td>{{itemNum}}</td>
 						<td>{{color}}</td>
 						<td>{{s}}</td>
 						<td>{{m}}</td>
@@ -746,7 +806,13 @@
 						<td>{{x3}}</td>
 						<td>{{other}}</td>
 						<td>{{unitPrice}}</td>
+						<td>{{qty}}</td>
 						<td>{{totals}}</td>
+						<td>
+							<button class="delete_order btn btn-danger" type="button">
+								<span class="glyphicon glyphicon-trash"></span>
+							</button>
+						</td>
 					</tr>
 					{{/each}}
 				</tbody>
@@ -757,8 +823,12 @@
 				<p class="col-md-12"><i>
 					Each order placed with GC is unique and individual and as such, additional costs may incur, that may not have been perceived especially if changes are made. It is our practice to provide an excellent  experience, and quality product. A 50% deposit is required to facilitate your order.
 				</i></p>
-				<div class="col-md-12">
-					<strong class="col-md-12">Customer Signature</strong>
+				<div id="content-deposit" class="col-md-12">
+					<h4 class="col-md-3	">Deposit: </h4>
+					<div class="col-md-6 input-group">
+						<span class="input-group-addon">$</span>
+						<input id="deposit" name="deposit" type="text" class="ta-right form-control" value="0"/>
+					</div>
 				</div>
 			</div>
 			<div class="col-md-6">

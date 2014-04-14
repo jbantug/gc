@@ -39,6 +39,7 @@ Template.menu_sales.events({
 		$('.menu-item').removeClass("menu-selected");
 		$(event.currentTarget.firstElementChild).addClass("menu-selected");
 		delete Session.keys['itemNum'];
+		Session.set("line_qty", 0);
 	},
 
 	'click .logout': function (event) {
@@ -70,7 +71,7 @@ Template.content_sales.events({
 		var other = $('#other').val();
 		var unitPrice = $('#unitPrice').text();
 		var totals = $('#totals').text();
-		var service = $('#service').val();
+		var service = Session.get("getMenu");
 
 		if(parseInt(qty) > 0){
 			Carts.insert(
@@ -94,9 +95,16 @@ Template.content_sales.events({
 			);
 		}
 
-		delete Session.keys['itemNum'];
+		Session.set("itemNum", "");
 		$('#item').val("Select Item");
 		Session.set("line_qty", 0);
+		$('#s').val("0");
+		$('#m').val("0");
+		$('#l').val("0");
+		$('#xl').val("0");
+		$('#x2').val("0");
+		$('#x3').val("0");
+		$('#other').val("0");
 	},
 
 	'click .delete_order': function (event, template) {
@@ -209,7 +217,7 @@ Template.content_sales.events({
 			}
 		);
 
-		var carts = Carts.find({username: Meteor.user().username});
+		var carts = Carts.find({username:Meteor.user().username, service:Session.get("getMenu")});
 		carts.forEach(function(cart){
 			var task_status = "Job Order";
 			var index = 0;
@@ -234,6 +242,10 @@ Template.content_sales.events({
 					}
 				)
 			});
+
+			if(color_qty < cart.qty){	
+				available = false;
+			}
 
 			Tasks.insert(
 				{	

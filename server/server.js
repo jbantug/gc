@@ -297,7 +297,7 @@ Meteor.methods({
 					}
 				)
 			});
-
+			
 			Inventory.update(
 				{
 					itemNum: itemNum

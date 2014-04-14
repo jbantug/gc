@@ -38,6 +38,7 @@ Template.menu_user.events({
 		$('.menu-item').removeClass("menu-selected");
 		$(event.currentTarget.firstElementChild).addClass("menu-selected");
 		delete Session.keys['itemNum'];
+		Session.set("line_qty", 0);
 	},
 
 	'click .logout': function (event) {
@@ -69,6 +70,7 @@ Template.content_user.events({
 		var other = $('#other').val();
 		var unitPrice = $('#unitPrice').text();
 		var totals = $('#totals').text();
+		var service = Session.get("getMenu");
 
 		if(parseInt(qty) > 0){
 			Carts.insert(
@@ -86,14 +88,22 @@ Template.content_user.events({
 					x3: parseInt(x3),
 					other: parseInt(other),
 					unitPrice: parseFloat(unitPrice),
-					totals: parseFloat(totals)
+					totals: parseFloat(totals),
+					service: service,
 				}
 			);
 		}
 
-		delete Session.keys['itemNum'];
+		Session.set("itemNum", "");
 		$('#item').val("Select Item");
 		Session.set("line_qty", 0);
+		$('#s').val("0");
+		$('#m').val("0");
+		$('#l').val("0");
+		$('#xl').val("0");
+		$('#x2').val("0");
+		$('#x3').val("0");
+		$('#other').val("0");
 	},
 
 	'click .delete_order': function (event, template) {
@@ -206,7 +216,7 @@ Template.content_user.events({
 			}
 		);
 
-		var carts = Carts.find({username: Meteor.user().username});
+		var carts = Carts.find({username:Meteor.user().username, service:Session.get("getMenu")});
 		carts.forEach(function(cart){
 			var task_status = "Job Order";
 			var index = 0;
@@ -402,7 +412,7 @@ Template.content_user.user_orders = function () {
 };
 
 Template.content_user.carts = function () {
-	return Carts.find({username: Meteor.user().username});
+	return Carts.find({username:Meteor.user().username, service:Session.get("getMenu")});
 };
 
 Template.menu_user.checkUser = function () {

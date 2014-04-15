@@ -1,75 +1,85 @@
 <template name="menu_staff">
-	<div class="col-md-3">
-		<ul>
-			<li>
-				<div class="highlight">
-					<span class="menu-item menu-selected">Job Order</span>
-					<span class="label label-default pull-right">{{job_order}}</span>
-				</div>
-				<div class="highlight">
-					<span class="menu-item">Preparing</span>
-					<span class="label label-default pull-right">{{preparing}}</span>
-				</div>
-				<div class="highlight">
-					<span class="menu-item">Embroidering</span>
-					<span class="label label-default pull-right">{{embroidering}}</span>
-				</div>
-				<div class="highlight">
-					<span class="menu-item">Printing</span>
-					<span class="label label-default pull-right">{{printing}}</span>
-				</div>
-				<div class="highlight">
-					<span class="menu-item">Completed</span>
-					<span class="label label-default pull-right">{{completed}}</span>
-				</div>
-				<hr/>
-				<div class="highlight">
-					<span class="menu-item">Need to Order</span>
-					<span class="label label-default pull-right">{{need_to_order}}</span>
-				</div>
-				<div class="highlight">
-					<span class="menu-item">Ordered</span>
-					<span class="label label-default pull-right">{{ordered}}</span>
-				</div>
-				<div class="highlight">
-					<span class="menu-item">Delivered</span>
-					<span class="label label-default pull-right">{{delivered}}</span>
-				</div>
-				<div class="highlight">
-					<span class="menu-item">Inventory</span>
-				</div>
-				<hr/>
-			</li>
-		</ul>
-		<div>
-			<button class="logout btn btn-info pull-right">Logout</button>
+	<nav role="navigation" class="navbar navbar-default col-md-3 col-xs-12">
+	 	<div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbarCollapse">
+			    <span class="sr-only">Toggle navigation</span>
+			    <span class="icon-bar"></span>
+			    <span class="icon-bar"></span>
+			    <span class="icon-bar"></span>
+		  	</button>
+        </div>
+     	<div id="navbarCollapse" class="collapse navbar-collapse">
+			<ul>
+				<li>
+					<div class="highlight">
+						<span class="menu-item menu-selected">Job Order</span>
+						<span class="label label-default pull-right">{{job_order}}</span>
+					</div>
+					<div class="highlight">
+						<span class="menu-item">Preparing</span>
+						<span class="label label-default pull-right">{{preparing}}</span>
+					</div>
+					<div class="highlight">
+						<span class="menu-item">Embroidering</span>
+						<span class="label label-default pull-right">{{embroidering}}</span>
+					</div>
+					<div class="highlight">
+						<span class="menu-item">Printing</span>
+						<span class="label label-default pull-right">{{printing}}</span>
+					</div>
+					<div class="highlight">
+						<span class="menu-item">Completed</span>
+						<span class="label label-default pull-right">{{completed}}</span>
+					</div>
+					<hr/>
+					<div class="highlight">
+						<span class="menu-item">Need to Order</span>
+						<span class="label label-default pull-right">{{need_to_order}}</span>
+					</div>
+					<div class="highlight">
+						<span class="menu-item">Ordered</span>
+						<span class="label label-default pull-right">{{ordered}}</span>
+					</div>
+					<div class="highlight">
+						<span class="menu-item">Delivered</span>
+						<span class="label label-default pull-right">{{delivered}}</span>
+					</div>
+					<div class="highlight">
+						<span class="menu-item">Inventory</span>
+					</div>
+					<hr/>
+				</li>
+			</ul>
+			<div>
+				<button class="logout btn btn-info pull-right">Logout</button>
+			</div>
 		</div>
-	</div>
+	</nav>
 </template>
 
 <template name="content_staff">
-	<div class="col-md-9" id="wrap">
+	<div class="col-md-9 col-xs-12" id="wrap">
 		<!--  -->
 		{{#if job_order}}
-		<div id="content-title" class="col-md-12">
+		<div id="content-title" class="col-md-12 col-xs-12">
 			JOB ORDERS
 		</div>
-		<div id="content-table" class="col-md-12">
+		<div id="content-table" class="col-md-12 col-xs-12">
 			<ul class="col-md-12">
 			{{#each job_order_tasks}}
-			<li class="highlight col-md-12">
+			<li class="highlight col-md-12 col-xs-12">
 				<div class="pull-left">
 					<span class="order_task_id" style="display:none">{{_id}}</span>
-					<p>
+					<p class="col-xs-12">
 						<span>
 							<strong>{{ name }}</strong>
 							&nbsp;(Order ID: <span>{{ order_id }})</span>
 						</span>
 					</p>
-					<p>
+					<p class="col-xs-12">
 						{{ item }} <span class="label" style="background:{{color}}">{{color}}</span>&nbsp;&nbsp;Quantity: {{ qty }}
 					</p>
-					<p>
+					<p class="col-xs-12">
 						<span class="label label-default">S:{{s}}</span>
 						<span class="label label-default">M:{{m}}</span>
 						<span class="label label-default">L:{{l}}</span>
@@ -80,12 +90,12 @@
 					</p>
 				</div>
 				<div class="pull-right" style="text-align:right">
-					<p>Ordered: {{ date }}</p>
+					<p class="col-xs-12">Ordered: {{ date }}</p>
 					<br/>
 					{{#if available}}
-					<button class="next_order next btn btn-primary" type="button">Next&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span></button>
+					<button class="next_order next col-xs-12 btn btn-primary" type="button">Next&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span></button>
 					{{else}}
-					<p>No Supply</p>
+					<p class="col-xs-12">No Supply</p>
 					{{/if}}
 				</div>
 			</li>
@@ -95,25 +105,25 @@
 		{{/if}}
 		<!--  -->
 		{{#if preparing}}
-		<div id="content-title" class="col-md-12">
+		<div id="content-title" class="col-md-12 col-xs-12">
 			PREPARING 
 		</div>
-		<div id="content-table" class="col-md-12">
-			<ul class="col-md-12">
+		<div id="content-table" class="col-md-12 col-xs-12">
+			<ul class="col-md-12 col-xs-12">
 			{{#each preparing_tasks}}
-			<li class="highlight col-md-12">
+			<li class="highlight col-md-12 col-xs-12">
 				<div class="pull-left">
 					<span class="order_task_id" style="display:none">{{_id}}</span>
-					<p>
+					<p class="col-xs-12">
 						<span>
 							<strong>{{ name }}</strong>
 							&nbsp;(Order ID: <span>{{ order_id }})</span>
 						</span>
 					</p>
-					<p>
+					<p class="col-xs-12">
 						{{ item }} <span class="label" style="background:{{color}}">{{color}}</span>&nbsp;&nbsp;Quantity: {{ qty }}
 					</p>
-					<p>
+					<p class="col-xs-12">
 						<span class="label label-default">S:{{s}}</span>
 						<span class="label label-default">M:{{m}}</span>
 						<span class="label label-default">L:{{l}}</span>
@@ -124,9 +134,9 @@
 					</p>
 				</div>
 				<div class="pull-right" style="text-align:right">
-					<p>Ordered: {{ date }}</p>
-					<p>Started: {{ updated }}</p>
-					<button class="next_order next btn btn-primary" type="button">Next&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span></button>
+					<p class="col-xs-12">Ordered: {{ date }}</p>
+					<p class="col-xs-12">Started: {{ updated }}</p>
+					<button class="next_order next col-xs-12 btn btn-primary" type="button">Next&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span></button>
 				</div>
 			</li>
 			{{/each}}
@@ -141,19 +151,19 @@
 		<div id="content-table" class="col-md-12">
 			<ul class="col-md-12">
 			{{#each embroidering_tasks}}
-			<li class="highlight col-md-12">
+			<li class="highlight col-md-12 col-xs-12">
 				<div class="pull-left">
 					<span class="order_task_id" style="display:none">{{_id}}</span>
-					<p>
+					<p class="col-xs-12">
 						<span>
 							<strong>{{ name }}</strong>
 							&nbsp;(Order ID: <span>{{ order_id }})</span>
 						</span>
 					</p>
-					<p>
+					<p class="col-xs-12">
 						{{ item }} <span class="label" style="background:{{color}}">{{color}}</span>&nbsp;&nbsp;Quantity: {{ qty }}
 					</p>
-					<p>
+					<p class="col-xs-12">
 						<span class="label label-default">S:{{s}}</span>
 						<span class="label label-default">M:{{m}}</span>
 						<span class="label label-default">L:{{l}}</span>
@@ -164,9 +174,9 @@
 					</p>
 				</div>
 				<div class="pull-right" style="text-align:right">
-					<p>Ordered: {{ date }}</p>
-					<p>Started: {{ updated }}</p>
-					<button class="next_order next btn btn-primary" type="button">Next&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span></button>
+					<p class="col-xs-12">Ordered: {{ date }}</p>
+					<p class="col-xs-12">Started: {{ updated }}</p>
+					<button class="next_order next col-xs-12 btn btn-primary" type="button">Next&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span></button>
 				</div>
 			</li>
 			{{/each}}
@@ -221,19 +231,19 @@
 		<div id="content-table" class="col-md-12">
 			<ul class="col-md-12">
 			{{#each completed_tasks}}
-			<li class="highlight col-md-12">
+			<li class="highlight col-md-12 col-xs-12">
 				<div class="pull-left">
 					<span class="order_task_id" style="display:none">{{_id}}</span>
-					<p>
+					<p class="col-xs-12">
 						<span>
 							<strong>{{ name }}</strong>
 							&nbsp;(Order ID: <span>{{ order_id }})</span>
 						</span>
 					</p>
-					<p>
+					<p class="col-xs-12">
 						{{ item }} <span class="label" style="background:{{color}}">{{color}}</span>&nbsp;&nbsp;Quantity: {{ qty }}
 					</p>
-					<p>
+					<p class="col-xs-12">
 						<span class="label label-default">S:{{s}}</span>
 						<span class="label label-default">M:{{m}}</span>
 						<span class="label label-default">L:{{l}}</span>
@@ -244,8 +254,8 @@
 					</p>
 				</div>
 				<div class="pull-right" style="text-align:right">
-					<p>Ordered: {{ date }}</p>
-					<p>Completed: {{ updated }}</p>
+					<p class="col-xs-12">Ordered: {{ date }}</p>
+					<p class="col-xs-12">Completed: {{ updated }}</p>
 					
 				</div>
 			</li>
@@ -255,23 +265,23 @@
 		{{/if}}
 		<!--  -->
 		{{#if need_to_order}}
-		<div id="content-title" class="col-md-12">
+		<div id="content-title" class="col-md-12 col-xs-12">
 			NEED TO ORDER
 		</div>
-		<div id="content-table" class="col-md-12">
-			<ul class="col-md-12">
+		<div id="content-table" class="col-md-12 col-xs-12">
+			<ul class="col-md-12 col-xs-12">
 			{{#each need_to_order_tasks}}
-			<li class="highlight col-md-12">
+			<li class="highlight col-md-12 col-xs-12">
 				<div class="pull-left">
 					<span class="purchase_id" style="display:none">{{_id}}</span>
-					<p>
+					<p class="col-xs-12">
 						<span><strong>{{ item }}</strong></span> 
 						&nbsp;(Item No: <span>{{ itemNum }}</span>)
 					</p>
-					<p>
+					<p class="col-xs-12">
 						Color: <span class="label" style="background:{{color}}">{{color}}</span>&nbsp;&nbsp;Quantity: {{ qty }}
 					</p>
-					<p>
+					<p class="col-xs-12">
 						<span class="label label-default">S:{{s}}</span>
 						<span class="label label-default">M:{{m}}</span>
 						<span class="label label-default">L:{{l}}</span>
@@ -284,7 +294,7 @@
 				<div class="pull-right" style="text-align:right">
 					<br/>
 					<br/>
-					<button class="next_purchase next btn btn-primary" type="button">Next&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span></button>
+					<button class="next_purchase next col-xs-12 btn btn-primary" type="button">Next&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span></button>
 				</div>
 			</li>
 			{{/each}}
@@ -293,23 +303,23 @@
 		{{/if}}
 		<!--  -->
 		{{#if ordered}}
-		<div id="content-title" class="col-md-12">
+		<div id="content-title" class="col-md-12 col-xs-12">
 			ORDERED
 		</div>
-		<div id="content-table" class="col-md-12">
-			<ul class="col-md-12">
+		<div id="content-table" class="col-md-12 col-xs-12">
+			<ul class="col-md-12 col-xs-12">
 			{{#each ordered_tasks}}
-			<li class="highlight col-md-12">
+			<li class="highlight col-md-12 col-xs-12">
 				<div class="pull-left">
 					<span class="purchase_id" style="display:none">{{_id}}</span>
-					<p>
+					<p class="col-xs-12">
 						<span><strong>{{ item }}</strong></span> 
 						&nbsp;(Item No: <span>{{ itemNum }}</span>)
 					</p>
-					<p>
+					<p class="col-xs-12">
 						Color: <span class="label" style="background:{{color}}">{{color}}</span>&nbsp;&nbsp;Quantity: {{ qty }}
 					</p>
-					<p>
+					<p class="col-xs-12">
 						<span class="label label-default">S:{{s}}</span>
 						<span class="label label-default">M:{{m}}</span>
 						<span class="label label-default">L:{{l}}</span>
@@ -320,9 +330,9 @@
 					</p>
 				</div>
 				<div class="pull-right" style="text-align:right">
-					<p>Ordered: {{ date_ordered }}</p>
+					<p class="col-xs-12">Ordered: {{ date_ordered }}</p>
 					<br/>
-					<button class="next_purchase next btn btn-primary" type="button">Next&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span></button>
+					<button class="next_purchase next col-xs-12 btn btn-primary" type="button">Next&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span></button>
 				</div>
 			</li>
 			{{/each}}
@@ -331,23 +341,23 @@
 		{{/if}}
 		<!--  -->
 		{{#if delivered}}
-		<div id="content-title" class="col-md-12">
+		<div id="content-title" class="col-md-12 col-xs-12">
 			DELIVERED
 		</div>
-		<div id="content-table" class="col-md-12">
-			<ul class="col-md-12">
+		<div id="content-table" class="col-md-12 col-xs-12">
+			<ul class="col-md-12 col-xs-12">
 			{{#each delivered_tasks}}
-			<li class="highlight col-md-12">
+			<li class="highlight col-md-12 col-xs-12">
 				<div class="pull-left">
 					<span class="purchase_id" style="display:none">{{_id}}</span>
-					<p>
+					<p class="col-xs-12">
 						<span><strong>{{ item }}</strong></span> 
 						&nbsp;(Item No: <span>{{ itemNum }}</span>)
 					</p>
-					<p>
+					<p class="col-xs-12">
 						Color: <span class="label" style="background:{{color}}">{{color}}</span>&nbsp;&nbsp;Quantity: {{ qty }}
 					</p>
-					<p>
+					<p class="col-xs-12">
 						<span class="label label-default">S:{{s}}</span>
 						<span class="label label-default">M:{{m}}</span>
 						<span class="label label-default">L:{{l}}</span>
@@ -358,8 +368,8 @@
 					</p>
 				</div>
 				<div class="pull-right" style="text-align:right">
-					<p>Ordered: {{ date_ordered }}</p>
-					<p>Delivered: {{ date_delivered }}</p>
+					<p class="col-xs-12">Ordered: {{ date_ordered }}</p>
+					<p class="col-xs-12">Delivered: {{ date_delivered }}</p>
 					
 				</div>
 			</li>
@@ -369,15 +379,15 @@
 		{{/if}}
 		<!--  -->
 		{{#if inventory}}
-		<div id="content-title" class="col-md-12">
+		<div id="content-title" class="col-md-12 col-xs-12">
 			INVENTORY&nbsp;
 			<button class="btn btn-primary" style="padding:0px 6px;" data-toggle="modal" data-target="#inventory-modal">
 				<span class="glyphicon glyphicon-plus"></span>
 			</button>
 		</div>
-		<div id="content-table" class="col-md-12">
+		<div id="content-table" class="col-md-12 col-xs-12">
 			{{#each inventory_items}}
-			<div class="col-md-4">
+			<div class="col-md-4 col-xs-12">
 				<div class="inventory_box highlight">
 					<p>Item No: <span>{{ itemNum }}</span></p>
 					<p>Item: <strong>{{ item }}</strong></p>

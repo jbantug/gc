@@ -1,38 +1,48 @@
 <template name="menu_user">
-	<div class="col-md-3">
-		<ul id="service-menu">
-			{{#each services}}
-			<li>
-				<div class="highlight">
-					<span class="menu-item">{{service}}</span>
-				</div>
-			</li>
-			{{/each}}
-			<hr/>
-			<li>
-				<div class="highlight">
-					<span class="menu-selected menu-item">Orders</span>
-					<span class="label label-default pull-right">{{user_orders_count}}</span>
-				</div>
-			</li>
-			<hr/>
-		</ul>
-		<div>
-			<button class="logout btn btn-info pull-right">Logout</button>
+	<nav role="navigation" class="navbar navbar-default col-md-3 col-xs-12">
+	 	<div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbarCollapse">
+			    <span class="sr-only">Toggle navigation</span>
+			    <span class="icon-bar"></span>
+			    <span class="icon-bar"></span>
+			    <span class="icon-bar"></span>
+		  	</button>
+        </div>
+        <div id="navbarCollapse" class="collapse navbar-collapse">
+			<ul id="service-menu">
+				{{#each services}}
+				<li>
+					<div class="highlight">
+						<span class="menu-item">{{service}}</span>
+					</div>
+				</li>
+				{{/each}}
+				<hr/>
+				<li>
+					<div class="highlight">
+						<span class="menu-selected menu-item">Orders</span>
+						<span class="label label-default pull-right">{{user_orders_count}}</span>
+					</div>
+				</li>
+				<hr/>
+			</ul>
+			<div>
+				<button class="logout btn btn-info pull-right">Logout</button>
+			</div>
 		</div>
-	</div>
+	</nav>
 </template>
 
 <template name="content_user">
-	<form class="col-md-9" id="wrap">
+	<form class="col-md-9 col-xs-12" id="wrap">
 		<!--  -->
 		{{#if embroidery}}
-		<div id="content-head" class="col-md-12">
+		<div id="content-head" class="col-md-12 col-xs-12">
 			<input name="service" type="hidden" value="Embroidery"/>
-			<div class="col-md-2">
+			<div class="col-md-2 col-xs-4">
 				<img class="logo" src="GCLogoColor.png"/>
 			</div>
-			<div class="col-md-4">
+			<div class="col-md-4 col-xs-8">
 				<p id="address">
 					<strong>GRAPHIC CONNECTIONS</strong><br/>
 					145 Mount Auburn Street<br/>
@@ -40,7 +50,7 @@
 					617 - 926 - 1155 
 				</p>
 			</div>
-			<div id="content-head-form" class="col-md-6">
+			<div id="content-head-form" class="col-md-6 col-xs-12">
 				<table class="table">
 					<tr>
 						<td>Company Name: </td>
@@ -61,33 +71,33 @@
 				</table>
 			</div>
 		</div>
-		<div id="content-datebox" class="col-md-12">
-			<div class="col-md-12" id="content-datebox-upper">
-				<span class="col-md-3">Salesperson: <input name="salesperson" style="width:50%;" class="form-control content-control" type="text"/></span>
-				<span id="dateToday" class="col-md-3">Today's Date: <u>{{ dateToday }}</u></span>
-				<span class="col-md-3">Est Prod Days: <input name="prod_days" style="width:43%;" class="form-control content-control" type="text"/></span>
-				<span class="col-md-3">Due Date: <input name="due_date" style="width:67%;" class="form-control content-control" type="date"/></span>
+		<div id="content-datebox" class="col-md-12 col-xs-12">
+			<div class="col-md-12 col-xs-12" id="content-datebox-upper">
+				<span class="col-md-3 col-xs-12">Salesperson: <input name="salesperson" style="width:50%;" class="form-control content-control" type="text"/></span>
+				<span id="dateToday" class="col-md-3 col-xs-12">Today's Date: <u>{{ dateToday }}</u></span>
+				<span class="col-md-3 col-xs-12">Est Prod Days: <input name="prod_days" style="width:43%;" class="form-control content-control" type="text"/></span>
+				<span class="col-md-3 col-xs-12">Due Date: <input name="due_date" style="width:67%;" class="form-control content-control" type="date"/></span>
 			</div>
-			<div  class="col-md-12" id="content-datebox-lower">
-				<span class="col-md-6">Garments: <input name="garments" style="width:50%;" class="form-control content-control" type="text"/></span>
-				<span class="col-md-6">Other: <input name="other_top" style="width:50%;" class="form-control content-control" type="text"/></span>
+			<div  class="col-md-12 col-xs-12" id="content-datebox-lower">
+				<span class="col-md-6 col-xs-12">Garments: <input name="garments" style="width:50%;" class="form-control content-control" type="text"/></span>
+				<span class="col-md-6 col-xs-12">Other: <input name="other_top" style="width:50%;" class="form-control content-control" type="text"/></span>
 			</div>
 		</div>
-		<div id="content-title" class="col-md-12">
-			<div class="col-md-6" style="padding-left:0px;">
+		<div id="content-title" class="col-md-12 col-xs-12">
+			<div class="col-md-6 col-xs-12" style="padding-left:0px;">
 				<strong>EMBROIDERY</strong>
 			</div>
-			<div class="col-md-3">
+			<div class="col-md-3 col-xs-12">
 				INVOICE #:<br/>
 				<input name="invoice" type="text" class="form-control" value="{{gen_invoice}}">
 			</div>
-			<div class="col-md-3">
+			<div class="col-md-3 col-xs-12">
 				Requested Combinations:<br/>
 				<input name="screen_print" type="checkbox" value="screen_print"/>SCREEN PRINT<br/>
 				<input name="vinyl" type="checkbox" value="vinyl"/>VINYL
 			</div>
 		</div>
-		<div id="content-table" class="col-md-12">
+		<div id="content-table" class="col-md-12 col-xs-12 table-responsive">
 			<table class="table table-bordered">
 				<thead>
 					<tr>
@@ -189,48 +199,48 @@
 				</tbody>
 			</table>
 		</div>
-		<div id="content-footer" class="col-md-12">
-			<div class="col-md-6">
-				<p class="col-md-12"><i>
+		<div id="content-footer" class="col-md-12 col-xs-12">
+			<div class="col-md-6 col-xs-12">
+				<p class="col-md-12 col-xs-12"><i>
 					Each order placed with GC is unique and individual and as such, additional costs may incur, that may not have been perceived especially if changes are made. It is our practice to provide an excellent  experience, and quality product. A 50% deposit is required to facilitate your order.
 				</i></p>
-				<div id="content-deposit" class="col-md-12">
-					<h4 class="col-md-3	">Deposit: </h4>
-					<div class="col-md-6 input-group">
+				<div id="content-deposit" class="col-md-12 col-xs-12">
+					<h4 class="col-md-3	col-xs-6">Deposit: </h4>
+					<div class="col-md-6 col-xs-6 input-group">
 						<span class="input-group-addon">$</span>
 						<input id="deposit" name="deposit" type="text" class="ta-right form-control" value="0"/>
 					</div>
 				</div>
 			</div>
-			<div class="col-md-6">
-				<div class="col-md-10 pull-right">
-					<div class="col-md-12 content-footer-adds">
-						<div class="col-md-6">
+			<div class="col-md-6 col-xs-12">
+				<div class="col-md-10 col-xs-12 pull-right">
+					<div class="col-md-12 col-xs-12 content-footer-adds">
+						<div class="col-md-6 col-xs-6">
 							<input id="adds1" name="adds1" type="text" class="form-control"/>
 						</div>
-						<div class="col-md-6 input-group">
+						<div class="col-md-6 col-xs-6 input-group">
 							<span class="input-group-addon">$</span>
 							<input id="adds1_val" name="adds1_val" type="text" value="0" class="ta-right form-control"/>
 						</div>
 					</div>
-					<div class="col-md-12 content-footer-adds">
-						<div class="col-md-6">
+					<div class="col-md-12 col-xs-12 content-footer-adds">
+						<div class="col-md-6 col-xs-6">
 							<input id="adds2" name="adds2" type="text" class="form-control"/>
 						</div>
-						<div class="col-md-6 input-group">
+						<div class="col-md-6 col-xs-6 input-group">
 							<span class="input-group-addon">$</span>
 							<input id="adds2_val" name="adds2_val" type="text" value="0" class="ta-right form-control"/>
 						</div>
 					</div>
-					<div id="content-footer-total" class="col-md-12">
-						<h3 class="col-md-6">TOTAL: </h3>
-						<div class="col-md-6 input-group">
+					<div id="content-footer-total" class="col-md-12 col-xs-12">
+						<h3 class="col-md-6 col-xs-6">TOTAL: </h3>
+						<div class="col-md-6 col-xs-6 input-group">
 							<span class="input-group-addon">$</span>
 							<input id="grand_total" name="grand_total" disabled type="text" class="ta-right form-control" value="{{grand_total}}"/>
 						</div>
 					</div>
-					<div id="content-footer-subwrap" class="col-md-12">
-						<button id="content-footer-submit" class="btn btn-primary" type="button">PROCEED</button>
+					<div id="content-footer-subwrap" class="col-md-12 col-xs-12">
+						<button id="content-footer-submit" class="col-xs-12 btn btn-primary" type="button">PROCEED</button>
 					</div>
 				</div>
 			</div>
@@ -238,12 +248,12 @@
 		{{/if}}
 		<!--  -->
 		{{#if screenPrinting}}
-		<div id="content-head" class="col-md-12">
+		<div id="content-head" class="col-md-12 col-xs-12">
 			<input name="service" type="hidden" value="Screen Printing"/>
-			<div class="col-md-2">
+			<div class="col-md-2 col-xs-4">
 				<img class="logo" src="GCLogoColor.png"/>
 			</div>
-			<div class="col-md-4">
+			<div class="col-md-4 col-xs-8">
 				<p id="address">
 					<strong>GRAPHIC CONNECTIONS</strong><br/>
 					145 Mount Auburn Street<br/>
@@ -251,7 +261,7 @@
 					617 - 926 - 1155 
 				</p>
 			</div>
-			<div id="content-head-form" class="col-md-6">
+			<div id="content-head-form" class="col-md-6 col-xs-12">
 				<table class="table">
 					<tr>
 						<td>Company Name: </td>
@@ -259,7 +269,7 @@
 					</tr>
 					<tr>
 						<td>Name: </td>
-						<td><input name="user_name" class="form-control content-control" type="text" value="{{currentUser.profile.name}}"/></td>
+						<td><input name="user_name" class="form-control content-control" type="text" value=""/></td>
 					</tr>
 					<tr>
 						<td>Address: </td>
@@ -272,28 +282,28 @@
 				</table>
 			</div>
 		</div>
-		<div id="content-datebox" class="col-md-12">
-			<div class="col-md-12" id="content-datebox-upper">
-				<span class="col-md-4">Salesperson: <input name="salesperson" style="width:65%;" class="form-control content-control" type="text"/></span>
-				<span id="dateToday" class="col-md-4">Today's Date: <u>{{ dateToday }}</u></span>
-				<span class="col-md-4">Due Date: <input name="due_date" style="width:67%;" class="form-control content-control" type="date"/></span>
+		<div id="content-datebox" class="col-md-12 col-xs-12">
+			<div class="col-md-12 col-xs-12" id="content-datebox-upper">
+				<span class="col-md-3 col-xs-12">Salesperson: <input name="salesperson" style="width:50%;" class="form-control content-control" type="text" value="{{currentUser.profile.name}}"/></span>
+				<span id="dateToday" class="col-md-4 col-xs-12">Today's Date: <u>{{ dateToday }}</u></span>
+				<span class="col-md-4 col-xs-12">Due Date: <input name="due_date" style="width:67%;" class="form-control content-control" type="date"/></span>
 			</div>
-			<div  class="col-md-12" id="content-datebox-lower">
-				<label class="col-md-4">NEW ORDER: <input name="retail" type="checkbox"/></label>
-				<label class="col-md-4">REPEAT ORDER: <input name="wholesale" type="checkbox"/></label>
-				<label class="col-md-4">RUSH: <input name="rush" type="checkbox"/></label>
+			<div  class="col-md-12 col-xs-12" id="content-datebox-lower">
+				<label class="col-md-4 col-xs-12">NEW ORDER: <input name="retail" type="checkbox"/></label>
+				<label class="col-md-4 col-xs-12">REPEAT ORDER: <input name="wholesale" type="checkbox"/></label>
+				<label class="col-md-4 col-xs-12">RUSH: <input name="rush" type="checkbox"/></label>
 			</div>
 		</div>
-		<div id="content-title" class="col-md-12">
-			<div class="col-md-6" style="padding-left:0px;">
+		<div id="content-title" class="col-md-12 col-xs-12">
+			<div class="col-md-6 col-xs-12" style="padding-left:0px;">
 				<strong>SCREEN PRINTING</strong>
 			</div>
-			<div class="col-md-3">
+			<div class="col-md-3 col-xs-12">
 				INVOICE #:<br/>
 				<input name="invoice" type="text" class="form-control" value="{{gen_invoice}}">
 			</div>
 		</div>
-		<div id="content-table" class="col-md-12">
+		<div id="content-table" class="col-md-12 col-xs-12 table-responsive">
 			<table class="table table-bordered">
 				<thead>
 					<tr>
@@ -395,47 +405,47 @@
 				</tbody>
 			</table>
 		</div>
-		<div id="content-footer" class="col-md-12">
-			<div class="col-md-6">
-				<p class="col-md-12"><i>
+		<div id="content-footer" class="col-md-12 col-xs-12">
+			<div class="col-md-6 col-xs-12">
+				<p class="col-md-12 col-xs-12"><i>
 					Each order placed with GC is unique and individual and as such, additional costs may incur, that may not have been perceived especially if changes are made. It is our practice to provide an excellent  experience, and quality product. A 50% deposit is required to facilitate your order.
 				</i></p>
-				<div id="content-deposit" class="col-md-12">
-					<h4 class="col-md-3	">Deposit: </h4>
-					<div class="col-md-6 input-group">
+				<div id="content-deposit" class="col-md-12 col-xs-12">
+					<h4 class="col-md-3 col-xs-6">Deposit: </h4>
+					<div class="col-md-6 col-xs-6 input-group">
 						<span class="input-group-addon">$</span>
 						<input id="deposit" name="deposit" type="text" class="ta-right form-control" value="0"/>
 					</div>
 				</div>
 			</div>
-			<div class="col-md-6">
-				<div class="col-md-10 pull-right">
-					<div class="col-md-12 content-footer-adds">
-						<div class="col-md-6">
+			<div class="col-md-6 col-xs-12">
+				<div class="col-md-10 col-xs-12 pull-right">
+					<div class="col-md-12 col-xs-12 content-footer-adds">
+						<div class="col-md-6 col-xs-6">
 							<input id="adds1" name="adds1" type="text" class="form-control"/>
 						</div>
-						<div class="col-md-6 input-group">
+						<div class="col-md-6 col-xs-6 input-group">
 							<span class="input-group-addon">$</span>
 							<input id="adds1_val" name="adds1_val" type="text" value="0" class="ta-right form-control"/>
 						</div>
 					</div>
-					<div class="col-md-12 content-footer-adds">
-						<div class="col-md-6">
+					<div class="col-md-12 col-xs-12 content-footer-adds">
+						<div class="col-md-6 col-xs-6">
 							<input id="adds2" name="adds2" type="text" class="form-control"/>
 						</div>
-						<div class="col-md-6 input-group">
+						<div class="col-md-6 col-xs-6 input-group">
 							<span class="input-group-addon">$</span>
 							<input id="adds2_val" name="adds2_val" type="text" value="0" class="ta-right form-control"/>
 						</div>
 					</div>
-					<div id="content-footer-total" class="col-md-12">
-						<h3 class="col-md-6">TOTAL: </h3>
-						<div class="col-md-6 input-group">
+					<div id="content-footer-total" class="col-md-12 col-xs-12">
+						<h3 class="col-md-6 col-xs-6">TOTAL: </h3>
+						<div class="col-md-6 col-xs-6 input-group">
 							<span class="input-group-addon">$</span>
-							<input id="grand_total" name="grand_total" disabled type="text" class="ta-right form-control" value="{{grand_total}}"/>
+							<input id="grand_total" name="grand_total" disabled type="text" class="ta-right form-control" value="{{order_total}}"/>
 						</div>
 					</div>
-					<div id="content-footer-subwrap" class="col-md-12">
+					<div id="content-footer-subwrap" class="col-md-12 col-xs-12">
 						<button id="content-footer-submit" class="btn btn-primary" type="button">PROCEED</button>
 					</div>
 				</div>
@@ -444,12 +454,12 @@
 		{{/if}}
 		<!--  -->
 		{{#if promotional}}
-		<div id="content-head" class="col-md-12">
+		<div id="content-head" class="col-md-12 col-xs-12">
 			<input name="service" type="hidden" value="Promotional"/>
-			<div class="col-md-2">
+			<div class="col-md-2 col-xs-4">
 				<img class="logo" src="GCLogoColor.png"/>
 			</div>
-			<div class="col-md-4">
+			<div class="col-md-4 col-xs-8">
 				<p id="address">
 					<strong>GRAPHIC CONNECTIONS</strong><br/>
 					145 Mount Auburn Street<br/>
@@ -457,7 +467,7 @@
 					617 - 926 - 1155 
 				</p>
 			</div>
-			<div id="content-head-form" class="col-md-6">
+			<div id="content-head-form" class="col-md-6 col-xs-12">
 				<table class="table">
 					<tr>
 						<td>Company Name: </td>
@@ -465,7 +475,7 @@
 					</tr>
 					<tr>
 						<td>Name: </td>
-						<td><input name="user_name" class="form-control content-control" type="text" value="{{currentUser.profile.name}}"/></td>
+						<td><input name="user_name" class="form-control content-control" type="text" value=""/></td>
 					</tr>
 					<tr>
 						<td>Address: </td>
@@ -478,28 +488,28 @@
 				</table>
 			</div>
 		</div>
-		<div id="content-datebox" class="col-md-12">
-			<div class="col-md-12" id="content-datebox-upper">
-				<span class="col-md-4">Salesperson: <input name="salesperson" style="width:65%;" class="form-control content-control" type="text"/></span>
-				<span id="dateToday" class="col-md-4">Today's Date: <u>{{ dateToday }}</u></span>
-				<span class="col-md-4">Due Date: <input name="due_date" style="width:67%;" class="form-control content-control" type="date"/></span>
+		<div id="content-datebox" class="col-md-12 col-xs-12">
+			<div class="col-md-12 col-xs-12" id="content-datebox-upper">
+				<span class="col-md-3 col-xs-12">Salesperson: <input name="salesperson" style="width:50%;" class="form-control content-control" type="text" value="{{currentUser.profile.name}}"/></span>
+				<span id="dateToday" class="col-md-4 col-xs-12">Today's Date: <u>{{ dateToday }}</u></span>
+				<span class="col-md-4 col-xs-12">Due Date: <input name="due_date" style="width:67%;" class="form-control content-control" type="date"/></span>
 			</div>
-			<div  class="col-md-12" id="content-datebox-lower">
-				<label class="col-md-4">RETAIL: <input name="retail" type="checkbox"/></label>
-				<label class="col-md-4">WHOLESALE: <input name="wholesale" type="checkbox"/></label>
-				<label class="col-md-4">RUSH: <input name="rush" type="checkbox"/></label>
+			<div  class="col-md-12 col-xs-12" id="content-datebox-lower">
+				<label class="col-md-4 col-xs-12">RETAIL: <input name="retail" type="checkbox"/></label>
+				<label class="col-md-4 col-xs-12">WHOLESALE: <input name="wholesale" type="checkbox"/></label>
+				<label class="col-md-4 col-xs-12">RUSH: <input name="rush" type="checkbox"/></label>
 			</div>
 		</div>
-		<div id="content-title" class="col-md-12">
-			<div class="col-md-6" style="padding-left:0px;">
+		<div id="content-title" class="col-md-12 col-xs-12">
+			<div class="col-md-6 col-xs-12" style="padding-left:0px;">
 				<strong>PROMOTIONAL</strong>
 			</div>
-			<div class="col-md-3">
+			<div class="col-md-3 col-xs-12">
 				INVOICE #:<br/>
 				<input name="invoice" type="text" class="form-control" value="{{gen_invoice}}">
 			</div>
 		</div>
-		<div id="content-table" class="col-md-12">
+		<div id="content-table" class="col-md-12 col-xs-12 table-responsive">
 			<table class="table table-bordered">
 				<thead>
 					<tr>
@@ -601,47 +611,47 @@
 				</tbody>
 			</table>
 		</div>
-		<div id="content-footer" class="col-md-12">
-			<div class="col-md-6">
-				<p class="col-md-12"><i>
+		<div id="content-footer" class="col-md-12 col-xs-12">
+			<div class="col-md-6 col-xs-12">
+				<p class="col-md-12 col-xs-12"><i>
 					Each order placed with GC is unique and individual and as such, additional costs may incur, that may not have been perceived especially if changes are made. It is our practice to provide an excellent  experience, and quality product. A 50% deposit is required to facilitate your order.
 				</i></p>
-				<div id="content-deposit" class="col-md-12">
-					<h4 class="col-md-3	">Deposit: </h4>
-					<div class="col-md-6 input-group">
+				<div id="content-deposit" class="col-md-12 col-xs-12">
+					<h4 class="col-md-3 col-xs-6">Deposit: </h4>
+					<div class="col-md-6 col-xs-6 input-group">
 						<span class="input-group-addon">$</span>
 						<input id="deposit" name="deposit" type="text" class="ta-right form-control" value="0"/>
 					</div>
 				</div>
 			</div>
-			<div class="col-md-6">
-				<div class="col-md-10 pull-right">
-					<div class="col-md-12 content-footer-adds">
-						<div class="col-md-6">
+			<div class="col-md-6 col-xs-12">
+				<div class="col-md-10 col-xs-12 pull-right">
+					<div class="col-md-12 col-xs-12 content-footer-adds">
+						<div class="col-md-6 col-xs-6">
 							<input id="adds1" name="adds1" type="text" class="form-control"/>
 						</div>
-						<div class="col-md-6 input-group">
+						<div class="col-md-6 col-xs-6 input-group">
 							<span class="input-group-addon">$</span>
 							<input id="adds1_val" name="adds1_val" type="text" value="0" class="ta-right form-control"/>
 						</div>
 					</div>
-					<div class="col-md-12 content-footer-adds">
-						<div class="col-md-6">
+					<div class="col-md-12 col-xs-12 content-footer-adds">
+						<div class="col-md-6 col-xs-6">
 							<input id="adds2" name="adds2" type="text" class="form-control"/>
 						</div>
-						<div class="col-md-6 input-group">
+						<div class="col-md-6 col-xs-6 input-group">
 							<span class="input-group-addon">$</span>
 							<input id="adds2_val" name="adds2_val" type="text" value="0" class="ta-right form-control"/>
 						</div>
 					</div>
-					<div id="content-footer-total" class="col-md-12">
-						<h3 class="col-md-6">TOTAL: </h3>
-						<div class="col-md-6 input-group">
+					<div id="content-footer-total" class="col-md-12 col-xs-12">
+						<h3 class="col-md-6 col-xs-6">TOTAL: </h3>
+						<div class="col-md-6 col-xs-6 input-group">
 							<span class="input-group-addon">$</span>
-							<input id="grand_total" name="grand_total" disabled type="text" class="ta-right form-control" value="{{grand_total}}"/>
+							<input id="grand_total" name="grand_total" disabled type="text" class="ta-right form-control" value="{{order_total}}"/>
 						</div>
 					</div>
-					<div id="content-footer-subwrap" class="col-md-12">
+					<div id="content-footer-subwrap" class="col-md-12 col-xs-12">
 						<button id="content-footer-submit" class="btn btn-primary" type="button">PROCEED</button>
 					</div>
 				</div>
@@ -650,12 +660,12 @@
 		{{/if}}
 		<!--  -->
 		{{#if business}}
-		<div id="content-head" class="col-md-12">
+		<div id="content-head" class="col-md-12 col-xs-12">
 			<input name="service" type="hidden" value="Business Cards"/>
-			<div class="col-md-2">
+			<div class="col-md-2 col-xs-4">
 				<img class="logo" src="GCLogoColor.png"/>
 			</div>
-			<div class="col-md-4">
+			<div class="col-md-4 col-xs-8">
 				<p id="address">
 					<strong>GRAPHIC CONNECTIONS</strong><br/>
 					145 Mount Auburn Street<br/>
@@ -663,7 +673,7 @@
 					617 - 926 - 1155 
 				</p>
 			</div>
-			<div id="content-head-form" class="col-md-6">
+			<div id="content-head-form" class="col-md-6 col-xs-12">
 				<table class="table">
 					<tr>
 						<td>Company Name: </td>
@@ -671,7 +681,7 @@
 					</tr>
 					<tr>
 						<td>Name: </td>
-						<td><input name="user_name" class="form-control content-control" type="text" value="{{currentUser.profile.name}}"/></td>
+						<td><input name="user_name" class="form-control content-control" type="text" value=""/></td>
 					</tr>
 					<tr>
 						<td>Address: </td>
@@ -684,28 +694,28 @@
 				</table>
 			</div>
 		</div>
-		<div id="content-datebox" class="col-md-12">
-			<div class="col-md-12" id="content-datebox-upper">
-				<span class="col-md-3">Salesperson: <input name="salesperson" style="width:50%;" class="form-control content-control" type="text"/></span>
-				<span id="dateToday" class="col-md-3">Today's Date: <u>{{ dateToday }}</u></span>
-				<span class="col-md-3">Est Prod Days: <input name="prod_days" style="width:43%;" class="form-control content-control" type="text"/></span>
-				<span class="col-md-3">Due Date: <input name="due_date" style="width:67%;" class="form-control content-control" type="date"/></span>
+		<div id="content-datebox" class="col-md-12 col-xs-12">
+			<div class="col-md-12 col-xs-12" id="content-datebox-upper">
+				<span class="col-md-3 col-xs-12">Salesperson: <input name="salesperson" style="width:50%;" class="form-control content-control" type="text" value="{{currentUser.profile.name}}"/></span>
+				<span id="dateToday" class="col-md-3 col-xs-12">Today's Date: <u>{{ dateToday }}</u></span>
+				<span class="col-md-3 col-xs-12">Est Prod Days: <input name="prod_days" style="width:43%;" class="form-control content-control" type="text"/></span>
+				<span class="col-md-3 col-xs-12">Due Date: <input name="due_date" style="width:67%;" class="form-control content-control" type="date"/></span>
 			</div>
-			<div  class="col-md-12" id="content-datebox-lower">
-				<span class="col-md-6">Garments: <input name="garments" style="width:50%;" class="form-control content-control" type="text"/></span>
-				<span class="col-md-6">Other: <input name="other_top" style="width:50%;" class="form-control content-control" type="text"/></span>
+			<div  class="col-md-12 col-xs-12" id="content-datebox-lower">
+				<span class="col-md-6 col-xs-12">Garments: <input name="garments" style="width:50%;" class="form-control content-control" type="text"/></span>
+				<span class="col-md-6 col-xs-12">Other: <input name="other_top" style="width:50%;" class="form-control content-control" type="text"/></span>
 			</div>
 		</div>
-		<div id="content-title" class="col-md-12">
-			<div class="col-md-6" style="padding-left:0px;">
+		<div id="content-title" class="col-md-12 col-xs-12">
+			<div class="col-md-6 col-xs-12" style="padding-left:0px;">
 				<strong>BUSINESS CARDS</strong>
 			</div>
-			<div class="col-md-3">
+			<div class="col-md-3 col-xs-12">
 				INVOICE #:<br/>
 				<input name="invoice" type="text" class="form-control" value="{{gen_invoice}}">
 			</div>
 		</div>
-		<div id="content-table" class="col-md-12">
+		<div id="content-table" class="col-md-12 col-xs-12 table-reponsive">
 			<table class="table table-bordered">
 				<thead>
 					<tr>
@@ -807,47 +817,47 @@
 				</tbody>
 			</table>
 		</div>
-		<div id="content-footer" class="col-md-12">
-			<div class="col-md-6">
-				<p class="col-md-12"><i>
+		<div id="content-footer" class="col-md-12 col-xs-12">
+			<div class="col-md-6 col-xs-12">
+				<p class="col-md-12 col-xs-12"><i>
 					Each order placed with GC is unique and individual and as such, additional costs may incur, that may not have been perceived especially if changes are made. It is our practice to provide an excellent  experience, and quality product. A 50% deposit is required to facilitate your order.
 				</i></p>
-				<div id="content-deposit" class="col-md-12">
-					<h4 class="col-md-3	">Deposit: </h4>
-					<div class="col-md-6 input-group">
+				<div id="content-deposit" class="col-md-12 col-xs-12">
+					<h4 class="col-md-3 col-xs-6">Deposit: </h4>
+					<div class="col-md-6 col-xs-6 input-group">
 						<span class="input-group-addon">$</span>
 						<input id="deposit" name="deposit" type="text" class="ta-right form-control" value="0"/>
 					</div>
 				</div>
 			</div>
-			<div class="col-md-6">
-				<div class="col-md-10 pull-right">
-					<div class="col-md-12 content-footer-adds">
-						<div class="col-md-6">
+			<div class="col-md-6 col-xs-12">
+				<div class="col-md-10 col-xs-12 pull-right">
+					<div class="col-md-12 col-xs-12 content-footer-adds">
+						<div class="col-md-6 col-xs-6">
 							<input id="adds1" name="adds1" type="text" class="form-control"/>
 						</div>
-						<div class="col-md-6 input-group">
+						<div class="col-md-6 col-xs-6 input-group">
 							<span class="input-group-addon">$</span>
 							<input id="adds1_val" name="adds1_val" type="text" value="0" class="ta-right form-control"/>
 						</div>
 					</div>
-					<div class="col-md-12 content-footer-adds">
-						<div class="col-md-6">
+					<div class="col-md-12 col-xs-12 content-footer-adds">
+						<div class="col-md-6 col-xs-6">
 							<input id="adds2" name="adds2" type="text" class="form-control"/>
 						</div>
-						<div class="col-md-6 input-group">
+						<div class="col-md-6 col-xs-6 input-group">
 							<span class="input-group-addon">$</span>
 							<input id="adds2_val" name="adds2_val" type="text" value="0" class="ta-right form-control"/>
 						</div>
 					</div>
-					<div id="content-footer-total" class="col-md-12">
-						<h3 class="col-md-6">TOTAL: </h3>
-						<div class="col-md-6 input-group">
+					<div id="content-footer-total" class="col-md-12 col-xs-12">
+						<h3 class="col-md-6 col-xs-6">TOTAL: </h3>
+						<div class="col-md-6 col-xs-6 input-group">
 							<span class="input-group-addon">$</span>
-							<input id="grand_total" name="grand_total" disabled type="text" class="ta-right form-control" value="{{grand_total}}"/>
+							<input id="grand_total" name="grand_total" disabled type="text" class="ta-right form-control" value="{{order_total}}"/>
 						</div>
 					</div>
-					<div id="content-footer-subwrap" class="col-md-12">
+					<div id="content-footer-subwrap" class="col-md-12 col-xs-12">
 						<button id="content-footer-submit" class="btn btn-primary" type="button">PROCEED</button>
 					</div>
 				</div>
@@ -856,23 +866,23 @@
 		{{/if}}
 		<!--  -->
 		{{#if user_orders}}
-		<div id="content-title" class="col-md-12">
-			<div class="col-md-2">YOUR ORDERS</div> 
-			<div class="col-md-3">
+		<div id="content-title" class="col-md-12 col-xs-12">
+			<div class="col-md-2 col-xs-6">YOUR ORDERS</div> 
+			<div class="col-md-3 col-xs-6">
 				<input id="search_order" type="text" class="form-control content-control" placeholder="Search Order ID">
 			</div>
 		</div>
-		<div id="content_table" class="col-md-12">
+		<div id="content_table" class="col-md-12 col-xs-12">
 			{{#each all_user_orders}}
-			<div class="highlight col-md-12" data-toggle="modal" data-target="#content-modal">
+			<div class="highlight col-md-12 col-xs-12" data-toggle="modal" data-target="#content-modal">
 				<div class="pull-left">
-					<p class="task_name">{{ name }}</p>
-					<p class="task_order_id">Order ID: {{ order_id }}</p>
+					<p class="task_name col-xs-12">{{ name }}</p>
+					<p class="task_order_id col-xs-12">Order ID: {{ order_id }}</p>
 				</div>
 				<div class="pull-right" style="text-align:right">
-					<p style="display:none;">Invoice: <span class="task_invoice">{{ invoice }}</span></p>
-					<p class="task_date">Date Ordered: {{ date }}</p>
-					<p class="task_status">Status: <strong>{{ status }}</strong></p>
+					<p class="col-xs-12" style="display:none;">Invoice: <span class="task_invoice col-xs-12">{{ invoice }}</span></p>
+					<p class="task_date col-xs-12">Date Ordered: {{ date }}</p>
+					<p class="task_status col-xs-12">Status: <strong>{{ status }}</strong></p>
 				</div>
 			</div>
 			{{/each}}
